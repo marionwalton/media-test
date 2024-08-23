@@ -8,16 +8,16 @@
 # lc: Library Carpentry
 # cp: Carpentries (to use for instructor training for instance)
 # incubator: The Carpentries Incubator
-carpentry: 'incubator'
+carpentry: 'dc'
 
 # Overall title for pages.
-title: 'Lesson Title'
+title: 'Data Carpentry for Media'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
 created: '2024-08-23'
 
 # Comma-separated list of keywords for the lesson
-keywords: 'software, data, lesson, The Carpentries'
+keywords: 'media, software, data, lesson, The Carpentries'
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
@@ -33,7 +33,7 @@ source: 'https://github.com/marionwalton/media-test'
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'team@carpentries.org'
+contact: 'marion.walton@uct.ac.za'
 
 # Navigation ------------------------------------------------
 #
@@ -59,7 +59,14 @@ contact: 'team@carpentries.org'
 
 # Order of episodes in your lesson
 episodes: 
-- introduction.Rmd
+- 00-intro.Rmd
+- 01-intro-to-r.Rmd
+- 02-starting-with-data.Rmd
+- 03-dplyr.Rmd
+- 04-tidyr.Rmd
+- 05-ggplot2.Rmd
+- 06-rmarkdown.Rmd
+- 07-json.Rmd
 
 # Information for Learners
 learners: 
