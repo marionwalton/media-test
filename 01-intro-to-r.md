@@ -190,39 +190,35 @@ duration_sec / 60
 This means that assigning a value to one object does not change the values of
 other objects. 
 
-For example, let's store the duration in seconds
-in a new object, `duration_minutes`:
+For example, let's store the duration in minutes
+in a new object, `duration_min`:
 
 
 ``` r
-duration_minutes <- duration_seconds/60
+duration_min <- duration_sec/60
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'duration_seconds' not found
-```
-
-and then change `duration_seconds` to 2400.
+and then change `duration_sec` to 2400.
 
 
 ``` r
-duration_seconds <- 2400
+duration_sec <- 2400
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-What do you think is the current content of the object `duration_minutes`? 40 or
+What do you think is the current content of the object `duration_min`? 40 or
 10
 
 :::::::::::::::  solution
 
 ## Solution
 
-The value of `duration_minutes` is still 10 because you have not
-re-run the line `duration_minutes <- duration_seconds/60` since
-changing the value of `duration_minutes`.
+The value of `duration_min` is still 10 because you have not
+re-run the line `duration_min <- duration_sec/60` since
+changing the value of `duration_min`.
 
 :::::::::::::::::::::::::
 
