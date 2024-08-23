@@ -218,7 +218,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. introduction</a>
+        <a href="00-intro.html">1. Before we Start</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -227,7 +227,61 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="next-episode.html">2. next-episode</a>
+        <a href="01-intro-to-r.html">2. Introduction to R</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="02-starting-with-data.html">3. Starting with Data</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush5">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading5">
+        <a href="03-dplyr.html">4. Data Wrangling with dplyr</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="04-tidyr.html">5. Data Wrangling with tidyr</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="05-ggplot2.html">6. Data Visualisation with ggplot2</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="06-rmarkdown.html">7. Getting started with R Markdown (Optional)</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="07-json.html">8. Processing JSON data (Optional)</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -275,17 +329,53 @@
         <!-- START: inst/pkgdown/templates/content-syllabus.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link float-end" href="introduction.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="00-intro.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="introduction.html" rel="next">Next: introduction... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="00-intro.html" rel="next">Next: Before we Start... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><h1 class="schedule-heading">Summary and Setup</h1>
       
 
-<p>This is a new lesson built with <a href="https://carpentries.github.io/sandpaper-docs" class="external-link">The Carpentries
-Workbench</a>.</p>
+<p>Data Carpentry’s aim is to teach researchers basic concepts, skills,
+and tools for working with data so that they can get more done in less
+time, and with less pain. The lessons below were designed for those
+interested in working with social sciences data in R.</p>
+<p>This is an introduction to R designed for participants with no
+programming experience. These lessons can be taught in a half-day,
+full-day, or over a two-day workshop (see <a href="https://datacarpentry.org/r-socialsci/instructor/instructor-notes.html" class="external-link">Instructor
+Notes</a> for suggested lesson plans). They start with some basic
+information about R syntax, the RStudio interface, and move through how
+to import CSV files, the structure of data frames, how to deal with
+factors, how to add/remove rows and columns, how to calculate summary
+statistics from a data frame, and a brief introduction to plotting.</p>
+<div id="getting-started" class="callout prereq">
+<div class="callout-square">
+<i class="callout-icon" data-feather="check"></i>
+</div>
+<div id="getting-started" class="callout-inner">
+<h3 class="callout-title">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h3>
+<div class="callout-content">
+<p>Data Carpentry’s teaching is hands-on, so participants are encouraged
+to use their own computers to ensure the proper setup of tools for an
+efficient workflow.</p>
+<p><strong>These lessons assume no prior knowledge of the skills or
+tools.</strong></p>
+<p>To get started, follow the directions in the “<a href="index.html#setup">Setup</a>” tab to download data to your computer and
+follow any installation instructions.</p>
+<div class="section level4">
+<h4 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a></h4>
+<p>This lesson requires a working copy of <strong>R</strong> and
+<strong>RStudio</strong>. <br>To most effectively use these materials,
+please make sure to install everything <em>before</em> working through
+this lesson.</p>
+</div>
+</div>
+</div>
+</div>
+
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -367,11 +457,11 @@ Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
 </section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link float-end" href="introduction.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="00-intro.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="introduction.html" rel="next">Next: introduction... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="00-intro.html" rel="next">Next: Before we Start... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav></div>
 <!-- END  : inst/pkgdown/templates/content-syllabus.html -->

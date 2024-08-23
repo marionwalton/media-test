@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://marionwalton.github.io/media-test/00-intro.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/01-intro-to-r.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/02-starting-with-data.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/03-dplyr.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/04-tidyr.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/05-ggplot2.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/06-rmarkdown.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/07-json.html</loc>
+  </url>
+  <url>
     <loc>https://marionwalton.github.io/media-test/404.html</loc>
   </url>
   <url>
@@ -17,6 +41,30 @@
   </url>
   <url>
     <loc>https://marionwalton.github.io/media-test/index.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/00-intro.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/01-intro-to-r.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/02-starting-with-data.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/03-dplyr.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/04-tidyr.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/05-ggplot2.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/06-rmarkdown.html</loc>
+  </url>
+  <url>
+    <loc>https://marionwalton.github.io/media-test/instructor/07-json.html</loc>
   </url>
   <url>
     <loc>https://marionwalton.github.io/media-test/instructor/404.html</loc>
