@@ -55,12 +55,26 @@ You can get output from R simply by typing math in the console:
 ```
 
 However, to do useful and interesting things, we need to assign *values* to
-*objects*. To create an object, we need to give it a name followed by the
+*objects*. 
+
+Let's start by imagining we are creating a tiny dataset by hand.
+To do this we'll store the information about three videos posted to YouTube.
+Each video has associated information such as its:
+ 
+ - video id (a unique text identifying the video stored in the object named video_id)
+ - duration in seconds (a number stored in the object named duration_sec)
+ - view count (a number stored in the object named view_count)
+ - comment count (a number stored in the object named comment_count)
+ - category label (a text label stored in the object named category_label)
+
+To create an object, we need to give it a name followed by the
 assignment operator `<-`, and the value we want to give it:
 
 ```{r, purl=FALSE}
-area_hectares <- 1.0
+duration_sec <- 1000
 ```
+
+In this case only one person has viewed our first video.
 
 `<-` is the assignment operator. It assigns values on the right to objects on
 the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can
@@ -77,8 +91,8 @@ same time as the <kbd>\-</kbd> key) will write `<- ` in a single keystroke in a
 PC, while typing <kbd>Option</kbd> + <kbd>\-</kbd> (push <kbd>Option</kbd> at the
 same time as the <kbd>\-</kbd> key) does the same in a Mac.
 
-Objects can be given any name such as `x`, `current_temperature`, or
-`subject_id`. You want your object names to be explicit and not too long. They
+Objects can be given any name such as `category_name`, `view_count`, or
+`video_id`. You want your object names to be explicit and not too long. They
 cannot start with a number (`2x` is not valid, but `x2` is). R is case sensitive
 (e.g., `age` is different from `Age`). There are some names that
 cannot be used because they are the names of fundamental objects in R (e.g.,
@@ -121,53 +135,55 @@ can force R to print the value by using parentheses or by typing
 the object name:
 
 ```{r, purl=FALSE}
-area_hectares <- 1.0    # doesn't print anything
-(area_hectares <- 1.0)  # putting parenthesis around the call prints the value of `area_hectares`
-area_hectares         # and so does typing the name of the object
+duration_sec <- 1    # doesn't print anything
+(duration_sec <- 1)  # putting parenthesis around the call prints the value of `area_hectares`
+duration_sec        # and so does typing the name of the object
 ```
 
-Now that R has `area_hectares` in memory, we can do arithmetic with it. For
-instance, we may want to convert this area into acres (area in acres is 2.47 times the area in hectares):
+Now that R has a value for `duration_sec` in memory, we can do arithmetic with it. For
+instance, we may want to convert the seconds into minutes (minutes are the time in seconds divided by 60):
 
 ```{r, purl=FALSE}
-2.47 * area_hectares
+duration_sec / 60
 ```
 
 We can also change an object's value by assigning it a new one:
 
 ```{r, purl=FALSE}
-area_hectares <- 2.5
-2.47 * area_hectares
+duration_sec <- 600
+duration_sec / 60
 ```
 
 This means that assigning a value to one object does not change the values of
-other objects. For example, let's store the plot's area in acres
-in a new object, `area_acres`:
+other objects. 
+
+For example, let's store the duration in seconds
+in a new object, `duration_minutes`:
 
 ```{r, purl=FALSE}
-area_acres <- 2.47 * area_hectares
+duration_minutes <- duration_seconds/60
 ```
 
-and then change `area_hectares` to 50.
+and then change `duration_seconds` to 2400.
 
 ```{r, purl=FALSE}
-area_hectares <- 50
+duration_seconds <- 2400
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-What do you think is the current content of the object `area_acres`? 123.5 or
-6\.175?
+What do you think is the current content of the object `duration_minutes`? 40 or
+10
 
 :::::::::::::::  solution
 
 ## Solution
 
-The value of `area_acres` is still 6.175 because you have not
-re-run the line `area_acres <- 2.47 * area_hectares` since
-changing the value of `area_hectares`.
+The value of `duration_minutes` is still 10 because you have not
+re-run the line `duration_minutes <- duration_seconds/60` since
+changing the value of `duration_minutes`.
 
 :::::::::::::::::::::::::
 
