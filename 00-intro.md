@@ -310,16 +310,16 @@ dir.create("fig_output")
 ```
 
 You can either download the data used for this lesson from GitHub or with R.
-You can copy the data from this [GitHub link](https://github.com/marionwalton/media-test/blob/main/episodes/data/videolist_search316_2024_07_13-19_06_19.csv)
-and paste it into a file called `youtube_search316.csv` in the `data/` directory you just created.
+You can copy the data from this [GitHub link](https://raw.githubusercontent.com/marionwalton/media-test/main/episodes/data/videolist_search316_2024_07_13-19_06_19.csv)
+and paste it into a file called `videolist_search316_2024_07_13-19_06_19.csv` in the `data/` directory you just created.
 Or you can do this directly from R by copying and pasting this in your terminal
 (your instructor can place this chunk of code in the Etherpad):
 
 
 ``` r
 download.file(
-  "https://github.com/marionwalton/media-test/blob/main/episodes/data/videolist_search316_2024_07_13-19_06_19.csv",
-  "data/youtube_search316.csv", mode = "wb"
+  "https://raw.githubusercontent.com/marionwalton/media-test/main/episodes/data/videolist_search316_2024_07_13-19_06_19.csv",
+  "data/videolist_search316_2024_07_13-19_06_19.csv", mode = "wb"
   )
 ```
 
