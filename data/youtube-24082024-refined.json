@@ -1,0 +1,181 @@
+[
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "channelId",
+    "newColumnName": "channel_id",
+    "description": "Rename column channelId to channel_id"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "channelTitle",
+    "newColumnName": "channel_title",
+    "description": "Rename column channelTitle to channel_title"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "videoId",
+    "newColumnName": "video_id",
+    "description": "Rename column videoId to video_id"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "publishedAt",
+    "newColumnName": "published_at",
+    "description": "Rename column publishedAt to published_at"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "publishedAtSQL",
+    "newColumnName": "published_at_sql",
+    "description": "Rename column publishedAtSQL to published_at_sql"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "videoTitle",
+    "newColumnName": "video_title",
+    "description": "Rename column videoTitle to video_title"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "videoDescription",
+    "newColumnName": "video_description",
+    "description": "Rename column videoDescription to video_description"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "videoCategoryId",
+    "newColumnName": "video_category_id",
+    "description": "Rename column videoCategoryId to video_category_id"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "videoCategoryLabel",
+    "newColumnName": "video_category_label",
+    "description": "Rename column videoCategoryLabel to video_category_label"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "topicCategories",
+    "newColumnName": "topic_categories",
+    "description": "Rename column topicCategories to topic_categories"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "durationSec",
+    "newColumnName": "duration_sec",
+    "description": "Rename column durationSec to duration_sec"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "defaultLanguage",
+    "newColumnName": "default_language",
+    "description": "Rename column defaultLanguage to default_language"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "defaultLAudioLanguage",
+    "newColumnName": "default_l_audio_language",
+    "description": "Rename column defaultLAudioLanguage to default_l_audio_language"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "licensedContent",
+    "newColumnName": "licensed_content",
+    "description": "Rename column licensedContent to licensed_content"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "locationDescription",
+    "newColumnName": "location_description",
+    "description": "Rename column locationDescription to location_description"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "viewCount",
+    "newColumnName": "view_count",
+    "description": "Rename column viewCount to view_count"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "likeCount",
+    "newColumnName": "like_count",
+    "description": "Rename column likeCount to like_count"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "favoriteCount",
+    "newColumnName": "favorite_count",
+    "description": "Rename column favoriteCount to favorite_count"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "commentCount",
+    "newColumnName": "comment_count",
+    "description": "Rename column commentCount to comment_count"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "dislikeCount",
+    "newColumnName": "dislike_count",
+    "description": "Rename column dislikeCount to dislike_count"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "dimension",
+    "description": "Remove column dimension"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "duration",
+    "description": "Remove column duration"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "dislike_count",
+    "description": "Remove column dislike_count"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "video_category_id",
+    "description": "Remove column video_category_id"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "latitude",
+    "description": "Remove column latitude"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "longitude",
+    "description": "Remove column longitude"
+  },
+  {
+    "op": "core/row-star",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "body_politics",
+          "expression": "value",
+          "columnName": "body_politics",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "yes",
+                "l": "yes"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "starred": true,
+    "description": "Star rows"
+  }
+]
