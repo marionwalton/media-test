@@ -37,6 +37,16 @@ This lesson requires a working copy of **R** and **RStudio**.
 <br>To most effectively use these materials, please make sure to install
 everything *before* working through this lesson.
 
+## About the example data
+
+We will be working with a dataset of 200 Youtube posts. Here is some background to the dataset.
+
+- An initial dataset of 314 posts were returned by the YouTube API in response to the following query: "Query: clicks south africa* hair (ad OR advertisement) -click" covering videos posted during the period 2020 - 2023
+- The dataset was prepared using a spreadsheet and OpenRefine to identify missing values, change variable names to "snake case", change tags and topics to lowercase, and to use semicolons to separate tags and topics.
+- Owing to the ambiguity of the keyword "clicks", many irrelevant results were returned. - The dataset was reviewed and any posts which were not related to the controversy, or which did not relate to issues about body politics and racism were excluded.
+- This resulted in a dataset of 200 posts selected for computational analysis.
+In case you need a refresher, here are some details about how [YouTube API](https://supermetrics.com/docs/integration-youtube-public-data-fields/) derives the variables in this dataset.
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
