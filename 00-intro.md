@@ -310,16 +310,16 @@ dir.create("fig_output")
 ```
 
 You can either download the data used for this lesson from GitHub or with R.
-You can copy the data from this [GitHub link](https://raw.githubusercontent.com/marionwalton/media-test/main/episodes/data/youtube-24082024-refined.csv)
-and paste it into a file called `youtube-24082024-refined.csv` in the `data/` directory you just created.
+You can copy the data from this [GitHub link](https://raw.githubusercontent.com/marionwalton/media-test/main/episodes/data/youtube-27082024-open-refine-200-na.csv)
+and paste it into a file called `youtube-27082024-open-refine-200-na.csv` in the `data/` directory you just created.
 Or you can do this directly from R by copying and pasting this in your terminal
 (your instructor can place this chunk of code in the Etherpad):
 
 
 ``` r
 download.file(
-  "https://raw.githubusercontent.com/marionwalton/media-test/main/episodes/data/youtube-24082024-refined.csv",
-  "data/youtube-24082024-refined.csv", mode = "wb"
+  "https://raw.githubusercontent.com/marionwalton/media-test/main/episodes/data/youtube-27082024-open-refine-200-na.csv",
+  "youtube-27082024-open-refine-200-na.csv", mode = "wb"
   )
 ```
 
