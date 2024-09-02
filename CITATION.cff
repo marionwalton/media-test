@@ -1,0 +1,16 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Data Carpentry for Media Researchers
+message: >-
+  If you use this lesson, please cite it using the metadata
+  from this file.
+type: software
+authors:
+  - given-names: Marion
+    family-names: Walton
+    email: marion.walton@uct.ac.za
+    name-particle: Marion
+    affiliation: University of Cape Town
+    orcid: 'https://orcid.org/0000-0002-3695-5701'
