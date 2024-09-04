@@ -72,24 +72,7 @@ In case you need a refresher, here are some details about how YouTube API derive
 
 We will be using a subset of the dataset that was prepared in OpenRefine (`data/youtube-27082024-open-refine-200-na.csv`). In this dataset, the missing data is encoded as "na", each row holds
 information for a single YouTube video, and the columns
-represent 
-
-| column\_name          | description                                                                                                                      | 
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| key\_id               | Added to provide a unique Id for each observation. (The InstanceID field does this as well but it is not as convenient to use)   | 
-| village              | Village name                                                                                                                     | 
-| interview\_date       | Date of interview                                                                                                                | 
-| no\_membrs            | How many members in the household?                                                                                               | 
-| years\_liv            | How many years have you been living in this village or neighboring village?                                                      | 
-| respondent\_wall\_type | What type of walls does their house have (from list)                                                                             | 
-| rooms                | How many rooms in the main house are used for sleeping?                                                                          | 
-| memb\_assoc           | Are you a member of an irrigation association?                                                                                   | 
-| affect\_conflicts     | Have you been affected by conflicts with other irrigators in the area?                                                           | 
-| liv\_count            | Number of livestock owned.                                                                                                       | 
-| items\_owned          | Which of the following items are owned by the household? (list)                                                                  | 
-| no\_meals             | How many meals do people in your household normally eat in a day?                                                                | 
-| months\_lack\_food     | Indicate which months, In the last 12 months have you faced a situation when you did not have enough food to feed the household? | 
-| instanceID           | Unique identifier for the form data submission                                                                                   | 
+represent                                                                                   | 
 
 | column\_name          | description                                                                                                                      | 
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
