@@ -15,10 +15,6 @@ The two main goals for this lessons are:
 
 - To make sure that learners are comfortable with working with data frames, and
   can use the bracket notation to select slices/columns.
-- To expose learners to factors. Their behavior is not necessarily intuitive,
-  and so it is important that they are guided through it the first time they are
-  exposed to it. The content of the lesson should be enough for learners to
-  avoid common mistakes with them.
 
 
 ::::::::::::
@@ -29,9 +25,6 @@ The two main goals for this lessons are:
 - Load external data from a .csv file into a data frame.
 - Summarize the contents of a data frame.
 - Subset values from data frames.
-- Describe the difference between a factor and a string.
-- Convert between strings and factors.
-- Reorder and rename factors.
 - Change how character strings are handled in a data frame.
 - Examine and change date formats.
 
@@ -42,8 +35,6 @@ The two main goals for this lessons are:
 - What is a data.frame?
 - How can I read a complete csv file into R?
 - How can I get basic summary information about my dataset?
-- How can I change the way R treats strings in my dataset?
-- Why would I want strings to be treated differently?
 - How are dates represented in R and how can I change the format?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -70,18 +61,19 @@ import tabular data using `read_csv()`.
 
 ## Presentation of the SAFI Data
 
-SAFI (Studying African Farmer-Led Irrigation) is a study looking at farming
-and irrigation methods in Tanzania and Mozambique. The survey data
-was collected through interviews conducted between November 2016 and
-June 2017. For this lesson, we will be using a subset of the
-available data. For information about the full teaching dataset used
-in other lessons in this workshop, see the
-[dataset description](https://datacarpentry.org/socialsci-workshop/index.html#data).
+Sample data
+We will be working with a dataset of 200 Youtube posts. Here is some background to the dataset.
 
-We will be using a subset of the cleaned version of the dataset that
-was produced through cleaning in OpenRefine (`data/SAFI_clean.csv`). In this dataset, the missing data is encoded as "NULL", each row holds
-information for a single interview respondent, and the columns
-represent:
+An initial dataset of 314 posts were returned by the YouTube API in response to the following query: "Query: clicks south africa* hair (ad OR advertisement) -click" covering videos posted during the period 2020 - 2023
+The dataset was prepared using a spreadsheet and OpenRefine to identify missing values, change variable names to "snake case", change tags and topics to lowercase, and to use semicolons to separate tags and topics.
+Owing to the ambiguity of the keyword "clicks", many irrelevant results were returned. The dataset was reviewed and any posts which were not related to the controversy, or which did not relate to issues about body politics and racism were excluded.
+This resulted in a dataset of 200 posts selected for computational analysis.
+In case you need a refresher, here are some details about how YouTube API derives the 
+[variables in this dataset](https://supermetrics.com/docs/integration-youtube-public-data-fields/).
+
+We will be using a subset of the dataset that was prepared in OpenRefine (`data/youtube-27082024-open-refine-200-na.csv`). In this dataset, the missing data is encoded as "na", each row holds
+information for a single YouTube video, and the columns
+represent 
 
 | column\_name          | description                                                                                                                      | 
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -99,6 +91,42 @@ represent:
 | no\_meals             | How many meals do people in your household normally eat in a day?                                                                | 
 | months\_lack\_food     | Indicate which months, In the last 12 months have you faced a situation when you did not have enough food to feed the household? | 
 | instanceID           | Unique identifier for the form data submission                                                                                   | 
+
+| column\_name          | description                                                                                                                      | 
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| 'position'               | 
+| 'randomise'              | 
+| 'channel_id'             | 
+| 'channel_title'          | 
+| 'video_id'               | 
+| 'url'                   |
+|  'published_at'         |
+|  'published_at_sql'     |
+|  'year'                  | 
+| 'month'                   | 
+| 'day'                     | 
+| 'video_title'             | 
+| 'video_description'       | 
+| 'tags'                    | 
+| 'video_category_label'     | 
+| 'topic_categories'          | 
+| 'duration_sec'              | 
+| 'definition'                | 
+| 'caption'                   | 
+| 'default_language'          | 
+| 'default_l_audio_language'   | 
+| 'thumbnail_maxres'          | 
+| 'licensed_content'          | 
+| 'location_description'      | 
+| 'view_count'                | 
+| 'like_count'                | 
+| 'favorite_count'            | 
+| 'comment_count'             | 
+| 'controversy'               | 
+| 'clicks'                    | 
+| 'body_politics'             | 
+| 'eff_lead'                  | 
+
 
 ## Importing data
 
