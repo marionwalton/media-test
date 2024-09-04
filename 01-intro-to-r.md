@@ -442,19 +442,19 @@ vector. `length()` tells you how many elements are in a particular vector:
 
 
 ``` r
-length(hh_members)
+length(view_count)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'hh_members' not found
+``` output
+[1] 4
 ```
 
 ``` r
-length(respondent_wall_type)
+length(video_category_label)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found
+``` output
+[1] 3
 ```
 
 An important feature of a vector, is that all of the elements are the same type of data.
@@ -462,19 +462,19 @@ The function `typeof()` indicates the type of an object:
 
 
 ``` r
-typeof(hh_members)
+typeof(view_count)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'hh_members' not found
+``` output
+[1] "double"
 ```
 
 ``` r
-typeof(respondent_wall_type)
+typeof(video_category_label)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found
+``` output
+[1] "character"
 ```
 
 The function `str()` provides an overview of the structure of an object and its
@@ -483,39 +483,39 @@ objects:
 
 
 ``` r
-str(hh_members)
+str(view_count)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'hh_members' not found
+``` output
+ num [1:4] 120987 789 1 2
 ```
 
 ``` r
-str(respondent_wall_type)
+str(video_category_label)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found
+``` output
+ chr [1:3] "politics" "society" "business"
 ```
 
 You can use the `c()` function to add other elements to your vector:
 
 
 ``` r
-possessions <- c("bicycle", "radio", "television")
-possessions <- c(possessions, "mobile_phone") # add to the end of the vector
-possessions <- c("car", possessions) # add to the beginning of the vector
-possessions
+default_l_audio_language <- c("en", "af", "zu")
+default_l_audio_language <- c(default_l_audio_language, "fr") # add to the end of the vector
+default_l_audio_language <- c("ar", default_l_audio_language) # add to the beginning of the vector
+default_l_audio_language
 ```
 
 ``` output
-[1] "car"          "bicycle"      "radio"        "television"   "mobile_phone"
+[1] "ar" "en" "af" "zu" "fr"
 ```
 
-In the first line, we take the original vector `possessions`,
-add the value `"mobile_phone"` to the end of it, and save the result back into
-`possessions`. Then we add the value `"car"` to the beginning, again saving the result
-back into `possessions`.
+In the first line, we take the original vector `default_l_audio_language`,
+add the value `"fr"` to the end of it, and save the result back into
+`default_l_audio_language`. Then we add the value `"ar"` to the beginning, again saving the result
+back into `default_l_audio_language`.
 
 We can do this over and over again to grow a vector, or assemble a dataset.
 As we program, this may be useful to add results that we are collecting or
@@ -616,20 +616,20 @@ Subsetting (sometimes referred to as extracting or indexing) involves accessing 
 
 
 ``` r
-respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks")
-respondent_wall_type[2]
+audio_language <- c("en", "af", "zu")
+audio_language[2]
 ```
 
 ``` output
-[1] "burntbricks"
+[1] "af"
 ```
 
 ``` r
-respondent_wall_type[c(3, 2)]
+audio_language[c(3, 2)]
 ```
 
 ``` output
-[1] "sunbricks"   "burntbricks"
+[1] "zu" "af"
 ```
 
 We can also repeat the indices to create an object with more elements than the
@@ -637,13 +637,12 @@ original one:
 
 
 ``` r
-more_respondent_wall_type <- respondent_wall_type[c(1, 2, 3, 2, 1, 3)]
-more_respondent_wall_type
+extra_audio_language <- audio_language[c(3, 2,2,1,3,2)]
+extra_audio_language
 ```
 
 ``` output
-[1] "muddaub"     "burntbricks" "sunbricks"   "burntbricks" "muddaub"    
-[6] "sunbricks"  
+[1] "zu" "af" "af" "en" "zu" "af"
 ```
 
 R indices start at 1. Programming languages like Fortran, MATLAB, Julia, and R
@@ -658,12 +657,12 @@ select the element with the same index, while `FALSE` will not:
 
 
 ``` r
-hh_members <- c(3, 7, 10, 6)
-hh_members[c(TRUE, FALSE, TRUE, TRUE)]
+view_count <- c(120987, 789, 1, 2)
+view_count[c(TRUE, FALSE, TRUE, FALSE)]
 ```
 
 ``` output
-[1]  3 10  6
+[1] 120987      1
 ```
 
 Typically, these logical vectors are not typed by hand, but are the output of
@@ -672,20 +671,20 @@ values above 5:
 
 
 ``` r
-hh_members > 5    # will return logicals with TRUE for the indices that meet the condition
+view_count > 5    # will return logicals with TRUE for the indices that meet the condition
 ```
 
 ``` output
-[1] FALSE  TRUE  TRUE  TRUE
+[1]  TRUE  TRUE FALSE FALSE
 ```
 
 ``` r
 ## so we can use this to select only the values above 5
-hh_members[hh_members > 5]
+view_count[view_count > 5]
 ```
 
 ``` output
-[1]  7 10  6
+[1] 120987    789
 ```
 
 You can combine multiple tests using `&` (both conditions are true, AND) or `|`
@@ -693,19 +692,19 @@ You can combine multiple tests using `&` (both conditions are true, AND) or `|`
 
 
 ``` r
-hh_members[hh_members < 4 | hh_members > 7]
+view_count[view_count > 10 | view_count < 1000]
 ```
 
 ``` output
-[1]  3 10
+[1] 120987    789      1      2
 ```
 
 ``` r
-hh_members[hh_members >= 4 & hh_members <= 7]
+view_count[view_count>= 10 & view_count <= 10000]
 ```
 
 ``` output
-[1] 7 6
+[1] 789
 ```
 
 Here, `<` stands for "less than", `>` for "greater than", `>=` for "greater than
@@ -720,12 +719,12 @@ become tedious.
 
 
 ``` r
-possessions <- c("car", "bicycle", "radio", "television", "mobile_phone")
-possessions[possessions == "car" | possessions == "bicycle"] # returns both car and bicycle
+audio_language <- c("en", "af", "zu","fr","ar")
+audio_language[audio_language == "zu" | audio_language == "af"] # returns both zu and af
 ```
 
 ``` output
-[1] "car"     "bicycle"
+[1] "af" "zu"
 ```
 
 The function `%in%` allows you to test if any of the elements of a search vector
@@ -733,11 +732,11 @@ The function `%in%` allows you to test if any of the elements of a search vector
 
 
 ``` r
-possessions %in% c("car", "bicycle")
+audio_language %in% c("en", "fr")
 ```
 
 ``` output
-[1]  TRUE  TRUE FALSE FALSE FALSE
+[1]  TRUE FALSE FALSE  TRUE FALSE
 ```
 
 Note that the output is the same length as the search vector on the left hand
@@ -747,19 +746,19 @@ in the search vector that appear in your target vector:
 
 
 ``` r
-possessions %in% c("car", "bicycle", "motorcycle", "truck", "boat", "bus")
+audio_language %in% c("en", "af", "zu","fr","ar")
 ```
 
 ``` output
-[1]  TRUE  TRUE FALSE FALSE FALSE
+[1] TRUE TRUE TRUE TRUE TRUE
 ```
 
 ``` r
-possessions[possessions %in% c("car", "bicycle", "motorcycle", "truck", "boat", "bus")]
+audio_language[audio_language %in% c("en", "af", "xh", "zu", "fr", "ar")]
 ```
 
 ``` output
-[1] "car"     "bicycle"
+[1] "en" "af" "zu" "fr" "ar"
 ```
 
 ## Missing data
@@ -776,8 +775,8 @@ the missing values.
 
 
 ``` r
-rooms <- c(2, 1, 1, NA, 7)
-mean(rooms)
+comment_count <- c(2, 1, 1, NA, 7)
+mean(comment_count)
 ```
 
 ``` output
@@ -785,7 +784,7 @@ mean(rooms)
 ```
 
 ``` r
-max(rooms)
+max(comment_count)
 ```
 
 ``` output
@@ -793,7 +792,7 @@ max(rooms)
 ```
 
 ``` r
-mean(rooms, na.rm = TRUE)
+mean(comment_count, na.rm = TRUE)
 ```
 
 ``` output
@@ -801,7 +800,7 @@ mean(rooms, na.rm = TRUE)
 ```
 
 ``` r
-max(rooms, na.rm = TRUE)
+max(comment_count, na.rm = TRUE)
 ```
 
 ``` output
@@ -816,7 +815,7 @@ examples.
 ``` r
 ## Extract those elements which are not missing values.
 ## The ! character is also called the NOT operator
-rooms[!is.na(rooms)]
+comment_count[!is.na(comment_count)]
 ```
 
 ``` output
@@ -826,7 +825,7 @@ rooms[!is.na(rooms)]
 ``` r
 ## Count the number of missing values.
 ## The output of is.na() is a logical vector (TRUE/FALSE equivalent to 1/0) so the sum() function here is effectively counting
-sum(is.na(rooms))
+sum(is.na(comment_count))
 ```
 
 ``` output
@@ -835,7 +834,7 @@ sum(is.na(rooms))
 
 ``` r
 ## Returns the object with incomplete cases removed. The returned object is an atomic vector of type `"numeric"` (or `"double"`).
-na.omit(rooms)
+na.omit(comment_count)
 ```
 
 ``` output
@@ -848,7 +847,7 @@ attr(,"class")
 
 ``` r
 ## Extract those elements which are complete cases. The returned object is an atomic vector of type `"numeric"` (or `"double"`).
-rooms[complete.cases(rooms)]
+comment_count[complete.cases(comment_count)]
 ```
 
 ``` output
@@ -861,13 +860,13 @@ Recall that you can use the `typeof()` function to find the type of your atomic 
 
 ## Exercise
 
-1. Using this vector of rooms, create a new vector with the NAs removed.
+1. Using this vector of comments, create a new vector with the NAs removed.
 
 ```r
-rooms <- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
+comment_count<- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
 ```
 
-2. Use the function `median()` to calculate the median of the `rooms` vector.
+2. Use the function `median()` to calculate the median of the `comment_count` vector.
 
 3. Use R to figure out how many households in the set use more than 2 rooms for sleeping.
 
@@ -877,26 +876,26 @@ rooms <- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
 
 
 ``` r
-rooms <- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
-rooms_no_na <- rooms[!is.na(rooms)]
+comment_count <- c(10000, 2, 19, 1, NA, 3, 1, 3, 2, 1999, 1, 89, 3, 1, NA, 1)
+comments_no_na <- comment_count[!is.na(comment_count)]
 # or
-rooms_no_na <- na.omit(rooms)
+comments_no_na <- na.omit(comment_count)
 # 2.
-median(rooms, na.rm = TRUE)
+median(comment_count, na.rm = TRUE)
 ```
 
 ``` output
-[1] 1
+[1] 2.5
 ```
 
 ``` r
 # 3.
-rooms_above_2 <- rooms_no_na[rooms_no_na > 2]
-length(rooms_above_2)
+comments_above_2 <- comments_no_na[comments_no_na > 2]
+length(comments_above_2)
 ```
 
 ``` output
-[1] 4
+[1] 7
 ```
 
 :::::::::::::::::::::::::
