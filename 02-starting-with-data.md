@@ -167,7 +167,7 @@ library(tidyverse)
 library(here)
 
 videos <- read_csv(
-  here("data", "SAFI_clean.csv"), 
+  here("data", "youtube-27082024-open-refine-200-na.csv"), 
   na = "na")
 ```
 
@@ -323,9 +323,9 @@ videos[1, 1]
 
 ``` output
 # A tibble: 1 × 1
-  key_ID
-   <dbl>
-1      1
+  position
+     <dbl>
+1      112
 ```
 
 ``` r
@@ -335,9 +335,9 @@ videos[1, 6]
 
 ``` output
 # A tibble: 1 × 1
-  respondent_wall_type
-  <chr>               
-1 muddaub             
+  url                                        
+  <chr>                                      
+1 https://www.youtube.com/watch?v=iPUAl1jywdU
 ```
 
 ``` r
@@ -346,14 +346,18 @@ videos[[1]]
 ```
 
 ``` output
-  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
- [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
- [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
- [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71 127
- [73] 133 152 153 155 178 177 180 181 182 186 187 195 196 197 198 201 202  72
- [91]  73  76  83  85  89 101 103 102  78  80 104 105 106 109 110 113 118 125
-[109] 119 115 108 116 117 144 143 150 159 160 165 166 167 174 175 189 191 192
-[127] 126 193 194 199 200
+  [1] 112  50 149 167 195 213 145 315 190 214 263  30  63  65   2   3   4   7
+ [19]   9  13  14  16  17  24  36  66  72 132 118 299  40  43  46  54  58  80
+ [37]  88  93  99 103 123 124 152 169 174 181 200 215 217 218 227 236 244 250
+ [55] 253 272 282 284 291 257   1  29  38  92 135 139 144 153 170 176 183 187
+ [73] 194 197 207 221 226 262 271 273 278 290 294 295 306 307 311  11  44  57
+ [91]  60  64  69  70  78  96 107 121 130 308   5   8  10  21  23  25  28  34
+[109]  52  56  61  62  71  73  74  81  86  91  98 100 110 120 126 131 133 136
+[127] 141 142 143 146 150 154 159 161 164 166 173 178 182 184 191 192 202 208
+[145] 210 219 220 223 231 233 234 238 243 245 261 264 275 276 277 283 285 288
+[163] 292 300 304 305 309 313   6  15  18  19  22  27  31  33  35  37  39  41
+[181]  42  67  77  82  83  85  87  94 158 168 193 254 293 104 155 162 204 209
+[199] 246 255
 ```
 
 ``` r
@@ -362,20 +366,20 @@ videos[1]
 ```
 
 ``` output
-# A tibble: 131 × 1
-   key_ID
-    <dbl>
- 1      1
- 2      2
- 3      3
- 4      4
- 5      5
- 6      6
- 7      7
- 8      8
- 9      9
-10     10
-# ℹ 121 more rows
+# A tibble: 200 × 1
+   position
+      <dbl>
+ 1      112
+ 2       50
+ 3      149
+ 4      167
+ 5      195
+ 6      213
+ 7      145
+ 8      315
+ 9      190
+10      214
+# ℹ 190 more rows
 ```
 
 ``` r
@@ -385,11 +389,11 @@ videos[1:3, 7]
 
 ``` output
 # A tibble: 3 × 1
-  rooms
-  <dbl>
-1     1
-2     1
-3     1
+  published_at       
+  <dttm>             
+1 2020-09-14 16:16:44
+2 2020-09-11 05:34:52
+3 2020-09-10 11:59:51
 ```
 
 ``` r
@@ -398,13 +402,17 @@ videos[3, ]
 ```
 
 ``` output
-# A tibble: 1 × 14
-  key_ID village interview_date      no_membrs years_liv respondent_wall_type
-   <dbl> <chr>   <dttm>                  <dbl>     <dbl> <chr>               
-1      3 God     2016-11-17 00:00:00        10        15 burntbricks         
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 1 × 32
+  position randomise channel_id channel_title video_id url   published_at       
+     <dbl>     <dbl> <chr>      <chr>         <chr>    <chr> <dttm>             
+1      149       313 UCMwDXpWE… Stellenbosch… v8XfpOi… http… 2020-09-10 11:59:51
+# ℹ 25 more variables: published_at_sql <chr>, year <dbl>, month <dbl>,
+#   day <dbl>, video_title <chr>, video_description <chr>, tags <chr>,
+#   video_category_label <chr>, topic_categories <chr>, duration_sec <dbl>,
+#   definition <chr>, caption <lgl>, default_language <chr>,
+#   default_l_audio_language <chr>, thumbnail_maxres <chr>,
+#   licensed_content <dbl>, location_description <chr>, view_count <dbl>,
+#   like_count <dbl>, favorite_count <dbl>, comment_count <dbl>, …
 ```
 
 ``` r
@@ -423,23 +431,26 @@ videos[, -1]          # The whole tibble, except the first column
 ```
 
 ``` output
-# A tibble: 131 × 13
-   village  interview_date      no_membrs years_liv respondent_wall_type rooms
-   <chr>    <dttm>                  <dbl>     <dbl> <chr>                <dbl>
- 1 God      2016-11-17 00:00:00         3         4 muddaub                  1
- 2 God      2016-11-17 00:00:00         7         9 muddaub                  1
- 3 God      2016-11-17 00:00:00        10        15 burntbricks              1
- 4 God      2016-11-17 00:00:00         7         6 burntbricks              1
- 5 God      2016-11-17 00:00:00         7        40 burntbricks              1
- 6 God      2016-11-17 00:00:00         3         3 muddaub                  1
- 7 God      2016-11-17 00:00:00         6        38 muddaub                  1
- 8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks              3
- 9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks              1
-10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks              5
-# ℹ 121 more rows
-# ℹ 7 more variables: memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 200 × 31
+   randomise channel_id         channel_title video_id url   published_at       
+       <dbl> <chr>              <chr>         <chr>    <chr> <dttm>             
+ 1       409 UCI3RT5PGmdi1KVp9… eNCA          iPUAl1j… http… 2020-09-14 16:16:44
+ 2       702 UCI3RT5PGmdi1KVp9… eNCA          YUmIAd_… http… 2020-09-11 05:34:52
+ 3       313 UCMwDXpWEVQVw4ZF7… Stellenbosch… v8XfpOi… http… 2020-09-10 11:59:51
+ 4       384 UCsqKkYLOaJ9oBwq9… SOUTH AFRICA… lnLdo2k… http… 2020-09-07 11:08:43
+ 5       606 UC5G5Dy8-mmp27jo6… Umgosi Enter… XN6toca… http… 2020-09-08 12:45:36
+ 6       423 UCC1udUghY9dloGMu… The Tea World rh2Nz78… http… 2020-09-09 15:03:43
+ 7       452 UCaCcVtl9O3h5en4m… Celeb LaLa L… 1l5GZ0N… http… 2020-09-08 18:43:58
+ 8       276 UCAurTjb6Ewz21vjf… NOSIPHO NZAMA j4Y022C… http… 2021-06-22 10:18:51
+ 9       321 UCBlX1mnsIFZRqsyR… Zandile Mhla… gf2YNN6… http… 2020-09-07 18:50:42
+10       762 UClY87IoUANFZtswy… Beauty recip… AGJmRd4… http… 2022-11-26 09:08:54
+# ℹ 190 more rows
+# ℹ 25 more variables: published_at_sql <chr>, year <dbl>, month <dbl>,
+#   day <dbl>, video_title <chr>, video_description <chr>, tags <chr>,
+#   video_category_label <chr>, topic_categories <chr>, duration_sec <dbl>,
+#   definition <chr>, caption <lgl>, default_language <chr>,
+#   default_l_audio_language <chr>, thumbnail_maxres <chr>,
+#   licensed_content <dbl>, location_description <chr>, view_count <dbl>, …
 ```
 
 ``` r
@@ -447,18 +458,26 @@ videos[-c(7:131), ]   # Equivalent to head(videos)
 ```
 
 ``` output
-# A tibble: 6 × 14
-  key_ID village interview_date      no_membrs years_liv respondent_wall_type
-   <dbl> <chr>   <dttm>                  <dbl>     <dbl> <chr>               
-1      1 God     2016-11-17 00:00:00         3         4 muddaub             
-2      2 God     2016-11-17 00:00:00         7         9 muddaub             
-3      3 God     2016-11-17 00:00:00        10        15 burntbricks         
-4      4 God     2016-11-17 00:00:00         7         6 burntbricks         
-5      5 God     2016-11-17 00:00:00         7        40 burntbricks         
-6      6 God     2016-11-17 00:00:00         3         3 muddaub             
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 75 × 32
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      154       806 UCzvl9exW-o8IsySPU-ezgoQ TheKingzRSA        m4KitiL… http…
+ 8      159       496 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… QigpfXd… http…
+ 9      161       678 UCFnUvf-Lg1nIc5wvl9lx8zQ Mzansi Hotspot     cuXJVNI… http…
+10      164       181 UCITau47AeZDY9sO77TA3OUA ITV News           aqSmGuy… http…
+# ℹ 65 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
 `tibble`s can be subset by calling indices (as shown previously), but also by
@@ -520,6 +539,15 @@ n_rows <- nrow(videos)
 videos_last <- videos[n_rows, ]
 ## 3.
 videos_middle <- videos[median(1:n_rows), ]
+```
+
+``` error
+Error in `videos[median(1:n_rows), ]`:
+! Can't subset rows with `median(1:n_rows)`.
+✖ Can't convert from `i` <double> to <integer> due to loss of precision.
+```
+
+``` r
 ## 4.
 videos_head <- videos[-(7:n_rows), ]
 ```
@@ -566,18 +594,11 @@ Let's extract our `published_at` column and inspect the structure:
 
 ``` r
 dates <- videos$published_at
-```
-
-``` warning
-Warning: Unknown or uninitialised column: `published_at`.
-```
-
-``` r
 str(dates)
 ```
 
 ``` output
- NULL
+ POSIXct[1:200], format: "2020-09-14 16:16:44" "2020-09-11 05:34:52" "2020-09-10 11:59:51" ...
 ```
 
 When we imported the data in R, `read_csv()` recognized that this column
@@ -588,83 +609,32 @@ our data frame to store it:
 
 ``` r
 videos$day <- day(dates)
-```
-
-``` warning
-Warning: tz(): Don't know how to compute timezone for object of class NULL;
-returning "UTC".
-```
-
-``` error
-Error in `$<-`:
-! Assigned data `day(dates)` must be compatible with existing data.
-✖ Existing data has 131 rows.
-✖ Assigned data has 0 rows.
-ℹ Only vectors of size 1 are recycled.
-Caused by error in `vectbl_recycle_rhs_rows()`:
-! Can't recycle input of size 0 to size 131.
-```
-
-``` r
 videos$month <- month(dates)
-```
-
-``` warning
-Warning: tz(): Don't know how to compute timezone for object of class NULL;
-returning "UTC".
-```
-
-``` error
-Error in `$<-`:
-! Assigned data `month(dates)` must be compatible with existing data.
-✖ Existing data has 131 rows.
-✖ Assigned data has 0 rows.
-ℹ Only vectors of size 1 are recycled.
-Caused by error in `vectbl_recycle_rhs_rows()`:
-! Can't recycle input of size 0 to size 131.
-```
-
-``` r
 videos$year <- year(dates)
-```
-
-``` warning
-Warning: tz(): Don't know how to compute timezone for object of class NULL;
-returning "UTC".
-```
-
-``` error
-Error in `$<-`:
-! Assigned data `year(dates)` must be compatible with existing data.
-✖ Existing data has 131 rows.
-✖ Assigned data has 0 rows.
-ℹ Only vectors of size 1 are recycled.
-Caused by error in `vectbl_recycle_rhs_rows()`:
-! Can't recycle input of size 0 to size 131.
-```
-
-``` r
 videos
 ```
 
 ``` output
-# A tibble: 131 × 14
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1      1 God      2016-11-17 00:00:00         3         4 muddaub             
- 2      2 God      2016-11-17 00:00:00         7         9 muddaub             
- 3      3 God      2016-11-17 00:00:00        10        15 burntbricks         
- 4      4 God      2016-11-17 00:00:00         7         6 burntbricks         
- 5      5 God      2016-11-17 00:00:00         7        40 burntbricks         
- 6      6 God      2016-11-17 00:00:00         3         3 muddaub             
- 7      7 God      2016-11-17 00:00:00         6        38 muddaub             
- 8      8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 9      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
-10     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
-# ℹ 121 more rows
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 200 × 32
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <int>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
 Notice the three new columns at the end of our data frame.
