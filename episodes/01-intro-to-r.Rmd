@@ -261,8 +261,8 @@ length <- nchar("Tweebuffelsmeteenskootmorsdoodgeskietfontein")
 ```
 
 Here, the string `Tweebuffelsmeteenskootmorsdoodgeskietfontein` is given to the `nchar()` function, the `nchar()` function
-calculates the square root, and returns the value which is then assigned to
-the object `length`. This function is very simple, because it takes just one argument.
+counts the number of characters, and returns the value which is then assigned to
+the object `length`. This function has just one argument.
 
 The return 'value' of a function need not be numerical (like that of `nchar()`),
 and it also does not need to be a single item: it can be a set of things, or
