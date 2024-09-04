@@ -206,7 +206,7 @@ has been loaded, we can see the contents of the data frame by typing its name:
 `videos` in the console.
 
 ```{r, results="hold", purl=FALSE}
-videoss
+videos
 ## Try also
 ## view(videos)
 ## head(videos)
