@@ -90,7 +90,7 @@ In this case our first video is 1000 seconds in  duration.
 We set the duration by using `<-` or the assignment operator. It assigns values on the right to objects on
 the left. 
 
-So, after we execute `view_count <- 3`, the value of `view_count` is set to `3`. 
+So, after we execute `view_count <- 1000`, the value of `view_count` is set to `1000`. 
 
 The arrow can be read as 3 **goes into** `view_count`.  For historical reasons, you can also use `=`
 for assignments, but not in every context. Because of the
@@ -150,12 +150,12 @@ the object name:
 
 
 ``` r
-duration_sec <- 1    # doesn't print anything
-(duration_sec <- 1)  # putting parenthesis around the call prints the value of `area_hectares`
+duration_sec <- 100    # doesn't print anything
+(duration_sec <- 100)  # putting parenthesis around the call prints the value of `area_hectares`
 ```
 
 ``` output
-[1] 1
+[1] 100
 ```
 
 ``` r
@@ -163,7 +163,7 @@ duration_sec        # and so does typing the name of the object
 ```
 
 ``` output
-[1] 1
+[1] 100
 ```
 
 Now that R has a value for `duration_sec` in memory, we can do arithmetic with it. For
@@ -175,7 +175,7 @@ duration_sec / 60
 ```
 
 ``` output
-[1] 0.01666667
+[1] 1.666667
 ```
 
 We can also change an object's value by assigning it a new one:
@@ -379,6 +379,16 @@ pasting) first in your function call, and to specify the names of all optional
 arguments(like sep).  If you don't, someone reading your code might have to look up the
 definition of a function with unfamiliar arguments to understand what you're
 doing.
+
+
+``` r
+paste0("🚙","😊🕺","😳",collapse="")
+```
+
+``` output
+[1] "🚙😊🕺😳"
+```
+
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -856,7 +866,7 @@ Recall that you can use the `typeof()` function to find the type of your atomic 
 1. Using this vector of comments, create a new vector with the NAs removed.
 
 ```r
-comment_count<- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
+comment_count <- c(10000, 2, 19, 1, NA, 3, 1, 3, 2, 1999, 1, 89, 3, 1, NA, 1)
 ```
 
 2. Use the function `median()` to calculate the median of the `comment_count` vector.
