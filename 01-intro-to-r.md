@@ -85,11 +85,14 @@ assignment operator `<-`, and the value we want to give it:
 duration_sec <- 1000
 ```
 
-In this case only one person has viewed our first video.
+In this case our first video is 1000 seconds in  duration.
 
-`<-` is the assignment operator. It assigns values on the right to objects on
-the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can
-be read as 3 **goes into** `x`.  For historical reasons, you can also use `=`
+We set the duration by using `<-` or the assignment operator. It assigns values on the right to objects on
+the left. 
+
+So, after we execute `view_count <- 3`, the value of `view_count` is set to `3`. 
+
+The arrow can be read as 3 **goes into** `view_count`.  For historical reasons, you can also use `=`
 for assignments, but not in every context. Because of the
 [slight differences](https://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html)
 in syntax, it is good practice to always use `<-` for assignments. More
@@ -234,13 +237,13 @@ or include them after any code on the line.
 
 
 ``` r
-area_hectares <- 1.0			# land area in hectares
-area_acres <- area_hectares * 2.47	# convert to acres
-area_acres				# print land area in acres.
+duration_sec <- 250			# duration in seconds
+duration_min <- duration_sec /60	# convert to minutes
+duration_min				# print duration in minutes
 ```
 
 ``` output
-[1] 2.47
+[1] 4.166667
 ```
 
 RStudio makes it easy to comment or uncomment a paragraph: after selecting the
@@ -254,14 +257,12 @@ to select the whole line), then press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
 
 ## Exercise
 
-Create two variables `r_length` and `r_width` and assign them values. It should be noted that,
-because `length` is a built-in R function, R Studio might add "()" after you type `length` and
-if you leave the parentheses you will get unexpected results.
-This is why you might see other programmers abbreviate common words.
-Create a third variable `r_area` and give it a value based on the current values of `r_length`
-and `r_width`.
-Show that changing the values of either `r_length` and `r_width` does not affect the value of
-`r_area`.
+Create two variables `like_count` and `commment_count` and assign them values. 
+
+Create a third variable `ratio` and give it a value based on the current values of `like_count`
+and `comment_count`.
+Show that changing the values of either `like_count` and `comment_count` does not affect the value of
+`ratio`.
 
 :::::::::::::::  solution
 
@@ -269,26 +270,26 @@ Show that changing the values of either `r_length` and `r_width` does not affect
 
 
 ``` r
-r_length <- 2.5
-r_width <- 3.2
-r_area <- r_length * r_width
-r_area
+like_count <- 100
+comment_count <- 200
+ratio <- like_count/comment_count
+ratio
 ```
 
 ``` output
-[1] 8
+[1] 0.5
 ```
 
 ``` r
-# change the values of r_length and r_width
-r_length <- 7.0
-r_width <- 6.5
-# the value of r_area isn't changed
-r_area
+# change the values of like_count and comment_count
+like_count <- 1000
+comment_count <- 100
+# the value of ratio isn't changed
+ratio
 ```
 
 ``` output
-[1] 8
+[1] 0.5
 ```
 
 :::::::::::::::::::::::::
@@ -301,21 +302,22 @@ Functions are "canned scripts" that automate more complicated sets of commands
 including operations assignments, etc. Many functions are predefined, or can be
 made available by importing R *packages* (more on that later). A function
 usually gets one or more inputs called *arguments*. Functions often (but not
-always) return a *value*. A typical example would be the function `sqrt()`. The
-input (the argument) must be a number, and the return value (in fact, the
-output) is the square root of that number. Executing a function ('running it')
+always) return a *value*. A typical example would be the function `nchar()`, which 
+returns the number of individual characters in a word, sentence, or longer text. The
+input (the argument) must be a string (text), and the return value (in fact, the
+output) is the number of characters in the string. Executing a function ('running it')
 is called *calling* the function. An example of a function call is:
 
 
 ``` r
-b <- sqrt(a)
+length <- nchar("Tweebuffelsmeteenskootmorsdoodgeskietfontein")
 ```
 
-Here, the value of `a` is given to the `sqrt()` function, the `sqrt()` function
+Here, the string `Tweebuffelsmeteenskootmorsdoodgeskietfontein` is given to the `nchar()` function, the `nchar()` function
 calculates the square root, and returns the value which is then assigned to
-the object `b`. This function is very simple, because it takes just one argument.
+the object `length`. This function is very simple, because it takes just one argument.
 
-The return 'value' of a function need not be numerical (like that of `sqrt()`),
+The return 'value' of a function need not be numerical (like that of `nchar()`),
 and it also does not need to be a single item: it can be a set of things, or
 even a dataset. We'll see that when we read data files into R.
 
@@ -328,67 +330,51 @@ function operates, such as whether it ignores 'bad values', or what symbol to
 use in a plot.  However, if you want something specific, you can specify a value
 of your choice which will be used instead of the default.
 
-Let's try a function that can take multiple arguments: `round()`.
+Let's try a function that can take multiple arguments: `paste()`.
 
 
 ``` r
-round(3.14159)
+paste("🚙","😊🕺")
 ```
 
 ``` output
-[1] 3
+[1] "🚙 😊🕺"
 ```
 
-Here, we've called `round()` with just one argument, `3.14159`, and it has
-returned the value `3`.  That's because the default is to round to the nearest
-whole number. If we want more digits we can see how to do that by getting
-information about the `round` function.  We can use `args(round)` or look at the
-help for this function using `?round`.
+Here, we've called `paste()` with two arguments, "🚙" and "😊🕺", and it returns the string "🚙 😊🕺".
+It has concatenated the first argument (the car) with the second argument (the smiley and dancing emoji).
+We can use `args(paste)` or look at the help for this function using `?paste`.
 
 
 ``` r
-args(round)
+args(paste)
 ```
 
 ``` output
-function (x, digits = 0, ...) 
+function (..., sep = " ", collapse = NULL, recycle0 = FALSE) 
 NULL
 ```
 
 
 ``` r
-?round
+?paste
 ```
 
-We see that if we want a different number of digits, we can
-type `digits=2` or however many we want.
+We see that if we want to separate the terms with the | symbol, we can
+type `sep=|` or any other separator.
+
+
+``` r
+paste("🚙","😊🕺","😳",sep="|")
+```
+
+``` output
+[1] "🚙|😊🕺|😳"
+```
 
 
 ``` r
 round(3.14159, digits = 2)
-```
-
-``` output
-[1] 3.14
-```
-
-If you provide the arguments in the exact same order as they are defined you
-don't have to name them:
-
-
-``` r
-round(3.14159, 2)
-```
-
-``` output
-[1] 3.14
-```
-
-And if you do name the arguments, you can switch their order:
-
-
-``` r
-round(digits = 2, x = 3.14159)
 ```
 
 ``` output
@@ -405,9 +391,9 @@ doing.
 
 ## Exercise
 
-Type in `?round` at the console and then look at the output in the Help pane.
-What other functions exist that are similar to `round`?
-How do you use the `digits` parameter in the round function?
+Type in `?grepl` at the console and then look at the output in the Help pane.
+What other functions exist that are similar to `grepl`?
+How do you use the `ignore.case` parameter in the grepl function?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -419,35 +405,36 @@ A vector is the most common and basic data type in R, and is pretty much
 the workhorse of R. A vector is composed by a series of values, which can be
 either numbers or characters. We can assign a series of values to a vector using
 the `c()` function. For example we can create a vector of the number of household
-members for the households we've interviewed and assign
-it to a new object `hh_members`:
+views of the videos we're studying and assign
+it to a new object `view_count`:
 
 
 ``` r
-hh_members <- c(3, 7, 10, 6)
-hh_members
+view_count <- c(120987, 789, 1, 2)
+view_count
 ```
 
 ``` output
-[1]  3  7 10  6
+[1] 120987    789      1      2
 ```
 
 A vector can also contain characters. For example, we can have
-a vector of the building material used to construct our
-interview respondents' walls (`respondent_wall_type`):
+a vector of the categories content creators have used to classify
+ their YouTube videos
+ (`video_category_label`):
 
 
 ``` r
-respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks")
-respondent_wall_type
+video_category_label <- c("politics", "society", "business")
+video_category_label
 ```
 
 ``` output
-[1] "muddaub"     "burntbricks" "sunbricks"  
+[1] "politics" "society"  "business"
 ```
 
-The quotes around "muddaub", etc. are essential here. Without the quotes R
-will assume there are objects called `muddaub`, `burntbricks` and `sunbricks`. As these objects
+The quotes around "politics", etc. are essential here. Without the quotes R
+will assume there are objects called `politics`, `society` and `business`. As these objects
 don't exist in R's memory, there will be an error message.
 
 There are many functions that allow you to inspect the content of a
@@ -458,16 +445,16 @@ vector. `length()` tells you how many elements are in a particular vector:
 length(hh_members)
 ```
 
-``` output
-[1] 4
+``` error
+Error in eval(expr, envir, enclos): object 'hh_members' not found
 ```
 
 ``` r
 length(respondent_wall_type)
 ```
 
-``` output
-[1] 3
+``` error
+Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found
 ```
 
 An important feature of a vector, is that all of the elements are the same type of data.
@@ -478,16 +465,16 @@ The function `typeof()` indicates the type of an object:
 typeof(hh_members)
 ```
 
-``` output
-[1] "double"
+``` error
+Error in eval(expr, envir, enclos): object 'hh_members' not found
 ```
 
 ``` r
 typeof(respondent_wall_type)
 ```
 
-``` output
-[1] "character"
+``` error
+Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found
 ```
 
 The function `str()` provides an overview of the structure of an object and its
@@ -499,16 +486,16 @@ objects:
 str(hh_members)
 ```
 
-``` output
- num [1:4] 3 7 10 6
+``` error
+Error in eval(expr, envir, enclos): object 'hh_members' not found
 ```
 
 ``` r
 str(respondent_wall_type)
 ```
 
-``` output
- chr [1:3] "muddaub" "burntbricks" "sunbricks"
+``` error
+Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found
 ```
 
 You can use the `c()` function to add other elements to your vector:
