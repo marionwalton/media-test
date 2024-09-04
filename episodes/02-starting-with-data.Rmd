@@ -170,7 +170,7 @@ library(tidyverse)
 library(here)
 
 videos <- read_csv(
-  here("data", "SAFI_clean.csv"), 
+  here("data", "youtube-27082024-open-refine-200-na.csv"), 
   na = "na")
 ```
 
