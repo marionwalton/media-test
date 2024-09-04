@@ -57,9 +57,8 @@ functions `read_csv()` or `read_table()`; in other words, when importing
 spreadsheets from your hard drive (or the web). We will now demonstrate how to
 import tabular data using `read_csv()`.
 
-## Presentation of the SAFI Data
+## Presentation of the Clicks YouTube data
 
-Sample data
 We will be working with a dataset of 200 Youtube posts. Here is some background to the dataset.
 
 An initial dataset of 314 posts were returned by the YouTube API in response to the following query: "Query: clicks south africa* hair (ad OR advertisement) -click" covering videos posted during the period 2020 - 2023
