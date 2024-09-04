@@ -258,10 +258,11 @@ is called *calling* the function. An example of a function call is:
 
 ```{r, eval=FALSE, purl=FALSE}
 length <- nchar("Tweebuffelsmeteenskootmorsdoodgeskietfontein")
+length
 ```
 
 Here, the string `Tweebuffelsmeteenskootmorsdoodgeskietfontein` is given to the `nchar()` function, the `nchar()` function
-counts the number of characters, and returns the value which is then assigned to
+counts the number of characters, and returns the value "44" which is then assigned to
 the object `length`. This function has just one argument.
 
 The return 'value' of a function need not be numerical (like that of `nchar()`),
