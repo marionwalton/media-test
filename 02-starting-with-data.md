@@ -204,17 +204,33 @@ has been loaded, we can see the contents of the data frame by typing its name:
 
 
 ``` r
-videoss
-```
-
-``` error
-Error in eval(expr, envir, enclos): object 'videoss' not found
-```
-
-``` r
+videos
 ## Try also
 ## view(videos)
 ## head(videos)
+```
+
+``` output
+# A tibble: 200 × 32
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
