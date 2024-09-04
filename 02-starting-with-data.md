@@ -157,8 +157,8 @@ Image credit: <a href="https://github.com/allisonhorst/stats-illustrations">Alli
 Before we can use the `read_csv()` and `here()` functions, we need to load the
 tidyverse and here packages.
 
-Also, if you recall, the missing data is encoded as "NULL" in the dataset.
-We'll tell it to the function, so R will automatically convert all the "NULL"
+Also, if you recall, the missing data is encoded as "na" in the dataset.
+We'll tell it to the function, so R will automatically convert all the "na"
 entries in the dataset into `NA`.
 
 
@@ -166,21 +166,21 @@ entries in the dataset into `NA`.
 library(tidyverse)
 library(here)
 
-interviews <- read_csv(
+videos <- read_csv(
   here("data", "SAFI_clean.csv"), 
-  na = "NULL")
+  na = "na")
 ```
 
 In the above code, we notice the `here()` function takes folder and file names
-as inputs (e.g., `"data"`, `"SAFI_clean.csv"`), each enclosed in quotations
+as inputs (e.g., `"data"`, `"youtube-27082024-open-refine-200-na.csv"`), each enclosed in quotations
 (`""`) and separated by a comma. The `here()` will accept as many names as are
 necessary to navigate to a particular file
-(e.g., `here("analysis", "data", "surveys", "clean", "SAFI_clean.csv)`).
+(e.g., `here("analysis", "data", "surveys", "clean", "youtube-27082024-open-refine-200-na.csv")`).
 
 The `here()` function can accept the folder and file names in an alternate format,
 using a slash ("/") rather than commas to separate the names. The two methods are
-equivalent, so that `here("data", "SAFI_clean.csv")` and
-`here("data/SAFI_clean.csv")` produce the same result. (The slash is used on all
+equivalent, so that `here("data", "youtube-27082024-open-refine-200-na.csv")` and
+`here("data/youtube-27082024-open-refine-200-na.csv")` produce the same result. (The slash is used on all
 operating systems; backslashes are not used.)
 
 If you were to type in the code above, it is likely that the `read.csv()`
@@ -200,34 +200,21 @@ any data because, as you might recall, assignments (`<-`) don't display
 anything. (Note, however, that `read_csv` may show informational
 text about the data frame that is created.) If we want to check that our data
 has been loaded, we can see the contents of the data frame by typing its name:
-`interviews` in the console.
+`videos` in the console.
 
 
 ``` r
-interviews
-## Try also
-## view(interviews)
-## head(interviews)
+videoss
 ```
 
-``` output
-# A tibble: 131 × 14
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1      1 God      2016-11-17 00:00:00         3         4 muddaub             
- 2      2 God      2016-11-17 00:00:00         7         9 muddaub             
- 3      3 God      2016-11-17 00:00:00        10        15 burntbricks         
- 4      4 God      2016-11-17 00:00:00         7         6 burntbricks         
- 5      5 God      2016-11-17 00:00:00         7        40 burntbricks         
- 6      6 God      2016-11-17 00:00:00         3         3 muddaub             
- 7      7 God      2016-11-17 00:00:00         6        38 muddaub             
- 8      8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 9      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
-10     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
-# ℹ 121 more rows
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+``` error
+Error in eval(expr, envir, enclos): object 'videoss' not found
+```
+
+``` r
+## Try also
+## view(videos)
+## head(videos)
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -253,7 +240,7 @@ the data is read using `read_csv()`, it is stored in an object of class
 
 
 ``` r
-class(interviews)
+class(videos)
 ```
 
 ``` output
@@ -263,12 +250,12 @@ class(interviews)
 As a `tibble`, the type of data included in each column is listed in an
 abbreviated fashion below the column names. For instance, here `key_ID` is a
 column of floating point numbers (abbreviated `<dbl>` for the word 'double'),
-`village` is a column of characters (`<chr>`) and the `interview_date` is a
+`channel_title` is a column of characters (`<chr>`) and the `published_at` is a
 column in the "date and time" format (`<dttm>`).
 
 ## Inspecting data frames
 
-When calling a `tbl_df` object (like `interviews` here), there is already a lot
+When calling a `tbl_df` object (like `videos` here), there is already a lot
 of information about our data frame being displayed such as the number of rows,
 the number of columns, the names of the columns, and as we just saw the class of
 data stored in each column. However, there are functions to extract this
@@ -277,28 +264,28 @@ functions. Let's try them out!
 
 Size:
 
-- `dim(interviews)` - returns a vector with the number of rows as the first
+- `dim(videos)` - returns a vector with the number of rows as the first
   element, and the number of columns as the second element (the **dim**ensions of
   the object)
-- `nrow(interviews)` - returns the number of rows
-- `ncol(interviews)` - returns the number of columns
+- `nrow(videos)` - returns the number of rows
+- `ncol(videos)` - returns the number of columns
 
 Content:
 
-- `head(interviews)` - shows the first 6 rows
-- `tail(interviews)` - shows the last 6 rows
+- `head(videos)` - shows the first 6 rows
+- `tail(videos)` - shows the last 6 rows
 
 Names:
 
-- `names(interviews)` - returns the column names (synonym of `colnames()` for
+- `names(videos)` - returns the column names (synonym of `colnames()` for
   `data.frame` objects)
 
 Summary:
 
-- `str(interviews)` - structure of the object and information about the class,
+- `str(videos)` - structure of the object and information about the class,
   length and content of each column
-- `summary(interviews)` - summary statistics for each column
-- `glimpse(interviews)` - returns the number of columns and rows of the tibble,
+- `summary(videos)` - summary statistics for each column
+- `glimpse(videos)` - returns the number of columns and rows of the tibble,
   the names and class of each column, and previews as many values will fit on the
   screen. Unlike the other inspecting functions listed above, `glimpse()` is not a
   "base R" function so you need to have the `dplyr` or `tibble` packages loaded to
@@ -309,7 +296,7 @@ objects besides data frames or tibbles.
 
 ## Subsetting data frames
 
-Our `interviews` data frame has rows and columns (it has 2 dimensions).
+Our `videos` data frame has rows and columns (it has 2 dimensions).
 In practice, we may not need the entire data frame; for instance, we may only
 be interested in a subset of the observations (the rows) or a particular set
 of variables (the columns). If we want to
@@ -331,7 +318,7 @@ different classes. This is covered in the Software Carpentry lesson
 
 ``` r
 ## first element in the first column of the tibble
-interviews[1, 1]
+videos[1, 1]
 ```
 
 ``` output
@@ -343,7 +330,7 @@ interviews[1, 1]
 
 ``` r
 ## first element in the 6th column of the tibble 
-interviews[1, 6]
+videos[1, 6]
 ```
 
 ``` output
@@ -355,7 +342,7 @@ interviews[1, 6]
 
 ``` r
 ## first column of the tibble (as a vector)
-interviews[[1]]
+videos[[1]]
 ```
 
 ``` output
@@ -371,7 +358,7 @@ interviews[[1]]
 
 ``` r
 ## first column of the tibble
-interviews[1]
+videos[1]
 ```
 
 ``` output
@@ -393,7 +380,7 @@ interviews[1]
 
 ``` r
 ## first three elements in the 7th column of the tibble
-interviews[1:3, 7]
+videos[1:3, 7]
 ```
 
 ``` output
@@ -407,7 +394,7 @@ interviews[1:3, 7]
 
 ``` r
 ## the 3rd row of the tibble
-interviews[3, ]
+videos[3, ]
 ```
 
 ``` output
@@ -421,8 +408,8 @@ interviews[3, ]
 ```
 
 ``` r
-## equivalent to head_interviews <- head(interviews)
-head_interviews <- interviews[1:6, ]
+## equivalent to head_videos <- head(videos)
+head_videos <- videos[1:6, ]
 ```
 
 `:` is a special function that creates numeric vectors of integers in increasing
@@ -432,7 +419,7 @@ You can also exclude certain indices of a data frame using the "`-`" sign:
 
 
 ``` r
-interviews[, -1]          # The whole tibble, except the first column
+videos[, -1]          # The whole tibble, except the first column
 ```
 
 ``` output
@@ -456,7 +443,7 @@ interviews[, -1]          # The whole tibble, except the first column
 ```
 
 ``` r
-interviews[-c(7:131), ]   # Equivalent to head(interviews)
+videos[-c(7:131), ]   # Equivalent to head(videos)
 ```
 
 ``` output
@@ -479,13 +466,13 @@ calling their column names directly:
 
 
 ``` r
-interviews["village"]       # Result is a tibble
+videos["channel_title"]       # Result is a tibble
 
-interviews[, "village"]     # Result is a tibble
+videos[, "channel_title"]     # Result is a tibble
 
-interviews[["village"]]     # Result is a vector
+videos[["channel_title"]]     # Result is a vector
 
-interviews$village          # Result is a vector
+videos$channel_title          # Result is a vector
 ```
 
 In RStudio, you can use the autocompletion feature to get the full and correct
@@ -495,10 +482,10 @@ names of the columns.
 
 ## Exercise
 
-1. Create a tibble (`interviews_100`) containing only the data in
-  row 100 of the `interviews` dataset.
+1. Create a tibble (`videos_100`) containing only the data in
+  row 100 of the `videos` dataset.
 
-Now, continue using `interviews` for each of the following activities: 
+Now, continue using `videos` for each of the following activities: 
 
 2. Notice how `nrow()` gave you the number of rows in the tibble?
 
@@ -506,18 +493,18 @@ Now, continue using `interviews` for each of the following activities:
 - Compare that with what you see as the last row using `tail()` to make
   sure it's meeting expectations.
 - Pull out that last row using `nrow()` instead of the row number.
-- Create a new tibble (`interviews_last`) from that last row.
+- Create a new tibble (`videos_last`) from that last row.
 
-3. Using the number of rows in the interviews dataset that you found in
+3. Using the number of rows in the videos dataset that you found in
   question 2, extract the row that is in the middle of the dataset. Store
-  the content of this middle row in an object named `interviews_middle`.
+  the content of this middle row in an object named `videos_middle`.
   (hint: This dataset has an odd number of rows, so finding the middle is a
   bit trickier than dividing n\_rows by 2. Use the median( ) function and what
   you've learned about sequences in R to extract the middle row!
 
 4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
-  `head(interviews)`, keeping just the first through 6th rows of the
-  interviews dataset.
+  `head(videos)`, keeping just the first through 6th rows of the
+  videos dataset.
 
 :::::::::::::::  solution
 
@@ -526,343 +513,21 @@ Now, continue using `interviews` for each of the following activities:
 
 ``` r
 ## 1.
-interviews_100 <- interviews[100, ]
+videos_100 <- videos[100, ]
 ## 2.
 # Saving `n_rows` to improve readability and reduce duplication
-n_rows <- nrow(interviews)
-interviews_last <- interviews[n_rows, ]
+n_rows <- nrow(videos)
+videos_last <- videos[n_rows, ]
 ## 3.
-interviews_middle <- interviews[median(1:n_rows), ]
+videos_middle <- videos[median(1:n_rows), ]
 ## 4.
-interviews_head <- interviews[-(7:n_rows), ]
+videos_head <- videos[-(7:n_rows), ]
 ```
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Factors
-
-R has a special data class, called factor, to deal with categorical data that
-you may encounter when creating plots or doing statistical analyses. Factors are
-very useful and actually contribute to making R particularly well suited to
-working with data. So we are going to spend a little time introducing them.
-
-Factors represent categorical data. They are stored as integers associated with
-labels and they can be ordered (ordinal) or unordered (nominal). Factors
-create a structured  relation between the different levels (values) of a
-categorical variable, such as days of the week or responses to a question in
-a survey. This can make it easier to see how one element relates to the
-other elements in a column. While factors look (and often behave) like
-character vectors, they are actually treated as integer vectors by `R`. So
-you need to be very careful when treating them as strings.
-
-Once created, factors can only contain a pre-defined set of values, known as
-*levels*. By default, R always sorts levels in alphabetical order. For
-instance, if you have a factor with 2 levels:
-
-
-``` r
-respondent_floor_type <- factor(c("earth", "cement", "cement", "earth"))
-```
-
-R will assign `1` to the level `"cement"` and `2` to the level `"earth"`
-(because `c` comes before `e`, even though the first element in this vector is
-`"earth"`). You can see this by using the function `levels()` and you can find
-the number of levels using `nlevels()`:
-
-
-``` r
-levels(respondent_floor_type)
-```
-
-``` output
-[1] "cement" "earth" 
-```
-
-``` r
-nlevels(respondent_floor_type)
-```
-
-``` output
-[1] 2
-```
-
-Sometimes, the order of the factors does not matter. Other times you might want
-to specify the order because it is meaningful (e.g., "low", "medium", "high").
-It may improve your visualization, or it may be required by a particular type of
-analysis. Here, one way to reorder our levels in the `respondent_floor_type`
-vector would be:
-
-
-``` r
-respondent_floor_type # current order
-```
-
-``` output
-[1] earth  cement cement earth 
-Levels: cement earth
-```
-
-``` r
-respondent_floor_type <- factor(respondent_floor_type, 
-                                levels = c("earth", "cement"))
-
-respondent_floor_type # after re-ordering
-```
-
-``` output
-[1] earth  cement cement earth 
-Levels: earth cement
-```
-
-In R's memory, these factors are represented by integers (1, 2), but are more
-informative than integers because factors are self describing: `"cement"`,
-`"earth"` is more descriptive than `1`, and `2`. Which one is "earth"? You
-wouldn't be able to tell just from the integer data. Factors, on the other hand,
-have this information built in. It is particularly helpful when there are many
-levels. It also makes renaming levels easier. Let's say we made a mistake and
-need to recode "cement" to "brick". We can do this using the `fct_recode()`
-function from the **`forcats`** package (included in the **`tidyverse`**) which
-provides some extra tools to work with factors.
-
-
-``` r
-levels(respondent_floor_type)
-```
-
-``` output
-[1] "earth"  "cement"
-```
-
-``` r
-respondent_floor_type <- fct_recode(respondent_floor_type, brick = "cement")
-
-## as an alternative, we could change the "cement" level directly using the
-## levels() function, but we have to remember that "cement" is the second level
-# levels(respondent_floor_type)[2] <- "brick"
-
-levels(respondent_floor_type)
-```
-
-``` output
-[1] "earth" "brick"
-```
-
-``` r
-respondent_floor_type
-```
-
-``` output
-[1] earth brick brick earth
-Levels: earth brick
-```
-
-So far, your factor is unordered, like a nominal variable. R does not know the
-difference between a nominal and an ordinal variable. You make your factor an
-ordered factor by using the `ordered=TRUE` option inside your factor function.
-Note how the reported levels changed from the unordered factor above to the
-ordered version below. Ordered levels use the less than sign `<` to denote
-level ranking.
-
-
-``` r
-respondent_floor_type_ordered <- factor(respondent_floor_type, 
-                                        ordered = TRUE)
-
-respondent_floor_type_ordered # after setting as ordered factor
-```
-
-``` output
-[1] earth brick brick earth
-Levels: earth < brick
-```
-
-### Converting factors
-
-If you need to convert a factor to a character vector, you use
-`as.character(x)`.
-
-
-``` r
-as.character(respondent_floor_type)
-```
-
-``` output
-[1] "earth" "brick" "brick" "earth"
-```
-
-Converting factors where the levels appear as numbers (such as concentration
-levels, or years) to a numeric vector is a little trickier. The `as.numeric()`
-function returns the index values of the factor, not its levels, so it will
-result in an entirely new (and unwanted in this case) set of numbers.
-One method to avoid this is to convert factors to characters, and then to
-numbers. Another method is to use the `levels()` function. Compare:
-
-
-``` r
-year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
-
-as.numeric(year_fct)                     # Wrong! And there is no warning...
-```
-
-``` output
-[1] 3 2 1 4 3
-```
-
-``` r
-as.numeric(as.character(year_fct))       # Works...
-```
-
-``` output
-[1] 1990 1983 1977 1998 1990
-```
-
-``` r
-as.numeric(levels(year_fct))[year_fct]   # The recommended way.
-```
-
-``` output
-[1] 1990 1983 1977 1998 1990
-```
-
-Notice that in the recommended `levels()` approach, three important steps occur:
-
-- We obtain all the factor levels using `levels(year_fct)`
-- We convert these levels to numeric values using `as.numeric(levels(year_fct))`
-- We then access these numeric values using the underlying integers of the
-  vector `year_fct` inside the square brackets
-
-### Renaming factors
-
-When your data is stored as a factor, you can use the `plot()` function to get a
-quick glance at the number of observations represented by each factor level.
-Let's extract the `memb_assoc` column from our data frame, convert it into a
-factor, and use it to look at the number of interview respondents who were or
-were not members of an irrigation association:
-
-
-``` r
-## create a vector from the data frame column "memb_assoc"
-memb_assoc <- interviews$memb_assoc
-
-## convert it into a factor
-memb_assoc <- as.factor(memb_assoc)
-
-## let's see what it looks like
-memb_assoc
-```
-
-``` output
-  [1] <NA> yes  <NA> <NA> <NA> <NA> no   yes  no   no   <NA> yes  no   <NA> yes 
- [16] <NA> <NA> <NA> <NA> <NA> no   <NA> <NA> no   no   no   <NA> no   yes  <NA>
- [31] <NA> yes  no   yes  yes  yes  <NA> yes  <NA> yes  <NA> no   no   <NA> no  
- [46] no   yes  <NA> <NA> yes  <NA> no   yes  no   <NA> yes  no   no   <NA> no  
- [61] yes  <NA> <NA> <NA> no   yes  no   no   no   no   yes  <NA> no   yes  <NA>
- [76] <NA> yes  no   no   yes  no   no   yes  no   yes  no   no   <NA> yes  yes 
- [91] yes  yes  yes  no   no   no   no   yes  no   no   yes  yes  no   <NA> no  
-[106] no   <NA> no   no   <NA> no   <NA> <NA> no   no   no   no   yes  no   no  
-[121] no   no   no   no   no   no   no   no   no   yes  <NA>
-Levels: no yes
-```
-
-``` r
-## bar plot of the number of interview respondents who were
-## members of irrigation association:
-plot(memb_assoc)
-```
-
-<img src="fig/02-starting-with-data-rendered-factor-plot-default-order-1.png" alt="Yes/no bar graph showing number of individuals who are members of irrigation association" style="display: block; margin: auto;" />
-
-Looking at the plot compared to the output of the vector, we can see that in
-addition to "no"s and "yes"s, there are some respondents for whom the
-information about whether they were part of an irrigation association hasn't
-been recorded, and encoded as missing data. These respondents do not appear on the plot.
-Let's encode them differently so they can be counted and visualized in our plot.
-
-
-``` r
-## Let's recreate the vector from the data frame column "memb_assoc"
-memb_assoc <- interviews$memb_assoc
-
-## replace the missing data with "undetermined"
-memb_assoc[is.na(memb_assoc)] <- "undetermined"
-
-## convert it into a factor
-memb_assoc <- as.factor(memb_assoc)
-
-## let's see what it looks like
-memb_assoc
-```
-
-``` output
-  [1] undetermined yes          undetermined undetermined undetermined
-  [6] undetermined no           yes          no           no          
- [11] undetermined yes          no           undetermined yes         
- [16] undetermined undetermined undetermined undetermined undetermined
- [21] no           undetermined undetermined no           no          
- [26] no           undetermined no           yes          undetermined
- [31] undetermined yes          no           yes          yes         
- [36] yes          undetermined yes          undetermined yes         
- [41] undetermined no           no           undetermined no          
- [46] no           yes          undetermined undetermined yes         
- [51] undetermined no           yes          no           undetermined
- [56] yes          no           no           undetermined no          
- [61] yes          undetermined undetermined undetermined no          
- [66] yes          no           no           no           no          
- [71] yes          undetermined no           yes          undetermined
- [76] undetermined yes          no           no           yes         
- [81] no           no           yes          no           yes         
- [86] no           no           undetermined yes          yes         
- [91] yes          yes          yes          no           no          
- [96] no           no           yes          no           no          
-[101] yes          yes          no           undetermined no          
-[106] no           undetermined no           no           undetermined
-[111] no           undetermined undetermined no           no          
-[116] no           no           yes          no           no          
-[121] no           no           no           no           no          
-[126] no           no           no           no           yes         
-[131] undetermined
-Levels: no undetermined yes
-```
-
-``` r
-## bar plot of the number of interview respondents who were
-## members of irrigation association:
-plot(memb_assoc)
-```
-
-<img src="fig/02-starting-with-data-rendered-factor-plot-reorder-1.png" alt="Bar plot of association membership, showing missing responses." style="display: block; margin: auto;" />
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise
-
-- Rename the levels of the factor to have the first letter in uppercase:
-  "No","Undetermined", and "Yes".
-
-- Now that we have renamed the factor level to "Undetermined", can you
-  recreate the barplot such that "Undetermined" is last (after "Yes")?
-
-:::::::::::::::  solution
-
-## Solution
-
-
-``` r
-## Rename levels.
-memb_assoc <- fct_recode(memb_assoc, No = "no",
-                         Undetermined = "undetermined", Yes = "yes")
-## Reorder levels. Note we need to use the new level names.
-memb_assoc <- factor(memb_assoc, levels = c("No", "Yes", "Undetermined"))
-plot(memb_assoc)
-```
-
-<img src="fig/02-starting-with-data-rendered-factor-plot-exercise-1.png" alt="bar graph showing number of individuals who are members of irrigation association, including undetermined option" style="display: block; margin: auto;" />
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Formatting Dates
 
@@ -871,13 +536,13 @@ converting date and time information into a variable that is appropriate and
 usable during analyses. A best
 practice for dealing with date data is to ensure that each component of your
 date is available as a separate variable. In our dataset, we have a
-column `interview_date` which contains information about the
+column `published_at` which contains information about the
 year, month, and day that the interview was conducted. Let's
 convert those dates into three separate columns.
 
 
 ``` r
-str(interviews)
+str(videos)
 ```
 
 We are going to use the package **`lubridate`**, , which is included in the **`tidyverse`** installation and should be loaded by default. 
@@ -896,16 +561,23 @@ being a date and can be manipulated as such. The argument that the function
 requires is flexible, but, as a best practice, is a character vector formatted
 as "YYYY-MM-DD".
 
-Let's extract our `interview_date` column and inspect the structure:
+Let's extract our `published_at` column and inspect the structure:
 
 
 ``` r
-dates <- interviews$interview_date
+dates <- videos$published_at
+```
+
+``` warning
+Warning: Unknown or uninitialised column: `published_at`.
+```
+
+``` r
 str(dates)
 ```
 
 ``` output
- POSIXct[1:131], format: "2016-11-17" "2016-11-17" "2016-11-17" "2016-11-17" "2016-11-17" ...
+ NULL
 ```
 
 When we imported the data in R, `read_csv()` recognized that this column
@@ -915,14 +587,68 @@ our data frame to store it:
 
 
 ``` r
-interviews$day <- day(dates)
-interviews$month <- month(dates)
-interviews$year <- year(dates)
-interviews
+videos$day <- day(dates)
+```
+
+``` warning
+Warning: tz(): Don't know how to compute timezone for object of class NULL;
+returning "UTC".
+```
+
+``` error
+Error in `$<-`:
+! Assigned data `day(dates)` must be compatible with existing data.
+✖ Existing data has 131 rows.
+✖ Assigned data has 0 rows.
+ℹ Only vectors of size 1 are recycled.
+Caused by error in `vectbl_recycle_rhs_rows()`:
+! Can't recycle input of size 0 to size 131.
+```
+
+``` r
+videos$month <- month(dates)
+```
+
+``` warning
+Warning: tz(): Don't know how to compute timezone for object of class NULL;
+returning "UTC".
+```
+
+``` error
+Error in `$<-`:
+! Assigned data `month(dates)` must be compatible with existing data.
+✖ Existing data has 131 rows.
+✖ Assigned data has 0 rows.
+ℹ Only vectors of size 1 are recycled.
+Caused by error in `vectbl_recycle_rhs_rows()`:
+! Can't recycle input of size 0 to size 131.
+```
+
+``` r
+videos$year <- year(dates)
+```
+
+``` warning
+Warning: tz(): Don't know how to compute timezone for object of class NULL;
+returning "UTC".
+```
+
+``` error
+Error in `$<-`:
+! Assigned data `year(dates)` must be compatible with existing data.
+✖ Existing data has 131 rows.
+✖ Assigned data has 0 rows.
+ℹ Only vectors of size 1 are recycled.
+Caused by error in `vectbl_recycle_rhs_rows()`:
+! Can't recycle input of size 0 to size 131.
+```
+
+``` r
+videos
 ```
 
 ``` output
-# A tibble: 131 × 17
+# A tibble: 131 × 14
    key_ID village  interview_date      no_membrs years_liv respondent_wall_type
     <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
  1      1 God      2016-11-17 00:00:00         3         4 muddaub             
@@ -936,14 +662,14 @@ interviews
  9      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
 10     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
 # ℹ 121 more rows
-# ℹ 11 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
+# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
 #   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>, day <int>, month <dbl>, year <dbl>
+#   instanceID <chr>
 ```
 
 Notice the three new columns at the end of our data frame.
 
-In our example above, the `interview_date` column was read in correctly as a
+In our example above, the `published_at` column was read in correctly as a
 `Date` variable but generally that is not the case. Date columns are often read
 in as `character` variables and one can use the `as_date()` function to convert
 them to the appropriate `Date/POSIXct`format.
