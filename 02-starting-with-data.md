@@ -754,7 +754,6 @@ mdy(char_dates)
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Use read\_csv to read tabular data in R.
-- Use factors to represent categorical data in R.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
