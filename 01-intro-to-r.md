@@ -860,7 +860,7 @@ comment_count<- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
 
 2. Use the function `median()` to calculate the median of the `comment_count` vector.
 
-3. Use R to figure out how many households in the set use more than 2 rooms for sleeping.
+3. Use R to figure out how many videos in the set received more than two comments.
 
 :::::::::::::::  solution
 
