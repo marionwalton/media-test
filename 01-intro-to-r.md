@@ -373,17 +373,9 @@ paste("🚙","😊🕺","😳",sep="|")
 ```
 
 
-``` r
-round(3.14159, digits = 2)
-```
-
-``` output
-[1] 3.14
-```
-
-It's good practice to put the non-optional arguments (like the number you're
-rounding) first in your function call, and to specify the names of all optional
-arguments.  If you don't, someone reading your code might have to look up the
+It's good practice to put the non-optional arguments (like the strings you're
+pasting) first in your function call, and to specify the names of all optional
+arguments(like sep).  If you don't, someone reading your code might have to look up the
 definition of a function with unfamiliar arguments to understand what you're
 doing.
 
