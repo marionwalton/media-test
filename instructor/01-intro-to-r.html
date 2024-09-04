@@ -367,7 +367,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <ul><li>The main goal is to introduce users to the various objects in R,
 from atomic types to creating your own objects.</li>
@@ -614,7 +614,7 @@ values of other objects.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The value of <code>duration_min</code> is still 10 because you have
 not re-run the line <code>duration_min &lt;- duration_sec/60</code>
@@ -675,7 +675,7 @@ the value of <code>ratio</code>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -875,23 +875,23 @@ particular vector:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">length</span><span class="op">(</span><span class="va">hh_members</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">length</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'hh_members' not found</code></pre>
+<pre class="output" tabindex="0"><code>[1] 4</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">length</span><span class="op">(</span><span class="va">respondent_wall_type</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">length</span><span class="op">(</span><span class="va">video_category_label</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found</code></pre>
+<pre class="output" tabindex="0"><code>[1] 3</code></pre>
 </div>
 <p>An important feature of a vector, is that all of the elements are the
 same type of data. The function <code>typeof()</code> indicates the type
@@ -900,23 +900,23 @@ of an object:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">typeof</span><span class="op">(</span><span class="va">hh_members</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">typeof</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'hh_members' not found</code></pre>
+<pre class="output" tabindex="0"><code>[1] "double"</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">typeof</span><span class="op">(</span><span class="va">respondent_wall_type</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">typeof</span><span class="op">(</span><span class="va">video_category_label</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found</code></pre>
+<pre class="output" tabindex="0"><code>[1] "character"</code></pre>
 </div>
 <p>The function <code>str()</code> provides an overview of the structure
 of an object and its elements. It is a useful function when working with
@@ -925,23 +925,23 @@ large and complex objects:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">str</span><span class="op">(</span><span class="va">hh_members</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">str</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'hh_members' not found</code></pre>
+<pre class="output" tabindex="0"><code> num [1:4] 120987 789 1 2</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb46">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">str</span><span class="op">(</span><span class="va">respondent_wall_type</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">str</span><span class="op">(</span><span class="va">video_category_label</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'respondent_wall_type' not found</code></pre>
+<pre class="output" tabindex="0"><code> chr [1:3] "politics" "society" "business"</code></pre>
 </div>
 <p>You can use the <code>c()</code> function to add other elements to
 your vector:</p>
@@ -949,21 +949,22 @@ your vector:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">possessions</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"bicycle"</span>, <span class="st">"radio"</span>, <span class="st">"television"</span><span class="op">)</span></span>
-<span><span class="va">possessions</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="va">possessions</span>, <span class="st">"mobile_phone"</span><span class="op">)</span> <span class="co"># add to the end of the vector</span></span>
-<span><span class="va">possessions</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"car"</span>, <span class="va">possessions</span><span class="op">)</span> <span class="co"># add to the beginning of the vector</span></span>
-<span><span class="va">possessions</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">default_l_audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"zu"</span><span class="op">)</span></span>
+<span><span class="va">default_l_audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="va">default_l_audio_language</span>, <span class="st">"fr"</span><span class="op">)</span> <span class="co"># add to the end of the vector</span></span>
+<span><span class="va">default_l_audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"ar"</span>, <span class="va">default_l_audio_language</span><span class="op">)</span> <span class="co"># add to the beginning of the vector</span></span>
+<span><span class="va">default_l_audio_language</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "car"          "bicycle"      "radio"        "television"   "mobile_phone"</code></pre>
+<pre class="output" tabindex="0"><code>[1] "ar" "en" "af" "zu" "fr"</code></pre>
 </div>
 <p>In the first line, we take the original vector
-<code>possessions</code>, add the value <code>"mobile_phone"</code> to
-the end of it, and save the result back into <code>possessions</code>.
-Then we add the value <code>"car"</code> to the beginning, again saving
-the result back into <code>possessions</code>.</p>
+<code>default_l_audio_language</code>, add the value <code>"fr"</code>
+to the end of it, and save the result back into
+<code>default_l_audio_language</code>. Then we add the value
+<code>"ar"</code> to the beginning, again saving the result back into
+<code>default_l_audio_language</code>.</p>
 <p>We can do this over and over again to grow a vector, or assemble a
 dataset. As we program, this may be useful to add results that we are
 collecting or calculating.</p>
@@ -1010,7 +1011,7 @@ types in a single vector?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>R implicitly converts them to all be the same type.</p>
 </div>
@@ -1045,7 +1046,7 @@ types in a single vector?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>Vectors can be of only one data type. R tries to convert (coerce) the
 content of this vector to find a “common denominator” that doesn’t lose
@@ -1080,7 +1081,7 @@ any information.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>Only one. There is no memory of past data types, and the coercion
 happens the first time the vector is evaluated. Therefore, the
@@ -1118,24 +1119,24 @@ brackets. For instance:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">respondent_wall_type</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"muddaub"</span>, <span class="st">"burntbricks"</span>, <span class="st">"sunbricks"</span><span class="op">)</span></span>
-<span><span class="va">respondent_wall_type</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"zu"</span><span class="op">)</span></span>
+<span><span class="va">audio_language</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "burntbricks"</code></pre>
+<pre class="output" tabindex="0"><code>[1] "af"</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb54">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">respondent_wall_type</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "sunbricks"   "burntbricks"</code></pre>
+<pre class="output" tabindex="0"><code>[1] "zu" "af"</code></pre>
 </div>
 <p>We can also repeat the indices to create an object with more elements
 than the original one:</p>
@@ -1143,14 +1144,13 @@ than the original one:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">more_respondent_wall_type</span> <span class="op">&lt;-</span> <span class="va">respondent_wall_type</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">more_respondent_wall_type</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">extra_audio_language</span> <span class="op">&lt;-</span> <span class="va">audio_language</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">extra_audio_language</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "muddaub"     "burntbricks" "sunbricks"   "burntbricks" "muddaub"
-[6] "sunbricks"  </code></pre>
+<pre class="output" tabindex="0"><code>[1] "zu" "af" "af" "en" "zu" "af"</code></pre>
 </div>
 <p>R indices start at 1. Programming languages like Fortran, MATLAB,
 Julia, and R start counting at 1, because that’s what human beings
@@ -1165,13 +1165,13 @@ Python) count from 0 because that’s simpler for computers to do.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hh_members</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">6</span><span class="op">)</span></span>
-<span><span class="va">hh_members</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">view_count</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">120987</span>, <span class="fl">789</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">view_count</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  3 10  6</code></pre>
+<pre class="output" tabindex="0"><code>[1] 120987      1</code></pre>
 </div>
 <p>Typically, these logical vectors are not typed by hand, but are the
 output of other functions or logical tests. For instance, if you wanted
@@ -1180,24 +1180,24 @@ to select only the values above 5:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hh_members</span> <span class="op">&gt;</span> <span class="fl">5</span>    <span class="co"># will return logicals with TRUE for the indices that meet the condition</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">view_count</span> <span class="op">&gt;</span> <span class="fl">5</span>    <span class="co"># will return logicals with TRUE for the indices that meet the condition</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] FALSE  TRUE  TRUE  TRUE</code></pre>
+<pre class="output" tabindex="0"><code>[1]  TRUE  TRUE FALSE FALSE</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb62">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## so we can use this to select only the values above 5</span></span>
-<span><span class="va">hh_members</span><span class="op">[</span><span class="va">hh_members</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">]</span></span></code></pre>
+<span><span class="va">view_count</span><span class="op">[</span><span class="va">view_count</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  7 10  6</code></pre>
+<pre class="output" tabindex="0"><code>[1] 120987    789</code></pre>
 </div>
 <p>You can combine multiple tests using <code>&amp;</code> (both
 conditions are true, AND) or <code>|</code> (at least one of the
@@ -1206,23 +1206,23 @@ conditions is true, OR):</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hh_members</span><span class="op">[</span><span class="va">hh_members</span> <span class="op">&lt;</span> <span class="fl">4</span> <span class="op">|</span> <span class="va">hh_members</span> <span class="op">&gt;</span> <span class="fl">7</span><span class="op">]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">view_count</span><span class="op">[</span><span class="va">view_count</span> <span class="op">&gt;</span> <span class="fl">10</span> <span class="op">|</span> <span class="va">view_count</span> <span class="op">&lt;</span> <span class="fl">1000</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  3 10</code></pre>
+<pre class="output" tabindex="0"><code>[1] 120987    789      1      2</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb66">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hh_members</span><span class="op">[</span><span class="va">hh_members</span> <span class="op">&gt;=</span> <span class="fl">4</span> <span class="op">&amp;</span> <span class="va">hh_members</span> <span class="op">&lt;=</span> <span class="fl">7</span><span class="op">]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">view_count</span><span class="op">[</span><span class="va">view_count</span><span class="op">&gt;=</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">view_count</span> <span class="op">&lt;=</span> <span class="fl">10000</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] 7 6</code></pre>
+<pre class="output" tabindex="0"><code>[1] 789</code></pre>
 </div>
 <p>Here, <code>&lt;</code> stands for “less than”, <code>&gt;</code> for
 “greater than”, <code>&gt;=</code> for “greater than or equal to”, and
@@ -1237,13 +1237,13 @@ values, but this can quickly become tedious.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">possessions</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"car"</span>, <span class="st">"bicycle"</span>, <span class="st">"radio"</span>, <span class="st">"television"</span>, <span class="st">"mobile_phone"</span><span class="op">)</span></span>
-<span><span class="va">possessions</span><span class="op">[</span><span class="va">possessions</span> <span class="op">==</span> <span class="st">"car"</span> <span class="op">|</span> <span class="va">possessions</span> <span class="op">==</span> <span class="st">"bicycle"</span><span class="op">]</span> <span class="co"># returns both car and bicycle</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"zu"</span>,<span class="st">"fr"</span>,<span class="st">"ar"</span><span class="op">)</span></span>
+<span><span class="va">audio_language</span><span class="op">[</span><span class="va">audio_language</span> <span class="op">==</span> <span class="st">"zu"</span> <span class="op">|</span> <span class="va">audio_language</span> <span class="op">==</span> <span class="st">"af"</span><span class="op">]</span> <span class="co"># returns both zu and af</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "car"     "bicycle"</code></pre>
+<pre class="output" tabindex="0"><code>[1] "af" "zu"</code></pre>
 </div>
 <p>The function <code>%in%</code> allows you to test if any of the
 elements of a search vector (on the left hand side) are found in the
@@ -1252,12 +1252,12 @@ target vector (on the right hand side):</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">possessions</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"car"</span>, <span class="st">"bicycle"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"fr"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  TRUE  TRUE FALSE FALSE FALSE</code></pre>
+<pre class="output" tabindex="0"><code>[1]  TRUE FALSE FALSE  TRUE FALSE</code></pre>
 </div>
 <p>Note that the output is the same length as the search vector on the
 left hand side, because <code>%in%</code> checks whether each element of
@@ -1268,23 +1268,23 @@ appear in your target vector:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">possessions</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"car"</span>, <span class="st">"bicycle"</span>, <span class="st">"motorcycle"</span>, <span class="st">"truck"</span>, <span class="st">"boat"</span>, <span class="st">"bus"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"zu"</span>,<span class="st">"fr"</span>,<span class="st">"ar"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  TRUE  TRUE FALSE FALSE FALSE</code></pre>
+<pre class="output" tabindex="0"><code>[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb74">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">possessions</span><span class="op">[</span><span class="va">possessions</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"car"</span>, <span class="st">"bicycle"</span>, <span class="st">"motorcycle"</span>, <span class="st">"truck"</span>, <span class="st">"boat"</span>, <span class="st">"bus"</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span><span class="op">[</span><span class="va">audio_language</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"xh"</span>, <span class="st">"zu"</span>, <span class="st">"fr"</span>, <span class="st">"ar"</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "car"     "bicycle"</code></pre>
+<pre class="output" tabindex="0"><code>[1] "en" "af" "zu" "fr" "ar"</code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="missing-data">Missing data<a class="anchor" aria-label="anchor" href="#missing-data"></a></h2>
@@ -1300,8 +1300,8 @@ calculate the result while ignoring the missing values.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rooms</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">7</span><span class="op">)</span></span>
-<span><span class="fu">mean</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">comment_count</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu">mean</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1312,7 +1312,7 @@ calculate the result while ignoring the missing values.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">max</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">max</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1323,7 +1323,7 @@ calculate the result while ignoring the missing values.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">mean</span><span class="op">(</span><span class="va">rooms</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">mean</span><span class="op">(</span><span class="va">comment_count</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1334,7 +1334,7 @@ calculate the result while ignoring the missing values.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">max</span><span class="op">(</span><span class="va">rooms</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">max</span><span class="op">(</span><span class="va">comment_count</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1350,7 +1350,7 @@ with the functions <code>is.na()</code>, <code>na.omit()</code>, and
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Extract those elements which are not missing values.</span></span>
 <span><span class="co">## The ! character is also called the NOT operator</span></span>
-<span><span class="va">rooms</span><span class="op">[</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+<span><span class="va">comment_count</span><span class="op">[</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1363,7 +1363,7 @@ with the functions <code>is.na()</code>, <code>na.omit()</code>, and
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Count the number of missing values.</span></span>
 <span><span class="co">## The output of is.na() is a logical vector (TRUE/FALSE equivalent to 1/0) so the sum() function here is effectively counting</span></span>
-<span><span class="fu">sum</span><span class="op">(</span><span class="fu">is.na</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span><span class="fu">sum</span><span class="op">(</span><span class="fu">is.na</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1375,7 +1375,7 @@ with the functions <code>is.na()</code>, <code>na.omit()</code>, and
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Returns the object with incomplete cases removed. The returned object is an atomic vector of type `"numeric"` (or `"double"`).</span></span>
-<span><span class="fu">na.omit</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span></span></code></pre>
+<span><span class="fu">na.omit</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1391,7 +1391,7 @@ attr(,"class")
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Extract those elements which are complete cases. The returned object is an atomic vector of type `"numeric"` (or `"double"`).</span></span>
-<span><span class="va">rooms</span><span class="op">[</span><span class="fu">complete.cases</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+<span><span class="va">comment_count</span><span class="op">[</span><span class="fu">complete.cases</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1407,16 +1407,16 @@ the type of your atomic vector.</p>
 <div id="exercise-4" class="callout-inner">
 <h3 class="callout-title">Exercise</h3>
 <div class="callout-content">
-<ol style="list-style-type: decimal"><li>Using this vector of rooms, create a new vector with the NAs
+<ol style="list-style-type: decimal"><li>Using this vector of comments, create a new vector with the NAs
 removed.</li>
 </ol><div class="codewrapper sourceCode" id="cb92">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rooms</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">comment_count</span><span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre>
 </div>
 <ol start="2" style="list-style-type: decimal"><li><p>Use the function <code>median()</code> to calculate the median of
-the <code>rooms</code> vector.</p></li>
+the <code>comment_count</code> vector.</p></li>
 <li><p>Use R to figure out how many households in the set use more than
 2 rooms for sleeping.</p></li>
 </ol></div>
@@ -1427,36 +1427,36 @@ the <code>rooms</code> vector.</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
   <h4 class="accordion-header" id="headingSolution6"> Show me the solution </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb93">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rooms</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">rooms_no_na</span> <span class="op">&lt;-</span> <span class="va">rooms</span><span class="op">[</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="va">comment_count</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">2</span>, <span class="fl">19</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1999</span>, <span class="fl">1</span>, <span class="fl">89</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">comments_no_na</span> <span class="op">&lt;-</span> <span class="va">comment_count</span><span class="op">[</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co"># or</span></span>
-<span><span class="va">rooms_no_na</span> <span class="op">&lt;-</span> <span class="fu">na.omit</span><span class="op">(</span><span class="va">rooms</span><span class="op">)</span></span>
+<span><span class="va">comments_no_na</span> <span class="op">&lt;-</span> <span class="fu">na.omit</span><span class="op">(</span><span class="va">comment_count</span><span class="op">)</span></span>
 <span><span class="co"># 2.</span></span>
-<span><span class="fu">median</span><span class="op">(</span><span class="va">rooms</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+<span><span class="fu">median</span><span class="op">(</span><span class="va">comment_count</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] 1</code></pre>
+<pre class="output" tabindex="0"><code>[1] 2.5</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb95">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 3.</span></span>
-<span><span class="va">rooms_above_2</span> <span class="op">&lt;-</span> <span class="va">rooms_no_na</span><span class="op">[</span><span class="va">rooms_no_na</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">]</span></span>
-<span><span class="fu">length</span><span class="op">(</span><span class="va">rooms_above_2</span><span class="op">)</span></span></code></pre>
+<span><span class="va">comments_above_2</span> <span class="op">&lt;-</span> <span class="va">comments_no_na</span><span class="op">[</span><span class="va">comments_no_na</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">]</span></span>
+<span><span class="fu">length</span><span class="op">(</span><span class="va">comments_above_2</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] 4</code></pre>
+<pre class="output" tabindex="0"><code>[1] 7</code></pre>
 </div>
 </div>
 </div>
