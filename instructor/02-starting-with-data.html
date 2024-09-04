@@ -368,7 +368,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>The two main goals for this lessons are:</p>
 <ul><li>To make sure that learners are comfortable with working with data
@@ -614,20 +614,34 @@ can see the contents of the data frame by typing its name:
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">videoss</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'videoss' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Try also</span></span>
+<code class="sourceCode R"><span><span class="va">videos</span></span>
+<span><span class="co">## Try also</span></span>
 <span><span class="co">## view(videos)</span></span>
 <span><span class="co">## head(videos)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 200 × 32
+   position randomise channel_id               channel_title      video_id url
+      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                    &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 26 more variables: published_at &lt;dttm&gt;, published_at_sql &lt;chr&gt;, year &lt;dbl&gt;,
+#   month &lt;dbl&gt;, day &lt;dbl&gt;, video_title &lt;chr&gt;, video_description &lt;chr&gt;,
+#   tags &lt;chr&gt;, video_category_label &lt;chr&gt;, topic_categories &lt;chr&gt;,
+#   duration_sec &lt;dbl&gt;, definition &lt;chr&gt;, caption &lt;lgl&gt;,
+#   default_language &lt;chr&gt;, default_l_audio_language &lt;chr&gt;,
+#   thumbnail_maxres &lt;chr&gt;, licensed_content &lt;dbl&gt;, …</code></pre>
 </div>
 <div id="note" class="callout">
 <div class="callout-square">
@@ -657,7 +671,7 @@ the <strong><code>tidyverse</code></strong>. When the data is read using
 <code>read_csv()</code>, it is stored in an object of class
 <code>tbl_df</code>, <code>tbl</code>, and <code>data.frame</code>. You
 can see the class of an object with</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -741,7 +755,7 @@ Reproducible Scientific Analysis</a>.</p>
 </div>
 </div>
 </div>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -756,7 +770,7 @@ Reproducible Scientific Analysis</a>.</p>
      &lt;dbl&gt;
 1      112</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -771,7 +785,7 @@ Reproducible Scientific Analysis</a>.</p>
   &lt;chr&gt;
 1 https://www.youtube.com/watch?v=iPUAl1jywdU</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -794,7 +808,7 @@ Reproducible Scientific Analysis</a>.</p>
 [181]  42  67  77  82  83  85  87  94 158 168 193 254 293 104 155 162 204 209
 [199] 246 255</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -819,7 +833,7 @@ Reproducible Scientific Analysis</a>.</p>
 10      214
 # ℹ 190 more rows</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -836,7 +850,7 @@ Reproducible Scientific Analysis</a>.</p>
 2 2020-09-11 05:34:52
 3 2020-09-10 11:59:51</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -858,7 +872,7 @@ Reproducible Scientific Analysis</a>.</p>
 #   licensed_content &lt;dbl&gt;, location_description &lt;chr&gt;, view_count &lt;dbl&gt;,
 #   like_count &lt;dbl&gt;, favorite_count &lt;dbl&gt;, comment_count &lt;dbl&gt;, …</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -870,7 +884,7 @@ integers in increasing or decreasing order, test <code>1:10</code> and
 <code>10:1</code> for instance.</p>
 <p>You can also exclude certain indices of a data frame using the
 “<code>-</code>” sign:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -900,7 +914,7 @@ integers in increasing or decreasing order, test <code>1:10</code> and
 #   default_l_audio_language &lt;chr&gt;, thumbnail_maxres &lt;chr&gt;,
 #   licensed_content &lt;dbl&gt;, location_description &lt;chr&gt;, view_count &lt;dbl&gt;, …</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -932,7 +946,7 @@ integers in increasing or decreasing order, test <code>1:10</code> and
 </div>
 <p><code>tibble</code>s can be subset by calling indices (as shown
 previously), but also by calling their column names directly:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -984,9 +998,9 @@ just the first through 6th rows of the videos dataset.</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1006,7 +1020,7 @@ just the first through 6th rows of the videos dataset.</p></li>
 ! Can't subset rows with `median(1:n_rows)`.
 ✖ Can't convert from `i` &lt;double&gt; to &lt;integer&gt; due to loss of precision.</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1026,7 +1040,7 @@ a separate variable. In our dataset, we have a column
 <code>published_at</code> which contains information about the year,
 month, and day that the interview was conducted. Let’s convert those
 dates into three separate columns.</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1039,7 +1053,7 @@ loaded by default. However, if we deal with older versions of tidyverse
 (2022 and ealier), we can manually load it by typing
 <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code>.</p>
 <p>If necessary, start by loading the required package:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1053,7 +1067,7 @@ flexible, but, as a best practice, is a character vector formatted as
 “YYYY-MM-DD”.</p>
 <p>Let’s extract our <code>published_at</code> column and inspect the
 structure:</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1070,7 +1084,7 @@ that this column contained date information. We can now use the
 <code>day()</code>, <code>month()</code> and <code>year()</code>
 functions to extract this information from the date, and create new
 columns in our data frame to store it:</p>
-<div class="codewrapper sourceCode" id="cb32">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1110,7 +1124,7 @@ the case. Date columns are often read in as <code>character</code>
 variables and one can use the <code>as_date()</code> function to convert
 them to the appropriate <code>Date/POSIXct</code>format.</p>
 <p>Let’s say we have a vector of dates in character format:</p>
-<div class="codewrapper sourceCode" id="cb34">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1123,7 +1137,7 @@ them to the appropriate <code>Date/POSIXct</code>format.</p>
 <pre class="output" tabindex="0"><code> chr [1:3] "7/31/2012" "8/9/2014" "4/30/2016"</code></pre>
 </div>
 <p>We can convert this vector to dates as :</p>
-<div class="codewrapper sourceCode" id="cb36">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1140,7 +1154,7 @@ the equivalent of mm/dd/yyyy. A wrong format can lead to parsing errors
 or incorrect results.</p>
 <p>For example, observe what happens when we use a lower case y instead
 of upper case Y for the year.</p>
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1160,7 +1174,7 @@ of upper case Y for the year.</p>
 year instead of a four-digit year, and this leads to parsing errors.</p>
 <p>Or in the following example, observe what happens when the month and
 day elements of the format are switched.</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1180,7 +1194,7 @@ day elements of the format are switched.</p>
 cannot be parsed.</p>
 <p>We can also use functions <code>ymd()</code>, <code>mdy()</code> or
 <code>dmy()</code> to convert character variables to date.</p>
-<div class="codewrapper sourceCode" id="cb44">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
