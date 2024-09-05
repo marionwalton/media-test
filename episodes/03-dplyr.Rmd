@@ -367,7 +367,7 @@ channel_title:
 ```{r, purl=FALSE}
 videos %>%
     group_by(channel_title) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+    summarize(mean_views = mean(view_count))
 ```
 
 You may also have noticed that the output from these calls doesn't run off the
@@ -377,8 +377,8 @@ You can also group by multiple columns:
 
 ```{r, purl=FALSE}
 videos %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+    group_by(channel_title, video_category_label) %>%
+    summarize(mean_views = mean(view_count))
 ```
 
 Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
@@ -386,20 +386,20 @@ Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
 
 ```{r, purl=FALSE}
 videos %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs)) %>%
+    group_by(channel_title, video_category_label) %>%
+    summarize(mean_views = mean(view_count)) %>%
     ungroup()
 ```
 
-When grouping both by `channel_title` and `membr_assoc`, we see rows in our table for
-respondents who did not specify whether they were a member of an irrigation
-association. We can exclude those data from our table using a filter step.
+When grouping both by `channel_title` and `default_l_audio_language`, we see rows in our table for
+videos where the creator did not specify their default audio language. 
+We can exclude those data from our table using a filter step.
 
 ```{r, purl=FALSE}
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count))
 ```
 
 Once the data are grouped, you can also summarize multiple variables at the same
@@ -409,35 +409,45 @@ column indicating the minimum household size for each channel_title for each gro
 
 ```{r, purl=FALSE}
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs),
-              min_membrs = min(no_membrs))
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count))
 ```
 
 It is sometimes useful to rearrange the result of a query to inspect the values.
-For instance, we can sort on `min_membrs` to put the group with the smallest
+For instance, we can sort on `max_views` to put the group with the smallest
 household first:
 
 ```{r, purl=FALSE}
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs),
-              min_membrs = min(no_membrs)) %>%
-    arrange(min_membrs)
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count)) %>%
+    arrange(max_views)
 ```
 
 To sort in descending order, we need to add the `desc()` function. If we want to
-sort the results by decreasing order of minimum household size:
+sort the results by decreasing order of views, or reverse alphabetical order of the audio language
+ to see languages other than english:
+
 
 ```{r, purl=FALSE}
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs),
-              min_membrs = min(no_membrs)) %>%
-    arrange(desc(min_membrs))
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count)) %>%
+    arrange(desc(max_views))
+```
+```{r, purl=FALSE}
+videos %>%
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count)) %>%
+    arrange(desc(default_l_audio_language))
 ```
 
 ### Counting
