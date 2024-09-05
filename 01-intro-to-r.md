@@ -640,7 +640,7 @@ original one:
 
 
 ``` r
-extra_audio_language <- audio_language[c(3, 2,2,1,3,2)]
+extra_audio_language <- audio_language[c(3,2,2,1,3,2)]
 extra_audio_language
 ```
 
@@ -724,7 +724,7 @@ become tedious.
 
 
 ``` r
-audio_language <- c("en", "af", "zu","fr","ar")
+audio_language <- c("ar", "en", "af","zu","fr")
 audio_language[audio_language == "zu" | audio_language == "af"] # returns both zu and af
 ```
 
@@ -741,7 +741,7 @@ audio_language %in% c("en", "fr")
 ```
 
 ``` output
-[1]  TRUE FALSE FALSE  TRUE FALSE
+[1] FALSE  TRUE FALSE FALSE  TRUE
 ```
 
 Note that the output is the same length as the search vector on the left hand
@@ -751,7 +751,7 @@ in the search vector that appear in your target vector:
 
 
 ``` r
-audio_language %in% c("en", "af", "zu","fr","ar")
+audio_language %in% c("en", "af", "xh", "zu","fr","ar")
 ```
 
 ``` output
@@ -763,7 +763,15 @@ audio_language[audio_language %in% c("en", "af", "xh", "zu", "fr", "ar")]
 ```
 
 ``` output
-[1] "en" "af" "zu" "fr" "ar"
+[1] "ar" "en" "af" "zu" "fr"
+```
+
+``` r
+audio_language[audio_language %in% c("en", "fr")]
+```
+
+``` output
+[1] "en" "fr"
 ```
 
 ## Missing data
