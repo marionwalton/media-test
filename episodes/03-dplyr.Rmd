@@ -474,9 +474,8 @@ videos %>%
 
 ## Exercise
 
-How many households in the survey have an average of
-two meals per day? Three meals per day? Are there any other numbers
-of meals represented?
+Which YouTube video categories are used to describe the videos in the sample? (Use the video_category_label column.) 
+Create a tibble of these categories and the number of videos in each of them, arranged in descending order.
 
 :::::::::::::::  solution
 
@@ -484,7 +483,8 @@ of meals represented?
 
 ```{r}
 videos %>%
-   count(no_meals)
+   count(video_category_label) %>%
+   arrange(desc(n))
 ```
 
 :::::::::::::::::::::::::
