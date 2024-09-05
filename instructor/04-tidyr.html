@@ -508,16 +508,16 @@ the dataframe.</p>
 <pre class="output" tabindex="0"><code># A tibble: 10 × 3
    video_id    channel_title published_at_sql
    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;
- 1 -vdIFk95vPk eNCA          2020-09-07 8:23:46
- 2 JqdoE4kKYKg eNCA          2020-09-09 7:53:16
- 3 iPUAl1jywdU eNCA          2020-09-14 16:16:44
- 4 Ra0hdT2gsxU eNCA          2020-09-07 14:20:04
- 5 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
- 6 li3_91gCQHc eNCA          2020-09-09 4:30:37
- 7 59uEjm0OlRs eNCA          2020-09-07 8:13:41
- 8 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
- 9 _Mz-QydrFMs eNCA          2020-09-07 7:17:10
-10 flzoE9zL_KA eNCA          2020-09-07 11:28:32</code></pre>
+ 1 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
+ 2 3BkmO0M56lA eNCA          2020-09-08 6:54:04
+ 3 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
+ 4 huI9qbGqNhA eNCA          2020-09-07 17:59:13
+ 5 -vdIFk95vPk eNCA          2020-09-07 8:23:46
+ 6 iPUAl1jywdU eNCA          2020-09-14 16:16:44
+ 7 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
+ 8 EH0RpWcq66w eNCA          2020-09-08 12:50:32
+ 9 JqdoE4kKYKg eNCA          2020-09-09 7:53:16
+10 3EtH4eDceFY eNCA          2020-09-10 9:11:44 </code></pre>
 </div>
 <p>We notice that the layout or format of the <code>videos</code> data
 is in a format that adheres to rules 1-3, where</p>
@@ -782,7 +782,7 @@ this process a bit clearer.</p>
 <p><code>pivot_longer()</code> takes four principal arguments:</p>
 <ol style="list-style-type: decimal"><li>the data</li>
 <li>
-<em>cols</em> are the names of the columns we use to fill the a new
+<em>cols</em> are the names of the columns we use to fill the new
 values variable (or to drop).</li>
 <li>the <em>names_to</em> column variable we wish to create from the
 <em>cols</em> provided.</li>
@@ -793,16 +793,9 @@ with values associated with the <em>cols</em> provided.</li>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos_long</span> <span class="op">&lt;-</span> <span class="va">videos_topics</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="va">bicycle</span><span class="op">:</span><span class="va">car</span>,</span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="va">business</span><span class="op">:</span><span class="va">politics</span>,</span>
 <span>               names_to <span class="op">=</span> <span class="st">"topic_categories"</span>,</span>
 <span>               values_to <span class="op">=</span> <span class="st">"topic_categories_logical"</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in `pivot_longer()`:
-! Can't select columns that don't exist.
-✖ Column `bicycle` doesn't exist.</code></pre>
 </div>
 <p>View both <code>videos_long</code> and <code>videos_topics</code> and
 compare their structure.</p>
@@ -817,11 +810,11 @@ compare their structure.</p>
 <code>count</code> and <code>summarise</code>. We can create the same
 tables on <code>videos_long</code>, but this will require a different
 process.</p>
-<ol style="list-style-type: decimal"><li>Make a table showing showing the number of respondents in each
-village who owned a particular item, and include all items. The
-difference between this format and the wide format is that you can now
-<code>count</code> all the items using the <code>topic_categories</code>
-variable.</li>
+<ol style="list-style-type: decimal"><li>Make a table showing showing the number of videos from each channel
+categorised as a particular topic, and include all items. The difference
+between this format and the wide format is that you can now
+<code>count</code> all the topics using the
+<code>topic_categories</code> variable.</li>
 </ol></div>
 </div>
 </div>
@@ -832,19 +825,33 @@ variable.</li>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos_long</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">topic_categories_logical</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">village</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">count</span><span class="op">(</span><span class="va">topic_categories</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">count</span><span class="op">(</span><span class="va">topic_categories</span>, sort<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'videos_long' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 171 × 3
+# Groups:   channel_title [114]
+   channel_title   topic_categories       n
+   &lt;chr&gt;           &lt;chr&gt;              &lt;int&gt;
+ 1 SABC News       society               22
+ 2 eNCA            society               20
+ 3 eNCA            television_program    19
+ 4 SABC News       television_program    14
+ 5 Newzroom Afrika society               13
+ 6 Newzroom Afrika television_program    11
+ 7 SABC News       health                10
+ 8 eNCA            health                 8
+ 9 eNCA            politics               6
+10 Newzroom Afrika politics               5
+# ℹ 161 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -877,22 +884,35 @@ rather the absence thereof.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos_long</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">topic_categories_logical</span>,</span>
-<span>         <span class="va">topic_categories</span> <span class="op">!=</span> <span class="st">"no_listed_items"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="co"># to keep information per household, we count key_ID</span></span>
-<span>  <span class="fu">count</span><span class="op">(</span><span class="va">key_ID</span>, <span class="va">village</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># we want to also keep the village variable</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">village</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>mean_items <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>         <span class="va">topic_categories</span> <span class="op">!=</span> <span class="st">"no_topics"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># to keep information per video, we count video_id</span></span>
+<span>  <span class="fu">count</span><span class="op">(</span><span class="va">video_id</span>, <span class="va">channel_title</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># we want to also keep the channel variable</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>mean_topics <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'videos_long' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 114 × 2
+   channel_title                 mean_topics
+   &lt;chr&gt;                               &lt;dbl&gt;
+ 1 2nacheki                              1.5
+ 2 Absolute Controversy                  1
+ 3 African Diaspora News Channel         1
+ 4 Al Jazeera English                    2
+ 5 Ayanda Mafuyeka                       2
+ 6 Azana Jezile                          1
+ 7 BANELE NOCUZE                         1
+ 8 Banetsi Tshetlo                       1
+ 9 Beauty recipes                        2
+10 Blackish Blue TV                      2
+# ℹ 104 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -905,42 +925,61 @@ is structured. In the spreadsheets lesson, we learned that it’s best
 practice to have only a single piece of information in each cell of your
 spreadsheet. In this dataset, we have another column that stores
 multiple values in a single cell. Some of the cells in the
-<code>months_lack_food</code> column contain multiple months which, as
-before, are separated by semi-colons (<code>;</code>).</p>
+<code>tags</code> column contain multiple months which, as before, are
+separated by semi-colons (<code>;</code>).</p>
 <p>To create a data frame where each of the columns contain only one
 value per cell, we can repeat the steps we applied to
-<code>topic_categories</code> and apply them to
-<code>months_lack_food</code>. Since we will be using this data frame
-for the next episode, we will call it <code>videos_plotting</code>.</p>
-<div class="codewrapper sourceCode" id="cb26">
+<code>topic_categories</code> and apply them to <code>tags</code>. Since
+we will be using this data frame for the next episode, we will call it
+<code>videos_plotting</code>.</p>
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos_plotting</span> <span class="op">&lt;-</span> <span class="va">videos</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="co">## pivot wider by topic_categories</span></span>
 <span>  <span class="fu">separate_longer_delim</span><span class="op">(</span><span class="va">topic_categories</span>, delim <span class="op">=</span> <span class="st">";"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="co">## if there were no items listed, changing NA to no_listed_items</span></span>
-<span>  <span class="fu">replace_na</span><span class="op">(</span><span class="fu">list</span><span class="op">(</span>topic_categories <span class="op">=</span> <span class="st">"no_listed_items"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="co">## if there were no topics listed, changing NA to no_listed_items</span></span>
+<span>  <span class="fu">replace_na</span><span class="op">(</span><span class="fu">list</span><span class="op">(</span>topic_categories <span class="op">=</span> <span class="st">"no_topics"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>topic_categories_logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">topic_categories</span>,</span>
 <span>              values_from <span class="op">=</span> <span class="va">topic_categories_logical</span>,</span>
-<span>              values_fill <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>topic_categories_logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="co">## pivot wider by months_lack_food</span></span>
-<span>  <span class="fu">separate_longer_delim</span><span class="op">(</span><span class="va">months_lack_food</span>, delim <span class="op">=</span> <span class="st">";"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>months_lack_food_logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">months_lack_food</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">months_lack_food_logical</span>,</span>
-<span>              values_fill <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>months_lack_food_logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>              values_fill <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>topic_categories_logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="co">#%&gt;%</span></span>
+<span>  <span class="co">## pivot wider by tags</span></span>
+<span>  <span class="co">#separate_longer_delim(tags, delim = ";") %&gt;%</span></span>
+<span>  <span class="co">#mutate(tags_logical = TRUE) %&gt;%</span></span>
+<span>  <span class="co">#pivot_wider(names_from = tags,</span></span>
+<span>  <span class="co">#           values_from = tags_logical</span></span>
+<span>  <span class="co">#          values_fill = list(tags_logical = FALSE)) %&gt;%</span></span>
 <span>  <span class="co">## add some summary columns</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>number_months_lack_food <span class="op">=</span> <span class="fu">rowSums</span><span class="op">(</span><span class="fu">select</span><span class="op">(</span><span class="va">.</span>, <span class="va">Jan</span><span class="op">:</span><span class="va">May</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>number_items <span class="op">=</span> <span class="fu">rowSums</span><span class="op">(</span><span class="fu">select</span><span class="op">(</span><span class="va">.</span>, <span class="va">bicycle</span><span class="op">:</span><span class="va">car</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="co">#mutate(number_tags = rowSums(select(., Jan:May))) %&gt;% #replace with start and end tags</span></span>
+<span>  <span class="co">#mutate(number_topics = rowSums(select(., business:politics)))</span></span>
+<span></span>
+<span>  <span class="va">videos_plotting</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `separate_longer_delim()`:
-! Can't select columns that don't exist.
-✖ Column `months_lack_food` doesn't exist.</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 200 × 41
+   position randomise channel_id               channel_title      video_id url
+      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                    &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 35 more variables: published_at &lt;dttm&gt;, published_at_sql &lt;chr&gt;, year &lt;dbl&gt;,
+#   month &lt;dbl&gt;, day &lt;dbl&gt;, video_title &lt;chr&gt;, video_description &lt;chr&gt;,
+#   tags &lt;chr&gt;, video_category_label &lt;chr&gt;, duration_sec &lt;dbl&gt;,
+#   definition &lt;chr&gt;, caption &lt;lgl&gt;, default_language &lt;chr&gt;,
+#   default_l_audio_language &lt;chr&gt;, thumbnail_maxres &lt;chr&gt;,
+#   licensed_content &lt;dbl&gt;, location_description &lt;chr&gt;, view_count &lt;dbl&gt;, …</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="exporting-data">Exporting data<a class="anchor" aria-label="anchor" href="#exporting-data"></a></h2>
 <hr class="half-width"><p>Now that you have learned how to use
@@ -964,16 +1003,11 @@ deleted, we can always re-generate them.</p>
 of the dataset where each of the columns includes only one data value.
 Now we can save this data frame to our <code>data_output</code>
 directory.</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">write_csv</span> <span class="op">(</span><span class="va">videos_plotting</span>, file <span class="op">=</span> <span class="st">"data_output/videos_plotting.csv"</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'videos_plotting' not found</code></pre>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
