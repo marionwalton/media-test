@@ -826,7 +826,7 @@ the tidyverse installed.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Scroll through packages tab down to ‘tidyverse’. You can also type a
 few characters into the searchbox. The ‘tidyverse’ package is really a
@@ -1143,7 +1143,7 @@ values of other objects.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The value of <code>duration_min</code> is still 10 because you have
 not re-run the line <code>duration_min &lt;- duration_sec/60</code>
@@ -1206,7 +1206,7 @@ the value of <code>ratio</code>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1548,7 +1548,7 @@ types in a single vector?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>R implicitly converts them to all be the same type.</p>
 </div>
@@ -1583,7 +1583,7 @@ types in a single vector?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>Vectors can be of only one data type. R tries to convert (coerce) the
 content of this vector to find a “common denominator” that doesn’t lose
@@ -1618,7 +1618,7 @@ any information.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>Only one. There is no memory of past data types, and the coercion
 happens the first time the vector is evaluated. Therefore, the
@@ -1984,7 +1984,7 @@ two comments.</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
   <h4 class="accordion-header" id="headingSolution6"> Show me the solution </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb95">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4460,16 +4460,16 @@ the dataframe.</p>
 <pre class="output" tabindex="0"><code># A tibble: 10 × 3
    video_id    channel_title published_at_sql
    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;
- 1 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
- 2 3BkmO0M56lA eNCA          2020-09-08 6:54:04
- 3 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
- 4 huI9qbGqNhA eNCA          2020-09-07 17:59:13
- 5 -vdIFk95vPk eNCA          2020-09-07 8:23:46
- 6 iPUAl1jywdU eNCA          2020-09-14 16:16:44
- 7 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
- 8 EH0RpWcq66w eNCA          2020-09-08 12:50:32
- 9 JqdoE4kKYKg eNCA          2020-09-09 7:53:16
-10 3EtH4eDceFY eNCA          2020-09-10 9:11:44 </code></pre>
+ 1 oYpXigYPY34 eNCA          2020-09-07 13:12:02
+ 2 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
+ 3 tVJ1JF-eIoQ eNCA          2021-09-28 13:51:41
+ 4 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
+ 5 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
+ 6 EH0RpWcq66w eNCA          2020-09-08 12:50:32
+ 7 huI9qbGqNhA eNCA          2020-09-07 17:59:13
+ 8 -vdIFk95vPk eNCA          2020-09-07 8:23:46
+ 9 flzoE9zL_KA eNCA          2020-09-07 11:28:32
+10 3BkmO0M56lA eNCA          2020-09-08 6:54:04 </code></pre>
 </div>
 <p>We notice that the layout or format of the <code>videos</code> data
 is in a format that adheres to rules 1-3, where</p>
@@ -4573,8 +4573,7 @@ with “solar panel” in the <code>topic_categories</code> column.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">separate_longer_delim</span><span class="op">(</span><span class="va">topic_categories</span>, delim <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span></code></pre>
+<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">separate_longer_delim</span>(topic_categories, <span class="at">delim =</span> <span class="st">";"</span>) <span class="sc">%&gt;%</span></span></code></pre>
 </div>
 <p>After this transformation, you may notice that the
 <code>topic_categories</code> column contains <code>NA</code> values.
@@ -4589,8 +4588,7 @@ looking like this:</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">replace_na</span><span class="op">(</span><span class="fu">list</span><span class="op">(</span>topic_categories <span class="op">=</span> <span class="st">"no_categories"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">topic_categories =</span> <span class="st">"no_categories"</span>)) <span class="sc">%&gt;%</span></span></code></pre>
 </div>
 <p>Next, we create a new variable named
 <code>topic_categories_logical</code>, which has one value
@@ -4603,8 +4601,7 @@ describing whether the household did (<code>TRUE</code>) or didn’t
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">mutate</span><span class="op">(</span>topic_categories_logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">topic_categories_logical =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span></code></pre>
 </div>
 <figure><img src="fig/separate_longer.png" alt="Two tables shown side-by-side. The first row of the left table is highlighted in blue, and the first four rows of the right table are also highlighted in blue to show how each of the values of 'items owned' are given their own row with the separate longer delim function. The 'items owned logical' column is highlighted in yellow on the right table to show how the mutate function adds a new column." class="figure mx-auto d-block"></figure><p>Lastly, we use <code>pivot_wider()</code> to switch from long format
 to wide format. This creates a new column for each of the unique values
@@ -6609,7 +6606,7 @@ the output.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Solution to Exercise </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Create a chunk with <code>{r eval = FALSE, echo = FALSE}</code>, then
 create another chunk with <code>{r include = FALSE}</code> to compare.
@@ -6714,7 +6711,7 @@ the <code>interviews_plotting</code> data frame.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Solution to Exercise </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
