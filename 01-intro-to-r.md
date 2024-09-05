@@ -405,9 +405,9 @@ How do you use the `ignore.case` parameter in the grepl function?
 
 
 A vector is the most common and basic data type in R, and is pretty much
-the workhorse of R. A vector is composed by a series of values, which can be
+the workhorse of R. A vector is composed of a series of values, which can be
 either numbers or characters. We can assign a series of values to a vector using
-the `c()` function. For example we can create a vector of the number of household
+the `c()` function. For example we can create a vector of the number of 
 views of the videos we're studying and assign
 it to a new object `view_count`:
 
@@ -906,7 +906,7 @@ length(comments_above_2)
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Now that we have learned how to write scripts, and the basics of R's data
-structures, we are ready to start working with the SAFI dataset we have been
+structures, we are ready to start working with the YouTube dataset we have been
 using in the other lessons, and learn about data frames.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
