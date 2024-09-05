@@ -95,19 +95,21 @@ for example to get a sense of the differences between using `base`, `tidyverse`,
 To make sure everyone will use the same dataset for this lesson, we'll read
 again the SAFI dataset that we downloaded earlier.
 
-```{r, results="hide", purl=FALSE, message=FALSE}
 
-## load the tidyverse
+```{r, eval=TRUE, message=FALSE, purl=FALSE}
 library(tidyverse)
 library(here)
 
-interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
-
+videos <- read_csv(
+  here("data", "youtube-27082024-open-refine-200-na.csv"), 
+  na = "na")
+```  
+```{r, eval=TRUE, message=FALSE, purl=FALSE}
 ## inspect the data
-interviews
+videos
 
 ## preview the data
-# view(interviews)
+# view(videos)
 ```
 
 We're going to learn some of the most common **`dplyr`** functions:
@@ -122,7 +124,7 @@ We're going to learn some of the most common **`dplyr`** functions:
 ## Selecting columns and filtering rows
 
 To select columns of a dataframe, use `select()`. The first argument to this
-function is the dataframe (`interviews`), and the subsequent arguments are the
+function is the dataframe (`videos`), and the subsequent arguments are the
 columns to keep, separated by commas. Alternatively, if you are selecting
 columns adjacent to each other, you can use a `:` to select a range of columns,
 read as "select columns from \_\_\_ to \_\_\_." You may have done something similar in
@@ -131,20 +133,22 @@ subsetting, using a package (`dplyr`) instead of R's base functions.
 
 ```{r, results="hide", purl=FALSE}
 # to select columns throughout the dataframe
-select(interviews, village, no_membrs, months_lack_food)
+select(videos, channel_title, view_count, )
 # to do the same thing with subsetting
-interviews[c("village","no_membrs","months_lack_food")]
+videos[c("channel_title","view_count","comment_count")]
 # to select a series of connected columns
-select(interviews, village:respondent_wall_type)
+select(videos,"view_count":"comment_count")
+# to select columns by name as well as a series of connected columns
+select(videos,"channel_title","published_at_sql","view_count":"comment_count")
 ```
 
 To choose rows based on specific criteria, we can use the `filter()` function.
 The argument after the dataframe is the condition we want our final
-dataframe to adhere to (e.g. village name is Chirodzo):
+dataframe to adhere to (e.g. channel_title name is SABC News):
 
 ```{r, purl=FALSE}
-# filters observations where village name is "Chirodzo"
-filter(interviews, village == "Chirodzo")
+# filters observations where channel title is "SABC News"
+filter(videos, channel_title == "SABC News")
 ```
 
 We can also specify multiple conditions within the `filter()` function. We can
@@ -158,9 +162,9 @@ commas:
 
 # filters observations with "and" operator (comma)
 # output dataframe satisfies ALL specified conditions
-filter(interviews, village == "Chirodzo",
-                   rooms > 1,
-                   no_meals > 2)
+filter(videos, channel_title == "SABC News",
+                   view_count > 1000,
+                   comment_count > 20)
 ```
 
 We can also form "and" statements with the `&` operator instead of commas:
@@ -168,9 +172,9 @@ We can also form "and" statements with the `&` operator instead of commas:
 ```{r, purl=FALSE}
 # filters observations with "&" logical operator
 # output dataframe satisfies ALL specified conditions
-filter(interviews, village == "Chirodzo" &
-                   rooms > 1 &
-                   no_meals > 2)
+filter(videos, channel_title == "SABC News" &
+                   view_count > 1000 &
+                   comment_count > 20)
 ```
 
 In an "or" statement, observations must meet *at least one* of the specified conditions.
@@ -179,7 +183,7 @@ To form "or" statements we use the logical operator for "or," which is the verti
 ```{r, purl=FALSE}
 # filters observations with "|" logical operator
 # output dataframe satisfies AT LEAST ONE of the specified conditions
-filter(interviews, village == "Chirodzo" | village == "Ruaca")
+filter(videos, channel_title == "SABC News" | channel_title == "eNCA")
 ```
 
 ## Pipes
@@ -191,8 +195,8 @@ With intermediate steps, you create a temporary dataframe and use
 that as input to the next function, like this:
 
 ```{r, purl=FALSE}
-interviews2 <- filter(interviews, village == "Chirodzo")
-interviews_ch <- select(interviews2, village:respondent_wall_type)
+videos2 <- filter(videos, channel_title == "SABC News")
+videos_SABC_metrics <- select(videos2, channel_title,view_count:comment_count)
 ```
 
 This is readable, but can clutter up your workspace with lots of objects that
@@ -202,8 +206,9 @@ track of.
 You can also nest functions (i.e. one function inside of another), like this:
 
 ```{r, purl=FALSE}
-interviews_ch <- select(filter(interviews, village == "Chirodzo"),
-                         village:respondent_wall_type)
+videos_SABC_metrics <- select(filter(videos, channel_title == "SABC News"),
+                         channel_title,view_count:comment_count)
+videos_SABC_metrics
 ```
 
 This is handy, but can be difficult to read if too many functions are nested, as
@@ -220,25 +225,24 @@ you need to do many things to the same dataset. There are two Pipes in R: 1) `%>
 
 ```{r, purl=FALSE}
 # the following example is run using magrittr pipe but the output will be same with the native pipe
-interviews %>%
-    filter(village == "Chirodzo") %>%
-    select(village:respondent_wall_type)
-
-#interviews |>
-#   filter(village == "Chirodzo") |>
-#   select(village:respondent_wall_type)
+videos %>%
+    filter(channel_title == "SABC News") %>%
+    select(channel_title,view_count:comment_count)
+#videos |>
+#   filter(channel_title == "SABC News") |>
+#   select(channel_title,view_count:comment_count)
 ```
 
-In the above code, we use the pipe to send the `interviews` dataset first
-through `filter()` to keep rows where `village` is "Chirodzo", then through
-`select()` to keep only the columns from `village` to `respondent_wall_type`. Since `%>%`
+In the above code, we use the pipe to send the `videos` dataset first
+through `filter()` to keep rows where `channel_title` is "SABC News", then through
+`select()` to keep only the columns from `channel_title` to `respondent_wall_type`. Since `%>%`
 takes the object on its left and passes it as the first argument to the function
 on its right, we don't need to explicitly include the dataframe as an argument
 to the `filter()` and `select()` functions any more.
 
 Some may find it helpful to read the pipe like the word "then". For instance,
-in the above example, we take the dataframe `interviews`, *then* we `filter`
-for rows with `village == "Chirodzo"`, *then* we `select` columns `village:respondent_wall_type`.
+in the above example, we take the dataframe `videos`, *then* we `filter`
+for rows with `channel_title == "SABC News"`, *then* we `select` columns `channel_title:respondent_wall_type`.
 The **`dplyr`** functions by themselves are somewhat simple,
 but by combining them into linear workflows with the pipe, we can accomplish
 more complex data wrangling operations.
@@ -247,34 +251,33 @@ If we want to create a new object with this smaller version of the data, we
 can assign it a new name:
 
 ```{r, purl=FALSE}
-interviews_ch <- interviews %>%
-    filter(village == "Chirodzo") %>%
-    select(village:respondent_wall_type)
+videos_SABC_metrics <- videos %>%
+    filter(channel_title == "SABC News") %>%
+    select(channel_title:respondent_wall_type)
 
-interviews_ch
+videos_SABC_metrics
 
 ```
 
-Note that the final dataframe (`interviews_ch`) is the leftmost part of this
+Note that the final dataframe (`videos_SABC_metrics`) is the leftmost part of this
 expression.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-Using pipes, subset the `interviews` data to include interviews
-where respondents were members of an irrigation association
-(`memb_assoc`) and retain only the columns `affect_conflicts`,
-`liv_count`, and `no_meals`.
+Using pipes, subset the `videos` data to include videos
+where the video is categorised as "News & Politics" 
+and retain only the metrics columns with values (views, likes and comments).
 
 :::::::::::::::  solution
 
 ## Solution
 
 ```{r}
-interviews %>%
-    filter(memb_assoc == "yes") %>%
-    select(affect_conflicts, liv_count, no_meals)
+videos %>%
+    filter(video_category_label == "News & Politics") %>%
+    select(view_count,like_count,comment_count)
 ```
 
 :::::::::::::::::::::::::
@@ -287,43 +290,43 @@ Frequently you'll want to create new columns based on the values in existing
 columns, for example to do unit conversions, or to find the ratio of values in
 two columns. For this we'll use `mutate()`.
 
-We might be interested in the ratio of number of household members
-to rooms used for sleeping (i.e. avg number of people per room):
+We might be interested in the ratio of likes
+to comments:
 
 ```{r, purl=FALSE}
-interviews %>%
-    mutate(people_per_room = no_membrs / rooms)
+videos %>%
+    mutate(ratio = like_count / comment_count)
 ```
 
-We may be interested in investigating whether being a member of an
-irrigation association had any effect on the ratio of household members
-to rooms. To look at this relationship, we will first remove
-data from our dataset where the respondent didn't answer the
-question of whether they were a member of an irrigation association.
-These cases are recorded as "NULL" in the dataset.
+We may be interested in investigating whether mentioning the EFF in the video title
+ had any effect on the ratio of likes to comments. 
+ 
+ To look at this relationship, we will first remove
+data from our dataset where comments were not recorded.
+These cases are recorded as "NA" in the dataset.
 
 To remove these cases, we could insert a `filter()` in the chain:
 
 ```{r, purl=FALSE}
-interviews %>%
-    filter(!is.na(memb_assoc)) %>%
-    mutate(people_per_room = no_membrs / rooms)
+videos %>%
+    filter(!is.na(comment_count)) %>%
+    mutate(ratio = like_count / comment_count)
 ```
 
 The `!` symbol negates the result of the `is.na()` function. Thus, if `is.na()`
-returns a value of `TRUE` (because the `memb_assoc` is missing), the `!` symbol
-negates this and says we only want values of `FALSE`, where `memb_assoc` **is
+returns a value of `TRUE` (because the `comment_count` is missing), the `!` symbol
+negates this and says we only want values of `FALSE`, where `comment_count **is
 not** missing.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-Create a new dataframe from the `interviews` data that meets the following
-criteria: contains only the `village` column and a new column called
-`total_meals` containing a value that is equal to the total number of meals
-served in the household per day on average (`no_membrs` times `no_meals`).
-Only the rows where `total_meals` is greater than 20 should be shown in the
+Create a new dataframe from the `videos` data that meets the following
+criteria: contains only the `channel_title` column and, for all the videos which received at least one comment,
+ a new column called
+`ratio` containing a value that is equal to the likes divided by the comments.
+Only the rows where `ratio` is greater than 20 should be shown in the
 final dataframe.
 
 **Hint**: think about how the commands should be ordered to produce this data
@@ -334,10 +337,12 @@ frame!
 ## Solution
 
 ```{r}
-interviews_total_meals <- interviews %>%
-    mutate(total_meals = no_membrs * no_meals) %>%
-    filter(total_meals > 20) %>%
-    select(village, total_meals)
+videos_ratio <- videos %>%
+    filter(comment_count>0) %>%
+    mutate(ratio =  view_count/comment_count) %>%
+    filter(ratio > 20) %>%
+    select(channel_title, ratio)
+videos_ratio
 ```
 
 :::::::::::::::::::::::::
@@ -357,11 +362,11 @@ the `group_by()` function.
 group into a single-row summary of that group.  `group_by()` takes as arguments
 the column names that contain the **categorical** variables for which you want
 to calculate the summary statistics. So to compute the average household size by
-village:
+channel_title:
 
 ```{r, purl=FALSE}
-interviews %>%
-    group_by(village) %>%
+videos %>%
+    group_by(channel_title) %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
@@ -371,8 +376,8 @@ screen anymore. It's one of the advantages of `tbl_df` over dataframe.
 You can also group by multiple columns:
 
 ```{r, purl=FALSE}
-interviews %>%
-    group_by(village, memb_assoc) %>%
+videos %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
@@ -380,32 +385,32 @@ Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
 `ungroup` function:
 
 ```{r, purl=FALSE}
-interviews %>%
-    group_by(village, memb_assoc) %>%
+videos %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs)) %>%
     ungroup()
 ```
 
-When grouping both by `village` and `membr_assoc`, we see rows in our table for
+When grouping both by `channel_title` and `membr_assoc`, we see rows in our table for
 respondents who did not specify whether they were a member of an irrigation
 association. We can exclude those data from our table using a filter step.
 
 ```{r, purl=FALSE}
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
 Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum household size for each village for each group
+column indicating the minimum household size for each channel_title for each group
 (members of an irrigation association vs not):
 
 ```{r, purl=FALSE}
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs),
               min_membrs = min(no_membrs))
 ```
@@ -415,9 +420,9 @@ For instance, we can sort on `min_membrs` to put the group with the smallest
 household first:
 
 ```{r, purl=FALSE}
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs),
               min_membrs = min(no_membrs)) %>%
     arrange(min_membrs)
@@ -427,9 +432,9 @@ To sort in descending order, we need to add the `desc()` function. If we want to
 sort the results by decreasing order of minimum household size:
 
 ```{r, purl=FALSE}
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs),
               min_membrs = min(no_membrs)) %>%
     arrange(desc(min_membrs))
@@ -440,19 +445,19 @@ interviews %>%
 When working with data, we often want to know the number of observations found
 for each factor or combination of factors. For this task, **`dplyr`** provides
 `count()`. For example, if we wanted to count the number of rows of data for
-each village, we would do:
+each channel_title, we would do:
 
 ```{r, purl=FALSE}
-interviews %>%
-    count(village)
+videos %>%
+    count(channel_title)
 ```
 
 For convenience, `count()` provides the `sort` argument to get results in
 decreasing order:
 
 ```{r, purl=FALSE}
-interviews %>%
-    count(village, sort = TRUE)
+videos %>%
+    count(channel_title, sort = TRUE)
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -468,14 +473,14 @@ of meals represented?
 ## Solution
 
 ```{r}
-interviews %>%
+videos %>%
    count(no_meals)
 ```
 
 :::::::::::::::::::::::::
 
 Use `group_by()` and `summarize()` to find the mean, min, and max
-number of household members for each village. Also add the number of
+number of household members for each channel_title. Also add the number of
 observations (hint: see `?n`).
 
 :::::::::::::::  solution
@@ -483,8 +488,8 @@ observations (hint: see `?n`).
 ## Solution
 
 ```{r}
-interviews %>%
-  group_by(village) %>%
+videos %>%
+  group_by(channel_title) %>%
   summarize(
       mean_no_membrs = mean(no_membrs),
       min_no_membrs = min(no_membrs),
@@ -504,7 +509,7 @@ What was the largest household interviewed in each month?
 ```{r}
 # if not already included, add month, year, and day columns
 library(lubridate) # load lubridate if not already loaded
-interviews %>%
+videos %>%
     mutate(month = month(interview_date),
            day = day(interview_date),
            year = year(interview_date)) %>%
