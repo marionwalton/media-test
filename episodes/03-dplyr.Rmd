@@ -490,8 +490,8 @@ videos %>%
 :::::::::::::::::::::::::
 
 Use `group_by()` and `summarize()` to find the mean, min, and max
-number of household members for each channel_title. Also add the number of
-observations (hint: see `?n`).
+number of views for each YouTube channel (channel_title). Also add the number of
+observations (hint: see `?n`).  Arrange the channels in descending order by the channel's maximum views.
 
 :::::::::::::::  solution
 
@@ -501,16 +501,17 @@ observations (hint: see `?n`).
 videos %>%
   group_by(channel_title) %>%
   summarize(
-      mean_no_membrs = mean(no_membrs),
-      min_no_membrs = min(no_membrs),
-      max_no_membrs = max(no_membrs),
-      n = n()
-  )
+      mean_views = mean(view_count),
+      min_views = min(view_count),
+      max_views = max(view_count),
+      n = n()  )%>%
+      arrange(desc(max_views))
 ```
 
 :::::::::::::::::::::::::
 
-What was the largest household interviewed in each month?
+Excluding those videos that were set to not allow comments (comment_count =NA),
+ what was the total number of comments posted on the videos in each month?
 
 :::::::::::::::  solution
 
@@ -520,11 +521,13 @@ What was the largest household interviewed in each month?
 # if not already included, add month, year, and day columns
 library(lubridate) # load lubridate if not already loaded
 videos %>%
-    mutate(month = month(interview_date),
-           day = day(interview_date),
-           year = year(interview_date)) %>%
+    filter(!is.na(comment_count)) %>%
+    mutate(month = month(published_at_sql),
+           day = day(published_at_sql),
+           year = year(published_at_sql)) %>%
     group_by(year, month) %>%
-    summarize(max_no_membrs = max(no_membrs))
+    summarize(total_comments = sum(comment_count)) %>%
+    arrange(year,month)
 ```
 
 :::::::::::::::::::::::::
