@@ -242,7 +242,7 @@ to the `filter()` and `select()` functions any more.
 
 Some may find it helpful to read the pipe like the word "then". For instance,
 in the above example, we take the dataframe `videos`, *then* we `filter`
-for rows with `channel_title == "SABC News"`, *then* we `select` columns `channel_title:respondent_wall_type`.
+for rows with `channel_title == "SABC News"`, *then* we `select` columns `view_count:comment_count`.
 The **`dplyr`** functions by themselves are somewhat simple,
 but by combining them into linear workflows with the pipe, we can accomplish
 more complex data wrangling operations.
@@ -253,7 +253,7 @@ can assign it a new name:
 ```{r, purl=FALSE}
 videos_SABC_metrics <- videos %>%
     filter(channel_title == "SABC News") %>%
-    select(channel_title:respondent_wall_type)
+    select(view_count:comment_count)
 
 videos_SABC_metrics
 
