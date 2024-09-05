@@ -94,18 +94,47 @@ To make sure everyone will use the same dataset for this lesson, we'll read
 again the SAFI dataset that we downloaded earlier.
 
 
+
 ``` r
-## load the tidyverse
 library(tidyverse)
 library(here)
 
-interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
+videos <- read_csv(
+  here("data", "youtube-27082024-open-refine-200-na.csv"), 
+  na = "na")
+```
 
+``` r
 ## inspect the data
-interviews
+videos
+```
 
+``` output
+# A tibble: 200 × 32
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
+```
+
+``` r
 ## preview the data
-# view(interviews)
+# view(videos)
 ```
 
 We're going to learn some of the most common **`dplyr`** functions:
@@ -120,7 +149,7 @@ We're going to learn some of the most common **`dplyr`** functions:
 ## Selecting columns and filtering rows
 
 To select columns of a dataframe, use `select()`. The first argument to this
-function is the dataframe (`interviews`), and the subsequent arguments are the
+function is the dataframe (`videos`), and the subsequent arguments are the
 columns to keep, separated by commas. Alternatively, if you are selecting
 columns adjacent to each other, you can use a `:` to select a range of columns,
 read as "select columns from \_\_\_ to \_\_\_." You may have done something similar in
@@ -130,41 +159,46 @@ subsetting, using a package (`dplyr`) instead of R's base functions.
 
 ``` r
 # to select columns throughout the dataframe
-select(interviews, village, no_membrs, months_lack_food)
+select(videos, channel_title, view_count, )
 # to do the same thing with subsetting
-interviews[c("village","no_membrs","months_lack_food")]
+videos[c("channel_title","view_count","comment_count")]
 # to select a series of connected columns
-select(interviews, village:respondent_wall_type)
+select(videos,"view_count":"comment_count")
+# to select columns by name as well as a series of connected columns
+select(videos,"channel_title","published_at_sql","view_count":"comment_count")
 ```
 
 To choose rows based on specific criteria, we can use the `filter()` function.
 The argument after the dataframe is the condition we want our final
-dataframe to adhere to (e.g. village name is Chirodzo):
+dataframe to adhere to (e.g. channel_title name is SABC News):
 
 
 ``` r
-# filters observations where village name is "Chirodzo"
-filter(interviews, village == "Chirodzo")
+# filters observations where channel title is "SABC News"
+filter(videos, channel_title == "SABC News")
 ```
 
 ``` output
-# A tibble: 39 × 14
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1      8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 2      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
- 3     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 4     34 Chirodzo 2016-11-17 00:00:00         8        18 burntbricks         
- 5     35 Chirodzo 2016-11-17 00:00:00         5        45 muddaub             
- 6     36 Chirodzo 2016-11-17 00:00:00         6        23 sunbricks           
- 7     37 Chirodzo 2016-11-17 00:00:00         3         8 burntbricks         
- 8     43 Chirodzo 2016-11-17 00:00:00         7        29 muddaub             
- 9     44 Chirodzo 2016-11-17 00:00:00         2         6 muddaub             
-10     45 Chirodzo 2016-11-17 00:00:00         9         7 muddaub             
-# ℹ 29 more rows
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 22 × 32
+   position randomise channel_id               channel_title video_id    url    
+      <dbl>     <dbl> <chr>                    <chr>         <chr>       <chr>  
+ 1       30       785 UC8yH-uI81UUtEMDsowQyx1g SABC News     PNom9RIla7o https:…
+ 2       63       418 UC8yH-uI81UUtEMDsowQyx1g SABC News     EZDazXhf-Pk https:…
+ 3       65       486 UC8yH-uI81UUtEMDsowQyx1g SABC News     9ewtc8eUY7k https:…
+ 4        9       380 UC8yH-uI81UUtEMDsowQyx1g SABC News     naLVyfMrFGs https:…
+ 5       14       500 UC8yH-uI81UUtEMDsowQyx1g SABC News     pO8dkGtjxQc https:…
+ 6       17       647 UC8yH-uI81UUtEMDsowQyx1g SABC News     rRg8J3lqaPc https:…
+ 7       36       663 UC8yH-uI81UUtEMDsowQyx1g SABC News     TLAxmusluVw https:…
+ 8       66       541 UC8yH-uI81UUtEMDsowQyx1g SABC News     P82g09FOSQ0 https:…
+ 9       72       810 UC8yH-uI81UUtEMDsowQyx1g SABC News     N2d1eBI5Zjc https:…
+10      132       404 UC8yH-uI81UUtEMDsowQyx1g SABC News     JXz_3WWo3ew https:…
+# ℹ 12 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
 We can also specify multiple conditions within the `filter()` function. We can
@@ -178,28 +212,38 @@ commas:
 ``` r
 # filters observations with "and" operator (comma)
 # output dataframe satisfies ALL specified conditions
-filter(interviews, village == "Chirodzo",
-                   rooms > 1,
-                   no_meals > 2)
+filter(videos, channel_title == "SABC News",
+                   view_count > 1000,
+                   comment_count > 20)
 ```
 
 ``` output
-# A tibble: 10 × 14
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 2     49 Chirodzo 2016-11-16 00:00:00         6        26 burntbricks         
- 3     52 Chirodzo 2016-11-16 00:00:00        11        15 burntbricks         
- 4     56 Chirodzo 2016-11-16 00:00:00        12        23 burntbricks         
- 5     65 Chirodzo 2016-11-16 00:00:00         8        20 burntbricks         
- 6     66 Chirodzo 2016-11-16 00:00:00        10        37 burntbricks         
- 7     67 Chirodzo 2016-11-16 00:00:00         5        31 burntbricks         
- 8     68 Chirodzo 2016-11-16 00:00:00         8        52 burntbricks         
- 9    199 Chirodzo 2017-06-04 00:00:00         7        17 burntbricks         
-10    200 Chirodzo 2017-06-04 00:00:00         8        20 burntbricks         
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 16 × 32
+   position randomise channel_id               channel_title video_id    url    
+      <dbl>     <dbl> <chr>                    <chr>         <chr>       <chr>  
+ 1       30       785 UC8yH-uI81UUtEMDsowQyx1g SABC News     PNom9RIla7o https:…
+ 2       65       486 UC8yH-uI81UUtEMDsowQyx1g SABC News     9ewtc8eUY7k https:…
+ 3        9       380 UC8yH-uI81UUtEMDsowQyx1g SABC News     naLVyfMrFGs https:…
+ 4       36       663 UC8yH-uI81UUtEMDsowQyx1g SABC News     TLAxmusluVw https:…
+ 5       66       541 UC8yH-uI81UUtEMDsowQyx1g SABC News     P82g09FOSQ0 https:…
+ 6       72       810 UC8yH-uI81UUtEMDsowQyx1g SABC News     N2d1eBI5Zjc https:…
+ 7       11       209 UC8yH-uI81UUtEMDsowQyx1g SABC News     752qt6_0J0k https:…
+ 8        5       636 UC8yH-uI81UUtEMDsowQyx1g SABC News     AqQ-ukdgnWc https:…
+ 9       23       628 UC8yH-uI81UUtEMDsowQyx1g SABC News     CAwHz26tboE https:…
+10       34       569 UC8yH-uI81UUtEMDsowQyx1g SABC News     I5Qra7UUnJs https:…
+11       62       461 UC8yH-uI81UUtEMDsowQyx1g SABC News     mTfSl9KnNPo https:…
+12       73       659 UC8yH-uI81UUtEMDsowQyx1g SABC News     _aH8qJLdKtI https:…
+13       18       597 UC8yH-uI81UUtEMDsowQyx1g SABC News     B2SsMOgP8sQ https:…
+14       22       769 UC8yH-uI81UUtEMDsowQyx1g SABC News     dGDBWhcPTuI https:…
+15       67        33 UC8yH-uI81UUtEMDsowQyx1g SABC News     fs_xxqx70mA https:…
+16       85       574 UC8yH-uI81UUtEMDsowQyx1g SABC News     FIgI7GIcsuc https:…
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, location_description <chr>,
+#   view_count <dbl>, like_count <dbl>, favorite_count <dbl>, …
 ```
 
 We can also form "and" statements with the `&` operator instead of commas:
@@ -208,28 +252,38 @@ We can also form "and" statements with the `&` operator instead of commas:
 ``` r
 # filters observations with "&" logical operator
 # output dataframe satisfies ALL specified conditions
-filter(interviews, village == "Chirodzo" &
-                   rooms > 1 &
-                   no_meals > 2)
+filter(videos, channel_title == "SABC News" &
+                   view_count > 1000 &
+                   comment_count > 20)
 ```
 
 ``` output
-# A tibble: 10 × 14
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 2     49 Chirodzo 2016-11-16 00:00:00         6        26 burntbricks         
- 3     52 Chirodzo 2016-11-16 00:00:00        11        15 burntbricks         
- 4     56 Chirodzo 2016-11-16 00:00:00        12        23 burntbricks         
- 5     65 Chirodzo 2016-11-16 00:00:00         8        20 burntbricks         
- 6     66 Chirodzo 2016-11-16 00:00:00        10        37 burntbricks         
- 7     67 Chirodzo 2016-11-16 00:00:00         5        31 burntbricks         
- 8     68 Chirodzo 2016-11-16 00:00:00         8        52 burntbricks         
- 9    199 Chirodzo 2017-06-04 00:00:00         7        17 burntbricks         
-10    200 Chirodzo 2017-06-04 00:00:00         8        20 burntbricks         
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 16 × 32
+   position randomise channel_id               channel_title video_id    url    
+      <dbl>     <dbl> <chr>                    <chr>         <chr>       <chr>  
+ 1       30       785 UC8yH-uI81UUtEMDsowQyx1g SABC News     PNom9RIla7o https:…
+ 2       65       486 UC8yH-uI81UUtEMDsowQyx1g SABC News     9ewtc8eUY7k https:…
+ 3        9       380 UC8yH-uI81UUtEMDsowQyx1g SABC News     naLVyfMrFGs https:…
+ 4       36       663 UC8yH-uI81UUtEMDsowQyx1g SABC News     TLAxmusluVw https:…
+ 5       66       541 UC8yH-uI81UUtEMDsowQyx1g SABC News     P82g09FOSQ0 https:…
+ 6       72       810 UC8yH-uI81UUtEMDsowQyx1g SABC News     N2d1eBI5Zjc https:…
+ 7       11       209 UC8yH-uI81UUtEMDsowQyx1g SABC News     752qt6_0J0k https:…
+ 8        5       636 UC8yH-uI81UUtEMDsowQyx1g SABC News     AqQ-ukdgnWc https:…
+ 9       23       628 UC8yH-uI81UUtEMDsowQyx1g SABC News     CAwHz26tboE https:…
+10       34       569 UC8yH-uI81UUtEMDsowQyx1g SABC News     I5Qra7UUnJs https:…
+11       62       461 UC8yH-uI81UUtEMDsowQyx1g SABC News     mTfSl9KnNPo https:…
+12       73       659 UC8yH-uI81UUtEMDsowQyx1g SABC News     _aH8qJLdKtI https:…
+13       18       597 UC8yH-uI81UUtEMDsowQyx1g SABC News     B2SsMOgP8sQ https:…
+14       22       769 UC8yH-uI81UUtEMDsowQyx1g SABC News     dGDBWhcPTuI https:…
+15       67        33 UC8yH-uI81UUtEMDsowQyx1g SABC News     fs_xxqx70mA https:…
+16       85       574 UC8yH-uI81UUtEMDsowQyx1g SABC News     FIgI7GIcsuc https:…
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, location_description <chr>,
+#   view_count <dbl>, like_count <dbl>, favorite_count <dbl>, …
 ```
 
 In an "or" statement, observations must meet *at least one* of the specified conditions.
@@ -239,27 +293,30 @@ To form "or" statements we use the logical operator for "or," which is the verti
 ``` r
 # filters observations with "|" logical operator
 # output dataframe satisfies AT LEAST ONE of the specified conditions
-filter(interviews, village == "Chirodzo" | village == "Ruaca")
+filter(videos, channel_title == "SABC News" | channel_title == "eNCA")
 ```
 
 ``` output
-# A tibble: 88 × 14
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1      8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 2      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
- 3     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 4     23 Ruaca    2016-11-21 00:00:00        10        20 burntbricks         
- 5     24 Ruaca    2016-11-21 00:00:00         6         4 burntbricks         
- 6     25 Ruaca    2016-11-21 00:00:00        11         6 burntbricks         
- 7     26 Ruaca    2016-11-21 00:00:00         3        20 burntbricks         
- 8     27 Ruaca    2016-11-21 00:00:00         7        36 burntbricks         
- 9     28 Ruaca    2016-11-21 00:00:00         2         2 muddaub             
-10     29 Ruaca    2016-11-21 00:00:00         7        10 burntbricks         
-# ℹ 78 more rows
-# ℹ 8 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>
+# A tibble: 42 × 32
+   position randomise channel_id               channel_title video_id    url    
+      <dbl>     <dbl> <chr>                    <chr>         <chr>       <chr>  
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA          iPUAl1jywdU https:…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA          YUmIAd_O0U4 https:…
+ 3       30       785 UC8yH-uI81UUtEMDsowQyx1g SABC News     PNom9RIla7o https:…
+ 4       63       418 UC8yH-uI81UUtEMDsowQyx1g SABC News     EZDazXhf-Pk https:…
+ 5       65       486 UC8yH-uI81UUtEMDsowQyx1g SABC News     9ewtc8eUY7k https:…
+ 6        2       944 UCI3RT5PGmdi1KVp9FG_CneA eNCA          li3_91gCQHc https:…
+ 7        3       269 UCI3RT5PGmdi1KVp9FG_CneA eNCA          kvQRfnD1h64 https:…
+ 8        4       518 UCI3RT5PGmdi1KVp9FG_CneA eNCA          3BkmO0M56lA https:…
+ 9        7       417 UCI3RT5PGmdi1KVp9FG_CneA eNCA          hZBwMrCCp4A https:…
+10        9       380 UC8yH-uI81UUtEMDsowQyx1g SABC News     naLVyfMrFGs https:…
+# ℹ 32 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
 ## Pipes
@@ -272,8 +329,8 @@ that as input to the next function, like this:
 
 
 ``` r
-interviews2 <- filter(interviews, village == "Chirodzo")
-interviews_ch <- select(interviews2, village:respondent_wall_type)
+videos2 <- filter(videos, channel_title == "SABC News")
+videos_SABC_metrics <- select(videos2, channel_title,view_count:comment_count)
 ```
 
 This is readable, but can clutter up your workspace with lots of objects that
@@ -284,8 +341,26 @@ You can also nest functions (i.e. one function inside of another), like this:
 
 
 ``` r
-interviews_ch <- select(filter(interviews, village == "Chirodzo"),
-                         village:respondent_wall_type)
+videos_SABC_metrics <- select(filter(videos, channel_title == "SABC News"),
+                         channel_title,view_count:comment_count)
+videos_SABC_metrics
+```
+
+``` output
+# A tibble: 22 × 5
+   channel_title view_count like_count favorite_count comment_count
+   <chr>              <dbl>      <dbl>          <dbl>         <dbl>
+ 1 SABC News          22079        125              0           105
+ 2 SABC News           3339         18              0             7
+ 3 SABC News          20674        122              0           100
+ 4 SABC News          19715         68              0           132
+ 5 SABC News          14485         52              0            19
+ 6 SABC News           2329         18              0             7
+ 7 SABC News          25313        133              0           131
+ 8 SABC News          11466         55              0            28
+ 9 SABC News           7297         74              0            34
+10 SABC News           3147         12              0             2
+# ℹ 12 more rows
 ```
 
 This is handy, but can be difficult to read if too many functions are nested, as
@@ -303,44 +378,44 @@ you need to do many things to the same dataset. There are two Pipes in R: 1) `%>
 
 ``` r
 # the following example is run using magrittr pipe but the output will be same with the native pipe
-interviews %>%
-    filter(village == "Chirodzo") %>%
-    select(village:respondent_wall_type)
+videos %>%
+    filter(channel_title == "SABC News") %>%
+    select(channel_title,view_count:comment_count)
 ```
 
 ``` output
-# A tibble: 39 × 5
-   village  interview_date      no_membrs years_liv respondent_wall_type
-   <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 2 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
- 3 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 4 Chirodzo 2016-11-17 00:00:00         8        18 burntbricks         
- 5 Chirodzo 2016-11-17 00:00:00         5        45 muddaub             
- 6 Chirodzo 2016-11-17 00:00:00         6        23 sunbricks           
- 7 Chirodzo 2016-11-17 00:00:00         3         8 burntbricks         
- 8 Chirodzo 2016-11-17 00:00:00         7        29 muddaub             
- 9 Chirodzo 2016-11-17 00:00:00         2         6 muddaub             
-10 Chirodzo 2016-11-17 00:00:00         9         7 muddaub             
-# ℹ 29 more rows
+# A tibble: 22 × 5
+   channel_title view_count like_count favorite_count comment_count
+   <chr>              <dbl>      <dbl>          <dbl>         <dbl>
+ 1 SABC News          22079        125              0           105
+ 2 SABC News           3339         18              0             7
+ 3 SABC News          20674        122              0           100
+ 4 SABC News          19715         68              0           132
+ 5 SABC News          14485         52              0            19
+ 6 SABC News           2329         18              0             7
+ 7 SABC News          25313        133              0           131
+ 8 SABC News          11466         55              0            28
+ 9 SABC News           7297         74              0            34
+10 SABC News           3147         12              0             2
+# ℹ 12 more rows
 ```
 
 ``` r
-#interviews |>
-#   filter(village == "Chirodzo") |>
-#   select(village:respondent_wall_type)
+#videos |>
+#   filter(channel_title == "SABC News") |>
+#   select(channel_title,view_count:comment_count)
 ```
 
-In the above code, we use the pipe to send the `interviews` dataset first
-through `filter()` to keep rows where `village` is "Chirodzo", then through
-`select()` to keep only the columns from `village` to `respondent_wall_type`. Since `%>%`
+In the above code, we use the pipe to send the `videos` dataset first
+through `filter()` to keep rows where `channel_title` is "SABC News", then through
+`select()` to keep only the columns from `channel_title` to `respondent_wall_type`. Since `%>%`
 takes the object on its left and passes it as the first argument to the function
 on its right, we don't need to explicitly include the dataframe as an argument
 to the `filter()` and `select()` functions any more.
 
 Some may find it helpful to read the pipe like the word "then". For instance,
-in the above example, we take the dataframe `interviews`, *then* we `filter`
-for rows with `village == "Chirodzo"`, *then* we `select` columns `village:respondent_wall_type`.
+in the above example, we take the dataframe `videos`, *then* we `filter`
+for rows with `channel_title == "SABC News"`, *then* we `select` columns `channel_title:respondent_wall_type`.
 The **`dplyr`** functions by themselves are somewhat simple,
 but by combining them into linear workflows with the pipe, we can accomplish
 more complex data wrangling operations.
@@ -350,41 +425,48 @@ can assign it a new name:
 
 
 ``` r
-interviews_ch <- interviews %>%
-    filter(village == "Chirodzo") %>%
-    select(village:respondent_wall_type)
+videos_SABC_metrics <- videos %>%
+    filter(channel_title == "SABC News") %>%
+    select(channel_title:respondent_wall_type)
+```
 
-interviews_ch
+``` error
+Error in `select()`:
+! Can't select columns that don't exist.
+✖ Column `respondent_wall_type` doesn't exist.
+```
+
+``` r
+videos_SABC_metrics
 ```
 
 ``` output
-# A tibble: 39 × 5
-   village  interview_date      no_membrs years_liv respondent_wall_type
-   <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 2 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
- 3 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 4 Chirodzo 2016-11-17 00:00:00         8        18 burntbricks         
- 5 Chirodzo 2016-11-17 00:00:00         5        45 muddaub             
- 6 Chirodzo 2016-11-17 00:00:00         6        23 sunbricks           
- 7 Chirodzo 2016-11-17 00:00:00         3         8 burntbricks         
- 8 Chirodzo 2016-11-17 00:00:00         7        29 muddaub             
- 9 Chirodzo 2016-11-17 00:00:00         2         6 muddaub             
-10 Chirodzo 2016-11-17 00:00:00         9         7 muddaub             
-# ℹ 29 more rows
+# A tibble: 22 × 5
+   channel_title view_count like_count favorite_count comment_count
+   <chr>              <dbl>      <dbl>          <dbl>         <dbl>
+ 1 SABC News          22079        125              0           105
+ 2 SABC News           3339         18              0             7
+ 3 SABC News          20674        122              0           100
+ 4 SABC News          19715         68              0           132
+ 5 SABC News          14485         52              0            19
+ 6 SABC News           2329         18              0             7
+ 7 SABC News          25313        133              0           131
+ 8 SABC News          11466         55              0            28
+ 9 SABC News           7297         74              0            34
+10 SABC News           3147         12              0             2
+# ℹ 12 more rows
 ```
 
-Note that the final dataframe (`interviews_ch`) is the leftmost part of this
+Note that the final dataframe (`videos_SABC_metrics`) is the leftmost part of this
 expression.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-Using pipes, subset the `interviews` data to include interviews
-where respondents were members of an irrigation association
-(`memb_assoc`) and retain only the columns `affect_conflicts`,
-`liv_count`, and `no_meals`.
+Using pipes, subset the `videos` data to include videos
+where the video is categorised as "News & Politics" 
+and retain only the metrics columns with values (views, likes and comments).
 
 :::::::::::::::  solution
 
@@ -392,26 +474,26 @@ where respondents were members of an irrigation association
 
 
 ``` r
-interviews %>%
-    filter(memb_assoc == "yes") %>%
-    select(affect_conflicts, liv_count, no_meals)
+videos %>%
+    filter(video_category_label == "News & Politics") %>%
+    select(view_count,like_count,comment_count)
 ```
 
 ``` output
-# A tibble: 33 × 3
-   affect_conflicts liv_count no_meals
-   <chr>                <dbl>    <dbl>
- 1 once                     3        2
- 2 never                    2        2
- 3 never                    2        3
- 4 once                     3        2
- 5 frequently               1        3
- 6 more_once                5        2
- 7 more_once                3        2
- 8 more_once                2        3
- 9 once                     3        3
-10 never                    3        3
-# ℹ 23 more rows
+# A tibble: 85 × 3
+   view_count like_count comment_count
+        <dbl>      <dbl>         <dbl>
+ 1        939         12            NA
+ 2        910          7            NA
+ 3        213          6             2
+ 4      22079        125           105
+ 5       3339         18             7
+ 6      20674        122           100
+ 7       6745         10            NA
+ 8       6087         47             0
+ 9      11359         84             0
+10      34911        299            NA
+# ℹ 75 more rows
 ```
 
 :::::::::::::::::::::::::
@@ -424,85 +506,91 @@ Frequently you'll want to create new columns based on the values in existing
 columns, for example to do unit conversions, or to find the ratio of values in
 two columns. For this we'll use `mutate()`.
 
-We might be interested in the ratio of number of household members
-to rooms used for sleeping (i.e. avg number of people per room):
+We might be interested in the ratio of likes
+to comments:
 
 
 ``` r
-interviews %>%
-    mutate(people_per_room = no_membrs / rooms)
+videos %>%
+    mutate(ratio = like_count / comment_count)
 ```
 
 ``` output
-# A tibble: 131 × 15
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1      1 God      2016-11-17 00:00:00         3         4 muddaub             
- 2      2 God      2016-11-17 00:00:00         7         9 muddaub             
- 3      3 God      2016-11-17 00:00:00        10        15 burntbricks         
- 4      4 God      2016-11-17 00:00:00         7         6 burntbricks         
- 5      5 God      2016-11-17 00:00:00         7        40 burntbricks         
- 6      6 God      2016-11-17 00:00:00         3         3 muddaub             
- 7      7 God      2016-11-17 00:00:00         6        38 muddaub             
- 8      8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 9      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
-10     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
-# ℹ 121 more rows
-# ℹ 9 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>, people_per_room <dbl>
+# A tibble: 200 × 33
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 27 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
-We may be interested in investigating whether being a member of an
-irrigation association had any effect on the ratio of household members
-to rooms. To look at this relationship, we will first remove
-data from our dataset where the respondent didn't answer the
-question of whether they were a member of an irrigation association.
-These cases are recorded as "NULL" in the dataset.
+We may be interested in investigating whether mentioning the EFF in the video title
+ had any effect on the ratio of likes to comments. 
+ 
+ To look at this relationship, we will first remove
+data from our dataset where comments were not recorded.
+These cases are recorded as "NA" in the dataset.
 
 To remove these cases, we could insert a `filter()` in the chain:
 
 
 ``` r
-interviews %>%
-    filter(!is.na(memb_assoc)) %>%
-    mutate(people_per_room = no_membrs / rooms)
+videos %>%
+    filter(!is.na(comment_count)) %>%
+    mutate(ratio = like_count / comment_count)
 ```
 
 ``` output
-# A tibble: 92 × 15
-   key_ID village  interview_date      no_membrs years_liv respondent_wall_type
-    <dbl> <chr>    <dttm>                  <dbl>     <dbl> <chr>               
- 1      2 God      2016-11-17 00:00:00         7         9 muddaub             
- 2      7 God      2016-11-17 00:00:00         6        38 muddaub             
- 3      8 Chirodzo 2016-11-16 00:00:00        12        70 burntbricks         
- 4      9 Chirodzo 2016-11-16 00:00:00         8         6 burntbricks         
- 5     10 Chirodzo 2016-12-16 00:00:00        12        23 burntbricks         
- 6     12 God      2016-11-21 00:00:00         7        20 burntbricks         
- 7     13 God      2016-11-21 00:00:00         6         8 burntbricks         
- 8     15 God      2016-11-21 00:00:00         5        30 sunbricks           
- 9     21 God      2016-11-21 00:00:00         8        20 burntbricks         
-10     24 Ruaca    2016-11-21 00:00:00         6         4 burntbricks         
-# ℹ 82 more rows
-# ℹ 9 more variables: rooms <dbl>, memb_assoc <chr>, affect_conflicts <chr>,
-#   liv_count <dbl>, items_owned <chr>, no_meals <dbl>, months_lack_food <chr>,
-#   instanceID <chr>, people_per_room <dbl>
+# A tibble: 184 × 33
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 2      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 3      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 4      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 5      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 6      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 7      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+ 8      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+ 9      263       952 UCYeHXDmIJDiF1DVQM0qfNWQ Mama Shirat        19uG9pR… http…
+10       30       785 UC8yH-uI81UUtEMDsowQyx1g SABC News          PNom9RI… http…
+# ℹ 174 more rows
+# ℹ 27 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
 ```
 
 The `!` symbol negates the result of the `is.na()` function. Thus, if `is.na()`
-returns a value of `TRUE` (because the `memb_assoc` is missing), the `!` symbol
-negates this and says we only want values of `FALSE`, where `memb_assoc` **is
+returns a value of `TRUE` (because the `comment_count` is missing), the `!` symbol
+negates this and says we only want values of `FALSE`, where `comment_count **is
 not** missing.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-Create a new dataframe from the `interviews` data that meets the following
-criteria: contains only the `village` column and a new column called
-`total_meals` containing a value that is equal to the total number of meals
-served in the household per day on average (`no_membrs` times `no_meals`).
-Only the rows where `total_meals` is greater than 20 should be shown in the
+Create a new dataframe from the `videos` data that meets the following
+criteria: contains only the `channel_title` column and, for all the videos which received at least one comment,
+ a new column called
+`ratio` containing a value that is equal to the likes divided by the comments.
+Only the rows where `ratio` is greater than 20 should be shown in the
 final dataframe.
 
 **Hint**: think about how the commands should be ordered to produce this data
@@ -514,10 +602,29 @@ frame!
 
 
 ``` r
-interviews_total_meals <- interviews %>%
-    mutate(total_meals = no_membrs * no_meals) %>%
-    filter(total_meals > 20) %>%
-    select(village, total_meals)
+videos_ratio <- videos %>%
+    filter(comment_count>0) %>%
+    mutate(ratio =  view_count/comment_count) %>%
+    filter(ratio > 20) %>%
+    select(channel_title, ratio)
+videos_ratio
+```
+
+``` output
+# A tibble: 120 × 2
+   channel_title   ratio
+   <chr>           <dbl>
+ 1 The Tea World    143.
+ 2 Celeb LaLa Land  260.
+ 3 Zandile Mhlambi  106.
+ 4 Beauty recipes  3707.
+ 5 Mama Shirat      650.
+ 6 SABC News        210.
+ 7 SABC News        477 
+ 8 SABC News        207.
+ 9 SABC News        149.
+10 SABC News        762.
+# ℹ 110 more rows
 ```
 
 :::::::::::::::::::::::::
@@ -537,22 +644,21 @@ the `group_by()` function.
 group into a single-row summary of that group.  `group_by()` takes as arguments
 the column names that contain the **categorical** variables for which you want
 to calculate the summary statistics. So to compute the average household size by
-village:
+channel_title:
 
 
 ``` r
-interviews %>%
-    group_by(village) %>%
+videos %>%
+    group_by(channel_title) %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-``` output
-# A tibble: 3 × 2
-  village  mean_no_membrs
-  <chr>             <dbl>
-1 Chirodzo           7.08
-2 God                6.86
-3 Ruaca              7.57
+``` error
+Error in `summarize()`:
+ℹ In argument: `mean_no_membrs = mean(no_membrs)`.
+ℹ In group 1: `channel_title = "2nacheki"`.
+Caused by error:
+! object 'no_membrs' not found
 ```
 
 You may also have noticed that the output from these calls doesn't run off the
@@ -562,30 +668,15 @@ You can also group by multiple columns:
 
 
 ``` r
-interviews %>%
-    group_by(village, memb_assoc) %>%
+videos %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-``` output
-`summarise()` has grouped output by 'village'. You can override using the
-`.groups` argument.
-```
-
-``` output
-# A tibble: 9 × 3
-# Groups:   village [3]
-  village  memb_assoc mean_no_membrs
-  <chr>    <chr>               <dbl>
-1 Chirodzo no                   8.06
-2 Chirodzo yes                  7.82
-3 Chirodzo <NA>                 5.08
-4 God      no                   7.13
-5 God      yes                  8   
-6 God      <NA>                 6   
-7 Ruaca    no                   7.18
-8 Ruaca    yes                  9.5 
-9 Ruaca    <NA>                 6.22
+``` error
+Error in `group_by()`:
+! Must group by variables found in `.data`.
+✖ Column `memb_assoc` is not found.
 ```
 
 Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
@@ -593,92 +684,56 @@ Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
 
 
 ``` r
-interviews %>%
-    group_by(village, memb_assoc) %>%
+videos %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs)) %>%
     ungroup()
 ```
 
-``` output
-`summarise()` has grouped output by 'village'. You can override using the
-`.groups` argument.
+``` error
+Error in `group_by()`:
+! Must group by variables found in `.data`.
+✖ Column `memb_assoc` is not found.
 ```
 
-``` output
-# A tibble: 9 × 3
-  village  memb_assoc mean_no_membrs
-  <chr>    <chr>               <dbl>
-1 Chirodzo no                   8.06
-2 Chirodzo yes                  7.82
-3 Chirodzo <NA>                 5.08
-4 God      no                   7.13
-5 God      yes                  8   
-6 God      <NA>                 6   
-7 Ruaca    no                   7.18
-8 Ruaca    yes                  9.5 
-9 Ruaca    <NA>                 6.22
-```
-
-When grouping both by `village` and `membr_assoc`, we see rows in our table for
+When grouping both by `channel_title` and `membr_assoc`, we see rows in our table for
 respondents who did not specify whether they were a member of an irrigation
 association. We can exclude those data from our table using a filter step.
 
 
 ``` r
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-``` output
-`summarise()` has grouped output by 'village'. You can override using the
-`.groups` argument.
-```
-
-``` output
-# A tibble: 6 × 3
-# Groups:   village [3]
-  village  memb_assoc mean_no_membrs
-  <chr>    <chr>               <dbl>
-1 Chirodzo no                   8.06
-2 Chirodzo yes                  7.82
-3 God      no                   7.13
-4 God      yes                  8   
-5 Ruaca    no                   7.18
-6 Ruaca    yes                  9.5 
+``` error
+Error in `filter()`:
+ℹ In argument: `!is.na(memb_assoc)`.
+Caused by error:
+! object 'memb_assoc' not found
 ```
 
 Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum household size for each village for each group
+column indicating the minimum household size for each channel_title for each group
 (members of an irrigation association vs not):
 
 
 ``` r
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs),
               min_membrs = min(no_membrs))
 ```
 
-``` output
-`summarise()` has grouped output by 'village'. You can override using the
-`.groups` argument.
-```
-
-``` output
-# A tibble: 6 × 4
-# Groups:   village [3]
-  village  memb_assoc mean_no_membrs min_membrs
-  <chr>    <chr>               <dbl>      <dbl>
-1 Chirodzo no                   8.06          4
-2 Chirodzo yes                  7.82          2
-3 God      no                   7.13          3
-4 God      yes                  8             5
-5 Ruaca    no                   7.18          2
-6 Ruaca    yes                  9.5           5
+``` error
+Error in `filter()`:
+ℹ In argument: `!is.na(memb_assoc)`.
+Caused by error:
+! object 'memb_assoc' not found
 ```
 
 It is sometimes useful to rearrange the result of a query to inspect the values.
@@ -687,30 +742,19 @@ household first:
 
 
 ``` r
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs),
               min_membrs = min(no_membrs)) %>%
     arrange(min_membrs)
 ```
 
-``` output
-`summarise()` has grouped output by 'village'. You can override using the
-`.groups` argument.
-```
-
-``` output
-# A tibble: 6 × 4
-# Groups:   village [3]
-  village  memb_assoc mean_no_membrs min_membrs
-  <chr>    <chr>               <dbl>      <dbl>
-1 Chirodzo yes                  7.82          2
-2 Ruaca    no                   7.18          2
-3 God      no                   7.13          3
-4 Chirodzo no                   8.06          4
-5 God      yes                  8             5
-6 Ruaca    yes                  9.5           5
+``` error
+Error in `filter()`:
+ℹ In argument: `!is.na(memb_assoc)`.
+Caused by error:
+! object 'memb_assoc' not found
 ```
 
 To sort in descending order, we need to add the `desc()` function. If we want to
@@ -718,30 +762,19 @@ sort the results by decreasing order of minimum household size:
 
 
 ``` r
-interviews %>%
+videos %>%
     filter(!is.na(memb_assoc)) %>%
-    group_by(village, memb_assoc) %>%
+    group_by(channel_title, memb_assoc) %>%
     summarize(mean_no_membrs = mean(no_membrs),
               min_membrs = min(no_membrs)) %>%
     arrange(desc(min_membrs))
 ```
 
-``` output
-`summarise()` has grouped output by 'village'. You can override using the
-`.groups` argument.
-```
-
-``` output
-# A tibble: 6 × 4
-# Groups:   village [3]
-  village  memb_assoc mean_no_membrs min_membrs
-  <chr>    <chr>               <dbl>      <dbl>
-1 God      yes                  8             5
-2 Ruaca    yes                  9.5           5
-3 Chirodzo no                   8.06          4
-4 God      no                   7.13          3
-5 Chirodzo yes                  7.82          2
-6 Ruaca    no                   7.18          2
+``` error
+Error in `filter()`:
+ℹ In argument: `!is.na(memb_assoc)`.
+Caused by error:
+! object 'memb_assoc' not found
 ```
 
 ### Counting
@@ -749,21 +782,29 @@ interviews %>%
 When working with data, we often want to know the number of observations found
 for each factor or combination of factors. For this task, **`dplyr`** provides
 `count()`. For example, if we wanted to count the number of rows of data for
-each village, we would do:
+each channel_title, we would do:
 
 
 ``` r
-interviews %>%
-    count(village)
+videos %>%
+    count(channel_title)
 ```
 
 ``` output
-# A tibble: 3 × 2
-  village      n
-  <chr>    <int>
-1 Chirodzo    39
-2 God         43
-3 Ruaca       49
+# A tibble: 119 × 2
+   channel_title                     n
+   <chr>                         <int>
+ 1 2nacheki                          2
+ 2 Absolute Controversy              1
+ 3 African Diaspora News Channel     1
+ 4 Al Jazeera English                1
+ 5 Ayanda Mafuyeka                   2
+ 6 Azana Jezile                      1
+ 7 BANELE NOCUZE                     3
+ 8 Banetsi Tshetlo                   1
+ 9 Beauty recipes                    1
+10 Blackish Blue TV                  1
+# ℹ 109 more rows
 ```
 
 For convenience, `count()` provides the `sort` argument to get results in
@@ -771,17 +812,25 @@ decreasing order:
 
 
 ``` r
-interviews %>%
-    count(village, sort = TRUE)
+videos %>%
+    count(channel_title, sort = TRUE)
 ```
 
 ``` output
-# A tibble: 3 × 2
-  village      n
-  <chr>    <int>
-1 Ruaca       49
-2 God         43
-3 Chirodzo    39
+# A tibble: 119 × 2
+   channel_title                 n
+   <chr>                     <int>
+ 1 SABC News                    22
+ 2 eNCA                         20
+ 3 Newzroom Afrika              13
+ 4 Umgosi Entertainment          5
+ 5 StellenboschNews Com          4
+ 6 BANELE NOCUZE                 3
+ 7 Economic Freedom Fighters     3
+ 8 Renaldo Gouws                 3
+ 9 Trade with Free Money         3
+10 2nacheki                      2
+# ℹ 109 more rows
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -798,22 +847,20 @@ of meals represented?
 
 
 ``` r
-interviews %>%
+videos %>%
    count(no_meals)
 ```
 
-``` output
-# A tibble: 2 × 2
-  no_meals     n
-     <dbl> <int>
-1        2    52
-2        3    79
+``` error
+Error in `count()`:
+! Must group by variables found in `.data`.
+✖ Column `no_meals` is not found.
 ```
 
 :::::::::::::::::::::::::
 
 Use `group_by()` and `summarize()` to find the mean, min, and max
-number of household members for each village. Also add the number of
+number of household members for each channel_title. Also add the number of
 observations (hint: see `?n`).
 
 :::::::::::::::  solution
@@ -822,8 +869,8 @@ observations (hint: see `?n`).
 
 
 ``` r
-interviews %>%
-  group_by(village) %>%
+videos %>%
+  group_by(channel_title) %>%
   summarize(
       mean_no_membrs = mean(no_membrs),
       min_no_membrs = min(no_membrs),
@@ -832,13 +879,12 @@ interviews %>%
   )
 ```
 
-``` output
-# A tibble: 3 × 5
-  village  mean_no_membrs min_no_membrs max_no_membrs     n
-  <chr>             <dbl>         <dbl>         <dbl> <int>
-1 Chirodzo           7.08             2            12    39
-2 God                6.86             3            15    43
-3 Ruaca              7.57             2            19    49
+``` error
+Error in `summarize()`:
+ℹ In argument: `mean_no_membrs = mean(no_membrs)`.
+ℹ In group 1: `channel_title = "2nacheki"`.
+Caused by error:
+! object 'no_membrs' not found
 ```
 
 :::::::::::::::::::::::::
@@ -853,7 +899,7 @@ What was the largest household interviewed in each month?
 ``` r
 # if not already included, add month, year, and day columns
 library(lubridate) # load lubridate if not already loaded
-interviews %>%
+videos %>%
     mutate(month = month(interview_date),
            day = day(interview_date),
            year = year(interview_date)) %>%
@@ -861,21 +907,11 @@ interviews %>%
     summarize(max_no_membrs = max(no_membrs))
 ```
 
-``` output
-`summarise()` has grouped output by 'year'. You can override using the
-`.groups` argument.
-```
-
-``` output
-# A tibble: 5 × 3
-# Groups:   year [2]
-   year month max_no_membrs
-  <dbl> <dbl>         <dbl>
-1  2016    11            19
-2  2016    12            12
-3  2017     4            17
-4  2017     5            15
-5  2017     6            15
+``` error
+Error in `mutate()`:
+ℹ In argument: `month = month(interview_date)`.
+Caused by error:
+! object 'interview_date' not found
 ```
 
 :::::::::::::::::::::::::
