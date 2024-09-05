@@ -132,16 +132,16 @@ videos %>%
 # A tibble: 10 × 3
    video_id    channel_title published_at_sql   
    <chr>       <chr>         <chr>              
- 1 -vdIFk95vPk eNCA          2020-09-07 8:23:46 
- 2 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
- 3 iPUAl1jywdU eNCA          2020-09-14 16:16:44
- 4 Ra0hdT2gsxU eNCA          2020-09-07 14:20:04
- 5 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
- 6 li3_91gCQHc eNCA          2020-09-09 4:30:37 
- 7 59uEjm0OlRs eNCA          2020-09-07 8:13:41 
- 8 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
- 9 _Mz-QydrFMs eNCA          2020-09-07 7:17:10 
-10 flzoE9zL_KA eNCA          2020-09-07 11:28:32
+ 1 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
+ 2 3BkmO0M56lA eNCA          2020-09-08 6:54:04 
+ 3 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
+ 4 huI9qbGqNhA eNCA          2020-09-07 17:59:13
+ 5 -vdIFk95vPk eNCA          2020-09-07 8:23:46 
+ 6 iPUAl1jywdU eNCA          2020-09-14 16:16:44
+ 7 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
+ 8 EH0RpWcq66w eNCA          2020-09-08 12:50:32
+ 9 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
+10 3EtH4eDceFY eNCA          2020-09-10 9:11:44 
 ```
 
 We notice that the layout or format of the `videos` data is in a format that
@@ -404,7 +404,7 @@ column names. We will do this in two steps to make this process a bit clearer.
 `pivot_longer()` takes four principal arguments:
 
 1. the data
-2. *cols* are the names of the columns we use to fill the a new values variable
+2. *cols* are the names of the columns we use to fill the new values variable
   (or to drop).
 3. the *names\_to* column variable we wish to create from the *cols* provided.
 4. the *values\_to* column variable we wish to create and fill with values
@@ -414,15 +414,9 @@ column names. We will do this in two steps to make this process a bit clearer.
 
 ``` r
 videos_long <- videos_topics %>%
-  pivot_longer(cols = bicycle:car,
+  pivot_longer(cols = business:politics,
                names_to = "topic_categories",
                values_to = "topic_categories_logical")
-```
-
-``` error
-Error in `pivot_longer()`:
-! Can't select columns that don't exist.
-✖ Column `bicycle` doesn't exist.
 ```
 
 View both `videos_long` and `videos_topics` and compare their structure.
@@ -435,9 +429,9 @@ We created some summary tables on `videos_topics` using `count` and
 `summarise`. We can create the same tables on `videos_long`, but this will
 require a different process.
 
-1. Make a table showing showing the number of respondents in each village who
-  owned a particular item, and include all items. The difference between this
-  format and the wide format is that you can now `count` all the items using the
+1. Make a table showing showing the number of videos from each channel categorised as a particular topic,
+ and include all items. The difference between this
+  format and the wide format is that you can now `count` all the topics using the
   `topic_categories` variable.
 
 :::::::::::::::  solution
@@ -448,12 +442,26 @@ require a different process.
 ``` r
 videos_long %>%
   filter(topic_categories_logical) %>% 
-  group_by(village) %>% 
-  count(topic_categories)
+  group_by(channel_title) %>% 
+  count(topic_categories, sort=TRUE)
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'videos_long' not found
+``` output
+# A tibble: 171 × 3
+# Groups:   channel_title [114]
+   channel_title   topic_categories       n
+   <chr>           <chr>              <int>
+ 1 SABC News       society               22
+ 2 eNCA            society               20
+ 3 eNCA            television_program    19
+ 4 SABC News       television_program    14
+ 5 Newzroom Afrika society               13
+ 6 Newzroom Afrika television_program    11
+ 7 SABC News       health                10
+ 8 eNCA            health                 8
+ 9 eNCA            politics               6
+10 Newzroom Afrika politics               5
+# ℹ 161 more rows
 ```
 
 :::::::::::::::::::::::::
@@ -475,15 +483,28 @@ not   an actual item, but rather the absence thereof.
 ``` r
 videos_long %>% 
   filter(topic_categories_logical,
-         topic_categories != "no_listed_items") %>% 
-  # to keep information per household, we count key_ID
-  count(key_ID, village) %>% # we want to also keep the village variable
-  group_by(village) %>% 
-  summarise(mean_items = mean(n))
+         topic_categories != "no_topics") %>% 
+  # to keep information per video, we count video_id
+  count(video_id, channel_title) %>% # we want to also keep the channel variable
+  group_by(channel_title) %>% 
+  summarise(mean_topics = mean(n))
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'videos_long' not found
+``` output
+# A tibble: 114 × 2
+   channel_title                 mean_topics
+   <chr>                               <dbl>
+ 1 2nacheki                              1.5
+ 2 Absolute Controversy                  1  
+ 3 African Diaspora News Channel         1  
+ 4 Al Jazeera English                    2  
+ 5 Ayanda Mafuyeka                       2  
+ 6 Azana Jezile                          1  
+ 7 BANELE NOCUZE                         1  
+ 8 Banetsi Tshetlo                       1  
+ 9 Beauty recipes                        2  
+10 Blackish Blue TV                      2  
+# ℹ 104 more rows
 ```
 
 :::::::::::::::::::::::::
@@ -498,12 +519,12 @@ and fixed a problem in the way our data is structured. In the spreadsheets lesso
 we learned that it's best practice to
 have only a single piece of information in each cell of your spreadsheet. In
 this dataset, we have another column that stores multiple values in a single
-cell. Some of the cells in the `months_lack_food` column contain multiple months
+cell. Some of the cells in the `tags` column contain multiple months
 which, as before, are separated by semi-colons (`;`).
 
 To create a data frame where each of the columns contain only one value per cell,
 we can repeat the steps we applied to `topic_categories` and apply them to
-`months_lack_food`. Since we will be using this data frame for the next episode,
+`tags`. Since we will be using this data frame for the next episode,
 we will call it `videos_plotting`.
 
 
@@ -511,30 +532,47 @@ we will call it `videos_plotting`.
 videos_plotting <- videos %>%
   ## pivot wider by topic_categories
   separate_longer_delim(topic_categories, delim = ";") %>%
-  ## if there were no items listed, changing NA to no_listed_items
-  replace_na(list(topic_categories = "no_listed_items")) %>%
+  ## if there were no topics listed, changing NA to no_listed_items
+  replace_na(list(topic_categories = "no_topics")) %>%
   mutate(topic_categories_logical = TRUE) %>%
   pivot_wider(names_from = topic_categories,
               values_from = topic_categories_logical,
-              values_fill = list(topic_categories_logical = FALSE)) %>%
-  ## pivot wider by months_lack_food
-  separate_longer_delim(months_lack_food, delim = ";") %>%
-  mutate(months_lack_food_logical = TRUE) %>%
-  pivot_wider(names_from = months_lack_food,
-              values_from = months_lack_food_logical,
-              values_fill = list(months_lack_food_logical = FALSE)) %>%
+              values_fill = list(topic_categories_logical = FALSE)) #%>%
+  ## pivot wider by tags
+  #separate_longer_delim(tags, delim = ";") %>%
+  #mutate(tags_logical = TRUE) %>%
+  #pivot_wider(names_from = tags,
+  #           values_from = tags_logical
+  #          values_fill = list(tags_logical = FALSE)) %>%
   ## add some summary columns
-  mutate(number_months_lack_food = rowSums(select(., Jan:May))) %>%
-  mutate(number_items = rowSums(select(., bicycle:car)))
+  #mutate(number_tags = rowSums(select(., Jan:May))) %>% #replace with start and end tags
+  #mutate(number_topics = rowSums(select(., business:politics)))
+
+  videos_plotting
 ```
 
-``` error
-Error in `separate_longer_delim()`:
-! Can't select columns that don't exist.
-✖ Column `months_lack_food` doesn't exist.
+``` output
+# A tibble: 200 × 41
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 35 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, duration_sec <dbl>,
+#   definition <chr>, caption <lgl>, default_language <chr>,
+#   default_l_audio_language <chr>, thumbnail_maxres <chr>,
+#   licensed_content <dbl>, location_description <chr>, view_count <dbl>, …
 ```
-
-
 ## Exporting data
 
 Now that you have learned how to use **`dplyr`** and **`tidyr`** to wrangle your
@@ -563,9 +601,6 @@ write_csv (videos_plotting, file = "data_output/videos_plotting.csv")
 ```
 
 
-``` error
-Error in eval(expr, envir, enclos): object 'videos_plotting' not found
-```
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
