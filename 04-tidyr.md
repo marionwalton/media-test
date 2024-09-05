@@ -33,17 +33,45 @@ again the SAFI dataset that we downloaded earlier.
 
 
 ``` r
-## load the tidyverse
 library(tidyverse)
 library(here)
 
-interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
+videos <- read_csv(
+  here("data", "youtube-27082024-open-refine-200-na.csv"), 
+  na = "na")
+```
 
+``` r
 ## inspect the data
-interviews
+videos
+```
 
+``` output
+# A tibble: 200 × 32
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 26 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, topic_categories <chr>,
+#   duration_sec <dbl>, definition <chr>, caption <lgl>,
+#   default_language <chr>, default_l_audio_language <chr>,
+#   thumbnail_maxres <chr>, licensed_content <dbl>, …
+```
+
+``` r
 ## preview the data
-# view(interviews)
+# view(videos)
 ```
 
 ## Reshaping with pivot\_wider() and pivot\_longer()
@@ -64,23 +92,19 @@ This image is licenced under Attribution-NonCommercial-NoDerivs 3.0 United State
 In this section we will explore how these rules are linked to the different
 data formats researchers are often interested in: "wide" and "long". This
 tutorial will help you efficiently transform your data shape regardless of
-original format. First we will explore qualities of the `interviews` data and
+original format. First we will explore qualities of the `videos` data and
 how they relate to these different types of data formats.
 
 ### Long and wide data formats
 
-In the `interviews` data, each row contains the values of variables associated
-with each record collected (each interview in the villages). It is stated
-that the `key_ID` was "added to provide a unique Id for each observation"
-and the `instanceID` "does this as well but it is not as convenient to use."
-
-Once we have established that `key_ID` and `instanceID` are both unique we can use 
-either variable as an identifier corresponding to the 131 interview records.
+In the `videos` data, each row contains the values of variables associated
+with each record collected (each interview in the villages). The `video_id` identifier is a unique
+identifier for each YouTube video.
 
 
 ``` r
-interviews %>% 
-  select(key_ID) %>% 
+videos %>% 
+  select(video_id) %>% 
   distinct() %>% 
   count()
 ```
@@ -89,53 +113,38 @@ interviews %>%
 # A tibble: 1 × 1
       n
   <int>
-1   131
+1   200
 ```
 
-
-``` r
-interviews %>% 
-  select(instanceID) %>% 
-  distinct() %>% 
-  count()
-```
-
-``` output
-# A tibble: 1 × 1
-      n
-  <int>
-1   131
-```
-
-As seen in the code below, for each interview date in each village no
-`instanceID`s are the same. Thus, this format is what is called a "long" data
+As seen in the code below, for each time of publication in each channel no
+video_id`s are the same. Thus, this format is what is called a "long" data
 format, where each observation occupies only one row in the dataframe.
 
 
 ``` r
-interviews %>%
-  filter(village == "Chirodzo") %>%
-  select(key_ID, village, interview_date, instanceID) %>%
+videos %>%
+  filter(channel_title == "eNCA") %>%
+  select(video_id, channel_title, published_at_sql) %>%
   sample_n(size = 10)
 ```
 
 ``` output
-# A tibble: 10 × 4
-   key_ID village  interview_date      instanceID                               
-    <dbl> <chr>    <dttm>              <chr>                                    
- 1     53 Chirodzo 2016-11-16 00:00:00 uuid:cc7f75c5-d13e-43f3-97e5-4f4c03cb4b12
- 2     54 Chirodzo 2016-11-16 00:00:00 uuid:273ab27f-9be3-4f3b-83c9-d3e1592de919
- 3     44 Chirodzo 2016-11-17 00:00:00 uuid:f9fadf44-d040-4fca-86c1-2835f79c4952
- 4     56 Chirodzo 2016-11-16 00:00:00 uuid:973c4ac6-f887-48e7-aeaf-4476f2cfab76
- 5     61 Chirodzo 2016-11-16 00:00:00 uuid:2401cf50-8859-44d9-bd14-1bf9128766f2
- 6     36 Chirodzo 2016-11-17 00:00:00 uuid:c90eade0-1148-4a12-8c0e-6387a36f45b1
- 7      9 Chirodzo 2016-11-16 00:00:00 uuid:846103d2-b1db-4055-b502-9cd510bb7b37
- 8     60 Chirodzo 2016-11-16 00:00:00 uuid:85465caf-23e4-4283-bb72-a0ef30e30176
- 9     55 Chirodzo 2016-11-16 00:00:00 uuid:883c0433-9891-4121-bc63-744f082c1fa0
-10     10 Chirodzo 2016-12-16 00:00:00 uuid:8f4e49bc-da81-4356-ae34-e0d794a23721
+# A tibble: 10 × 3
+   video_id    channel_title published_at_sql   
+   <chr>       <chr>         <chr>              
+ 1 -vdIFk95vPk eNCA          2020-09-07 8:23:46 
+ 2 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
+ 3 iPUAl1jywdU eNCA          2020-09-14 16:16:44
+ 4 Ra0hdT2gsxU eNCA          2020-09-07 14:20:04
+ 5 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
+ 6 li3_91gCQHc eNCA          2020-09-09 4:30:37 
+ 7 59uEjm0OlRs eNCA          2020-09-07 8:13:41 
+ 8 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
+ 9 _Mz-QydrFMs eNCA          2020-09-07 7:17:10 
+10 flzoE9zL_KA eNCA          2020-09-07 11:28:32
 ```
 
-We notice that the layout or format of the `interviews` data is in a format that
+We notice that the layout or format of the `videos` data is in a format that
 adheres to rules 1-3, where
 
 - each column is a variable
@@ -168,30 +177,30 @@ machine readable and is closer to the formatting of databases.
 
 ### Questions which warrant different data formats
 
-In interviews, each row contains the values of variables associated with each
-record (the unit), values such as the village of the respondent, the number
-of household members, or the type of wall their house had. This format allows
-for us to make comparisons across individual surveys, but what if we wanted to
-look at differences in households grouped by different types of items owned?
+In our dataset of YouTube videos, each row contains the values of variables associated with each
+record (the unit), values such as the title of the channel which posted the video, the number
+of views, or the title and description for the video. This format allows
+for us to make comparisons across individual videos, but what if we wanted to
+look at differences in videos grouped by different topics or tags associated with the video?
 
 To facilitate this comparison we would need to create a new table where each row
-(the unit) was comprised of values of variables associated with items owned
-(i.e., `items_owned`). In practical terms this means the values of
-the items in `items_owned` (e.g. bicycle,
-radio, table, etc.) would become the names of column variables and
-the cells would contain values of `TRUE` or `FALSE`, for whether that household
-had that item.
+(the unit) was comprised of values of variables associated with topics or tags
+(i.e., the columns `topic_categories` or `tags` in the dataset). In practical terms this means the values of
+the topics in `topic_categories` (e.g. politics, health,
+business, society, etc.) would become the names of column variables and
+the cells would contain values of `TRUE` or `FALSE`, for whether the video fitted into that category or not.
+
 
 Once we we've created this new table, we can explore the relationship within and
-between villages. The key point here is that we are still following a tidy data
+between videos. The key point here is that we are still following a tidy data
 structure, but we have **reshaped** the data according to the observations of
 interest.
 
-Alternatively, if the interview dates were spread across multiple columns, and
-we were interested in visualizing, within each village, how irrigation
-conflicts have changed over time. This would require for the interview date to
-be included in a single column rather than spread across multiple columns. Thus,
-we would need to transform the column names into values of a variable.
+Alternatively, consider what we would do if the interview dates were spread across multiple columns, and
+we were interested in visualizing how the controversy changed over time. 
+
+This would require for the interview date to be included in a single column rather than spread across multiple columns. Thus,
+we would need to transform the column names into values of a single variable.
 
 We can do both of these transformations with two `tidyr` functions,
 `pivot_wider()` and `pivot_longer()`.
@@ -208,34 +217,34 @@ We can do both of these transformations with two `tidyr` functions,
 Further arguments include `values_fill` which, if set, fills in missing values
 with the value provided.
 
-Let's use `pivot_wider()` to transform interviews to create new columns for each
-item owned by a household.
+Let's use `pivot_wider()` to transform videos to create new columns for each
+topic category allocated to a video.
 There are a couple of new concepts in this transformation, so let's walk through
-it line by line. First we create a new object (`interviews_items_owned`) based on
-the `interviews` data frame.
+it line by line. First we create a new object (`videos_topics`) based on
+the `videos` data frame.
 
 
 ``` r
-interviews_items_owned <- interviews %>%
+videos_topics <- videos %>%
 ```
 
 Then we will actually need to make our data frame longer, because we have 
 multiple items in a single cell.
 We will use a new function, `separate_longer_delim()`, from the **`tidyr`** package
-to separate the values of `items_owned` based on the presence of semi-colons (`;`).
+to separate the values of `topic_categories` based on the presence of semi-colons (`;`).
 The values of this variable were multiple items separated by semi-colons, so
 this action creates a row for each item listed in a household's possession.
 Thus, we end up with a long format version of the dataset, with multiple rows
 for each respondent. For example, if a respondent has a television and a solar
 panel, that respondent will now have two rows, one with "television" and the
-other with "solar panel" in the `items_owned` column.
+other with "solar panel" in the `topic_categories` column.
 
 
 ``` r
-separate_longer_delim(items_owned, delim = ";") %>%
+separate_longer_delim(topic_categories, delim = ";")
 ```
 
-After this transformation, you may notice that the `items_owned` column contains
+After this transformation, you may notice that the `topic_categories` column contains
 `NA` values. This is because some of the respondents did not own any of the items
 that was in the interviewer's list. We can use the `replace_na()` function to
 change these `NA` values to something more meaningful. The `replace_na()` function
@@ -245,34 +254,34 @@ ends up looking like this:
 
 
 ``` r
-replace_na(list(items_owned = "no_listed_items")) %>%
+replace_na(list(topic_categories = "no_categories"))
 ```
 
-Next, we create a new variable named `items_owned_logical`, which has one value
+Next, we create a new variable named `topic_categories_logical`, which has one value
 (`TRUE`) for every row. This makes sense, since each item in every row was owned
 by that household. We are constructing this variable so that when we spread the
-`items_owned` across multiple columns, we can fill the values of those columns
+`topic_categories` across multiple columns, we can fill the values of those columns
 with logical values describing whether the household did (`TRUE`) or didn't
 (`FALSE`) own that particular item.
 
 
 ``` r
-mutate(items_owned_logical = TRUE) %>%
+mutate(topic_categories_logical = TRUE)
 ```
 
 ![](fig/separate_longer.png){alt="Two tables shown side-by-side. The first row of the left table is highlighted in blue, and the first four rows of the right table are also highlighted in blue to show how each of the values of 'items owned' are given their own row with the separate longer delim function. The 'items owned logical' column is highlighted in yellow on the right table to show how the mutate function adds a new column."}
 
 Lastly, we use `pivot_wider()` to switch from long format to wide format. This
-creates a new column for each of the unique values in the `items_owned` column,
-and fills those columns with the values of `items_owned_logical`. We also
-declare that for items that are missing, we want to fill those cells with the
+creates a new column for each of the unique values in the `topic_categories` column,
+and fills those columns with the values of `topic_categories_logical`. We also
+declare that for topics that are missing, we want to fill those cells with the
 value of `FALSE` instead of `NA`.
 
 
 ``` r
-pivot_wider(names_from = items_owned,
-            values_from = items_owned_logical,
-            values_fill = list(items_owned_logical = FALSE))
+pivot_wider(names_from = topic_categories,
+            values_from = topic_categories_logical,
+            values_fill = list(topic_categories_logical = FALSE))
 ```
 
 ![](fig/pivot_wider.png){alt="Two tables shown side-by-side. The 'items owned' column is highlighted in blue on the left table, and the column names are highlighted in blue on the right table to show how the values of the 'items owned' become the column names in the output of the pivot wider function. The 'items owned logical' column is highlighted in yellow on the left table, and the values of the bicycle, television, and solar panel columns are highlighted in yellow on the right table to show how the values of the 'items owned logical' column became the values of all three of the aforementioned columns."}
@@ -281,78 +290,111 @@ Combining the above steps, the chunk looks like this:
 
 
 ``` r
-interviews_items_owned <- interviews %>%
-  separate_longer_delim(items_owned, delim = ";") %>%
-  replace_na(list(items_owned = "no_listed_items")) %>%
-  mutate(items_owned_logical = TRUE) %>%
-  pivot_wider(names_from = items_owned,
-              values_from = items_owned_logical,
-              values_fill = list(items_owned_logical = FALSE))
+videos_topics <- videos %>%
+  separate_longer_delim(topic_categories, delim = ";") %>%
+  replace_na(list(topic_categories = "no_topics")) %>%
+  mutate(topic_categories_logical = TRUE) %>%
+  pivot_wider(names_from = topic_categories,
+              values_from = topic_categories_logical,
+              values_fill = list(topic_categories_logical = FALSE))
+  videos_topics
 ```
 
-View the `interviews_items_owned` data frame. It should have
-131 rows (the same number of rows you had originally), but
+``` output
+# A tibble: 200 × 41
+   position randomise channel_id               channel_title      video_id url  
+      <dbl>     <dbl> <chr>                    <chr>              <chr>    <chr>
+ 1      112       409 UCI3RT5PGmdi1KVp9FG_CneA eNCA               iPUAl1j… http…
+ 2       50       702 UCI3RT5PGmdi1KVp9FG_CneA eNCA               YUmIAd_… http…
+ 3      149       313 UCMwDXpWEVQVw4ZF7z-E4NoA StellenboschNews … v8XfpOi… http…
+ 4      167       384 UCsqKkYLOaJ9oBwq9rxFyZMw SOUTH AFRICAN POL… lnLdo2k… http…
+ 5      195       606 UC5G5Dy8-mmp27jo6Frht7iQ Umgosi Entertainm… XN6toca… http…
+ 6      213       423 UCC1udUghY9dloGMuvZzZEzA The Tea World      rh2Nz78… http…
+ 7      145       452 UCaCcVtl9O3h5en4m-_edhZg Celeb LaLa Land    1l5GZ0N… http…
+ 8      315       276 UCAurTjb6Ewz21vjfTs1wZxw NOSIPHO NZAMA      j4Y022C… http…
+ 9      190       321 UCBlX1mnsIFZRqsyRNvpW_rA Zandile Mhlambi    gf2YNN6… http…
+10      214       762 UClY87IoUANFZtswyC9GeecQ Beauty recipes     AGJmRd4… http…
+# ℹ 190 more rows
+# ℹ 35 more variables: published_at <dttm>, published_at_sql <chr>, year <dbl>,
+#   month <dbl>, day <dbl>, video_title <chr>, video_description <chr>,
+#   tags <chr>, video_category_label <chr>, duration_sec <dbl>,
+#   definition <chr>, caption <lgl>, default_language <chr>,
+#   default_l_audio_language <chr>, thumbnail_maxres <chr>,
+#   licensed_content <dbl>, location_description <chr>, view_count <dbl>, …
+```
+
+View the `videos_topics` data frame. It should have
+200 rows (the same number of rows you had originally), but
 extra columns for each item. How many columns were added?
 Notice that there is no longer a
-column titled `items_owned`. This is because there is a default
+column titled `topic_categories`. This is because there is a default
 parameter in `pivot_wider()` that drops the original column. The values that
-were in that column have now become columns named `television`, `solar_panel`,
-`table`, etc. You can use `dim(interviews)` and
-`dim(interviews_wide)` to see how the number of columns has changed between
+were in that column have now become columns named `politics`, `health`,
+`business`, etc. You can use `dim(videos)` and
+`dim(videos_wide)` to see how the number of columns has changed between
 the two datasets.
 
 This format of the data allows us to do interesting things, like make a table
-showing the number of respondents in each village who owned a particular item:
+showing the number of videos in each video category on a particular topic:
 
 
 ``` r
-interviews_items_owned %>%
-  filter(bicycle) %>%
-  group_by(village) %>%
-  count(bicycle)
+videos_topics %>%
+  filter(politics) %>%
+  group_by(video_category_label) %>%
+  count(politics)
 ```
 
 ``` output
-# A tibble: 3 × 3
-# Groups:   village [3]
-  village  bicycle     n
-  <chr>    <lgl>   <int>
-1 Chirodzo TRUE       17
-2 God      TRUE       23
-3 Ruaca    TRUE       20
+# A tibble: 4 × 3
+# Groups:   video_category_label [4]
+  video_category_label politics     n
+  <chr>                <lgl>    <int>
+1 Comedy               TRUE         1
+2 Entertainment        TRUE         5
+3 News & Politics      TRUE        24
+4 People & Blogs       TRUE        10
 ```
 
-Or below we calculate the average number of items from the list owned by
-respondents in each village. This code uses the `rowSums()` function to count
-the number of `TRUE` values in the `bicycle` to `car` columns for each row,
-hence its name. Note that we replaced `NA` values with the value `no_listed_items`,
+Or below we calculate the average number of topics addressed by
+each channel. This code uses the `rowSums()` function to count
+the number of `TRUE` values in the `business` to `politics` columns for each row,
+hence its name. Note that we replaced `NA` values with the value `no_topics`,
 so we must exclude this value in the aggregation. We then group the data by
-villages and calculate the mean number of items, so each average is grouped
-by village.
+channel and calculate the mean number of topics, so each average is grouped
+by channel.
 
 
 ``` r
-interviews_items_owned %>%
-    select(-no_listed_items) %>% 
-    mutate(number_items = rowSums(select(., bicycle:car))) %>%
-    group_by(village) %>%
-    summarize(mean_items = mean(number_items))
+videos_topics %>%
+    select(-no_topics) %>% 
+    mutate(number_topics = rowSums(select(., business:politics))) %>%
+    group_by(channel_title) %>%
+    summarize(mean_topics = mean(number_topics))
 ```
 
 ``` output
-# A tibble: 3 × 2
-  village  mean_items
-  <chr>         <dbl>
-1 Chirodzo       4.54
-2 God            3.98
-3 Ruaca          5.57
+# A tibble: 119 × 2
+   channel_title                 mean_topics
+   <chr>                               <dbl>
+ 1 2nacheki                              1.5
+ 2 Absolute Controversy                  1  
+ 3 African Diaspora News Channel         1  
+ 4 Al Jazeera English                    2  
+ 5 Ayanda Mafuyeka                       1  
+ 6 Azana Jezile                          1  
+ 7 BANELE NOCUZE                         1  
+ 8 Banetsi Tshetlo                       1  
+ 9 Beauty recipes                        2  
+10 Blackish Blue TV                      2  
+# ℹ 109 more rows
 ```
 
 ## Pivoting longer
 
 The opposing situation could occur if we had been provided with data in the form
-of `interviews_wide`, where the items owned are column names, but we
-wish to treat them as values of an `items_owned` variable instead.
+of `videos_wide`, where the items owned are column names, but we
+wish to treat them as values of an `topic_categories` variable instead.
 
 In this situation we are gathering these columns turning them into a pair
 of new variables. One variable includes the column names as values, and the
@@ -371,26 +413,32 @@ column names. We will do this in two steps to make this process a bit clearer.
 
 
 ``` r
-interviews_long <- interviews_items_owned %>%
+videos_long <- videos_topics %>%
   pivot_longer(cols = bicycle:car,
-               names_to = "items_owned",
-               values_to = "items_owned_logical")
+               names_to = "topic_categories",
+               values_to = "topic_categories_logical")
 ```
 
-View both `interviews_long` and `interviews_items_owned` and compare their structure.
+``` error
+Error in `pivot_longer()`:
+! Can't select columns that don't exist.
+✖ Column `bicycle` doesn't exist.
+```
+
+View both `videos_long` and `videos_topics` and compare their structure.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
-We created some summary tables on `interviews_items_owned` using `count` and
-`summarise`. We can create the same tables on `interviews_long`, but this will
+We created some summary tables on `videos_topics` using `count` and
+`summarise`. We can create the same tables on `videos_long`, but this will
 require a different process.
 
 1. Make a table showing showing the number of respondents in each village who
   owned a particular item, and include all items. The difference between this
   format and the wide format is that you can now `count` all the items using the
-  `items_owned` variable.
+  `topic_categories` variable.
 
 :::::::::::::::  solution
 
@@ -398,34 +446,20 @@ require a different process.
 
 
 ``` r
-interviews_long %>%
-  filter(items_owned_logical) %>% 
+videos_long %>%
+  filter(topic_categories_logical) %>% 
   group_by(village) %>% 
-  count(items_owned)
+  count(topic_categories)
 ```
 
-``` output
-# A tibble: 47 × 3
-# Groups:   village [3]
-   village  items_owned         n
-   <chr>    <chr>           <int>
- 1 Chirodzo bicycle            17
- 2 Chirodzo computer            2
- 3 Chirodzo cow_cart            6
- 4 Chirodzo cow_plough         20
- 5 Chirodzo electricity         1
- 6 Chirodzo fridge              1
- 7 Chirodzo lorry               1
- 8 Chirodzo mobile_phone       25
- 9 Chirodzo motorcyle          13
-10 Chirodzo no_listed_items     3
-# ℹ 37 more rows
+``` error
+Error in eval(expr, envir, enclos): object 'videos_long' not found
 ```
 
 :::::::::::::::::::::::::
 
 2. Calculate the average number of items from the list owned by
-  respondents in each village. If you remove rows where `items_owned_logical` is
+  respondents in each village. If you remove rows where `topic_categories_logical` is
   `FALSE` you will have a data frame where the number of rows per household is
   equal to the number of items owned. You can use that to calculate the mean
   number of items per village.
@@ -439,22 +473,17 @@ not   an actual item, but rather the absence thereof.
 
 
 ``` r
-interviews_long %>% 
-  filter(items_owned_logical,
-         items_owned != "no_listed_items") %>% 
+videos_long %>% 
+  filter(topic_categories_logical,
+         topic_categories != "no_listed_items") %>% 
   # to keep information per household, we count key_ID
   count(key_ID, village) %>% # we want to also keep the village variable
   group_by(village) %>% 
   summarise(mean_items = mean(n))
 ```
 
-``` output
-# A tibble: 3 × 2
-  village  mean_items
-  <chr>         <dbl>
-1 Chirodzo       4.92
-2 God            4.38
-3 Ruaca          5.93
+``` error
+Error in eval(expr, envir, enclos): object 'videos_long' not found
 ```
 
 :::::::::::::::::::::::::
@@ -473,21 +502,21 @@ cell. Some of the cells in the `months_lack_food` column contain multiple months
 which, as before, are separated by semi-colons (`;`).
 
 To create a data frame where each of the columns contain only one value per cell,
-we can repeat the steps we applied to `items_owned` and apply them to
+we can repeat the steps we applied to `topic_categories` and apply them to
 `months_lack_food`. Since we will be using this data frame for the next episode,
-we will call it `interviews_plotting`.
+we will call it `videos_plotting`.
 
 
 ``` r
-interviews_plotting <- interviews %>%
-  ## pivot wider by items_owned
-  separate_longer_delim(items_owned, delim = ";") %>%
+videos_plotting <- videos %>%
+  ## pivot wider by topic_categories
+  separate_longer_delim(topic_categories, delim = ";") %>%
   ## if there were no items listed, changing NA to no_listed_items
-  replace_na(list(items_owned = "no_listed_items")) %>%
-  mutate(items_owned_logical = TRUE) %>%
-  pivot_wider(names_from = items_owned,
-              values_from = items_owned_logical,
-              values_fill = list(items_owned_logical = FALSE)) %>%
+  replace_na(list(topic_categories = "no_listed_items")) %>%
+  mutate(topic_categories_logical = TRUE) %>%
+  pivot_wider(names_from = topic_categories,
+              values_from = topic_categories_logical,
+              values_fill = list(topic_categories_logical = FALSE)) %>%
   ## pivot wider by months_lack_food
   separate_longer_delim(months_lack_food, delim = ";") %>%
   mutate(months_lack_food_logical = TRUE) %>%
@@ -497,6 +526,12 @@ interviews_plotting <- interviews %>%
   ## add some summary columns
   mutate(number_months_lack_food = rowSums(select(., Jan:May))) %>%
   mutate(number_items = rowSums(select(., bicycle:car)))
+```
+
+``` error
+Error in `separate_longer_delim()`:
+! Can't select columns that don't exist.
+✖ Column `months_lack_food` doesn't exist.
 ```
 
 
@@ -524,10 +559,13 @@ this data frame to our `data_output` directory.
 
 
 ``` r
-write_csv (interviews_plotting, file = "data_output/interviews_plotting.csv")
+write_csv (videos_plotting, file = "data_output/videos_plotting.csv")
 ```
 
 
+``` error
+Error in eval(expr, envir, enclos): object 'videos_plotting' not found
+```
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
