@@ -1145,7 +1145,7 @@ than the original one:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">extra_audio_language</span> <span class="op">&lt;-</span> <span class="va">audio_language</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="va">extra_audio_language</span> <span class="op">&lt;-</span> <span class="va">audio_language</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">extra_audio_language</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -1238,7 +1238,7 @@ values, but this can quickly become tedious.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"zu"</span>,<span class="st">"fr"</span>,<span class="st">"ar"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"ar"</span>, <span class="st">"en"</span>, <span class="st">"af"</span>,<span class="st">"zu"</span>,<span class="st">"fr"</span><span class="op">)</span></span>
 <span><span class="va">audio_language</span><span class="op">[</span><span class="va">audio_language</span> <span class="op">==</span> <span class="st">"zu"</span> <span class="op">|</span> <span class="va">audio_language</span> <span class="op">==</span> <span class="st">"af"</span><span class="op">]</span> <span class="co"># returns both zu and af</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -1258,7 +1258,7 @@ target vector (on the right hand side):</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  TRUE FALSE FALSE  TRUE FALSE</code></pre>
+<pre class="output" tabindex="0"><code>[1] FALSE  TRUE FALSE FALSE  TRUE</code></pre>
 </div>
 <p>Note that the output is the same length as the search vector on the
 left hand side, because <code>%in%</code> checks whether each element of
@@ -1269,7 +1269,7 @@ appear in your target vector:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"zu"</span>,<span class="st">"fr"</span>,<span class="st">"ar"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">audio_language</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"af"</span>, <span class="st">"xh"</span>, <span class="st">"zu"</span>,<span class="st">"fr"</span>,<span class="st">"ar"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1285,7 +1285,18 @@ appear in your target vector:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "en" "af" "zu" "fr" "ar"</code></pre>
+<pre class="output" tabindex="0"><code>[1] "ar" "en" "af" "zu" "fr"</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb76">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">audio_language</span><span class="op">[</span><span class="va">audio_language</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"en"</span>, <span class="st">"fr"</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[1] "en" "fr"</code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="missing-data">Missing data<a class="anchor" aria-label="anchor" href="#missing-data"></a></h2>
@@ -1297,7 +1308,7 @@ data are represented in vectors as <code>NA</code>.</p>
 This feature makes it harder to overlook the cases where you are dealing
 with missing data. You can add the argument <code>na.rm=TRUE</code> to
 calculate the result while ignoring the missing values.</p>
-<div class="codewrapper sourceCode" id="cb76">
+<div class="codewrapper sourceCode" id="cb78">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1309,7 +1320,7 @@ calculate the result while ignoring the missing values.</p>
 </h3>
 <pre class="output" tabindex="0"><code>[1] NA</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb78">
+<div class="codewrapper sourceCode" id="cb80">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1320,7 +1331,7 @@ calculate the result while ignoring the missing values.</p>
 </h3>
 <pre class="output" tabindex="0"><code>[1] NA</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb80">
+<div class="codewrapper sourceCode" id="cb82">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1331,7 +1342,7 @@ calculate the result while ignoring the missing values.</p>
 </h3>
 <pre class="output" tabindex="0"><code>[1] 2.75</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb82">
+<div class="codewrapper sourceCode" id="cb84">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1345,7 +1356,7 @@ calculate the result while ignoring the missing values.</p>
 <p>If your data include missing values, you may want to become familiar
 with the functions <code>is.na()</code>, <code>na.omit()</code>, and
 <code>complete.cases()</code>. See below for examples.</p>
-<div class="codewrapper sourceCode" id="cb84">
+<div class="codewrapper sourceCode" id="cb86">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1358,7 +1369,7 @@ with the functions <code>is.na()</code>, <code>na.omit()</code>, and
 </h3>
 <pre class="output" tabindex="0"><code>[1] 2 1 1 7</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb86">
+<div class="codewrapper sourceCode" id="cb88">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1371,7 +1382,7 @@ with the functions <code>is.na()</code>, <code>na.omit()</code>, and
 </h3>
 <pre class="output" tabindex="0"><code>[1] 1</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb88">
+<div class="codewrapper sourceCode" id="cb90">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1387,7 +1398,7 @@ attr(,"na.action")
 attr(,"class")
 [1] "omit"</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb90">
+<div class="codewrapper sourceCode" id="cb92">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1410,7 +1421,7 @@ the type of your atomic vector.</p>
 <div class="callout-content">
 <ol style="list-style-type: decimal"><li>Using this vector of comments, create a new vector with the NAs
 removed.</li>
-</ol><div class="codewrapper sourceCode" id="cb92">
+</ol><div class="codewrapper sourceCode" id="cb94">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1430,7 +1441,7 @@ two comments.</p></li>
 </button>
 <div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb93">
+<div class="codewrapper sourceCode" id="cb95">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1446,7 +1457,7 @@ two comments.</p></li>
 </h3>
 <pre class="output" tabindex="0"><code>[1] 2.5</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb95">
+<div class="codewrapper sourceCode" id="cb97">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
