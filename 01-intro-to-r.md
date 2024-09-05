@@ -402,6 +402,8 @@ How do you use the `ignore.case` parameter in the grepl function?
 
 ## Vectors and data types
 
+![](fig/vector.png){alt='A graphical representation of a vector named "audio_language" showing how each value stored in the vector corresponds to an index starting at 1.'}
+
 
 
 A vector is the most common and basic data type in R, and is pretty much
