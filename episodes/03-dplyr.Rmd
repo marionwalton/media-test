@@ -483,8 +483,7 @@ Create a tibble of these categories and the number of videos in each of them, ar
 
 ```{r}
 videos %>%
-   count(video_category_label) %>%
-   arrange(desc(n))
+   count(video_category_label, sort=TRUE) 
 ```
 
 :::::::::::::::::::::::::
