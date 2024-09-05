@@ -1013,8 +1013,8 @@ videos %>%
 :::::::::::::::::::::::::
 
 Use `group_by()` and `summarize()` to find the mean, min, and max
-number of household members for each channel_title. Also add the number of
-observations (hint: see `?n`).
+number of views for each YouTube channel (channel_title). Also add the number of
+observations (hint: see `?n`).  Arrange the channels in descending order by the channel's maximum views.
 
 :::::::::::::::  solution
 
@@ -1025,24 +1025,34 @@ observations (hint: see `?n`).
 videos %>%
   group_by(channel_title) %>%
   summarize(
-      mean_no_membrs = mean(no_membrs),
-      min_no_membrs = min(no_membrs),
-      max_no_membrs = max(no_membrs),
-      n = n()
-  )
+      mean_views = mean(view_count),
+      min_views = min(view_count),
+      max_views = max(view_count),
+      n = n()  )%>%
+      arrange(desc(max_views))
 ```
 
-``` error
-Error in `summarize()`:
-ℹ In argument: `mean_no_membrs = mean(no_membrs)`.
-ℹ In group 1: `channel_title = "2nacheki"`.
-Caused by error:
-! object 'no_membrs' not found
+``` output
+# A tibble: 119 × 5
+   channel_title      mean_views min_views max_views     n
+   <chr>                   <dbl>     <dbl>     <dbl> <int>
+ 1 SABC News              36450.      2329    487961    22
+ 2 Beauty recipes        263208     263208    263208     1
+ 3 SamupertyZuluTV       144836     144836    144836     1
+ 4 eNCA                   36810.       910    138612    20
+ 5 Al Jazeera English    113704     113704    113704     1
+ 6 Eyewitness News       103949     103949    103949     1
+ 7 2nacheki               54470.     10047     98894     2
+ 8 Morexskinglow          91347      91347     91347     1
+ 9 Newzroom Afrika         9501.       246     83542    13
+10 Kay Monqo              81906      81906     81906     1
+# ℹ 109 more rows
 ```
 
 :::::::::::::::::::::::::
 
-What was the largest household interviewed in each month?
+Excluding those videos that were set to not allow comments (comment_count =NA),
+ what was the total number of comments posted on the videos in each month?
 
 :::::::::::::::  solution
 
@@ -1053,18 +1063,45 @@ What was the largest household interviewed in each month?
 # if not already included, add month, year, and day columns
 library(lubridate) # load lubridate if not already loaded
 videos %>%
-    mutate(month = month(interview_date),
-           day = day(interview_date),
-           year = year(interview_date)) %>%
+    filter(!is.na(comment_count)) %>%
+    mutate(month = month(published_at_sql),
+           day = day(published_at_sql),
+           year = year(published_at_sql)) %>%
     group_by(year, month) %>%
-    summarize(max_no_membrs = max(no_membrs))
+    summarize(total_comments = sum(comment_count)) %>%
+    arrange(year,month)
 ```
 
-``` error
-Error in `mutate()`:
-ℹ In argument: `month = month(interview_date)`.
-Caused by error:
-! object 'interview_date' not found
+``` output
+`summarise()` has grouped output by 'year'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 20 × 3
+# Groups:   year [4]
+    year month total_comments
+   <dbl> <dbl>          <dbl>
+ 1  2020     1             33
+ 2  2020     2              0
+ 3  2020     4            168
+ 4  2020     7            466
+ 5  2020     8             29
+ 6  2020     9          11215
+ 7  2020    10              1
+ 8  2020    11              1
+ 9  2021     6              0
+10  2021     9             17
+11  2021    12             64
+12  2022     1             14
+13  2022     2            386
+14  2022     3              4
+15  2022     4              8
+16  2022     7             76
+17  2022    11             71
+18  2023     1              7
+19  2023     3              6
+20  2023     6            241
 ```
 
 :::::::::::::::::::::::::
