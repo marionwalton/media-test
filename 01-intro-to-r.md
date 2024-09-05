@@ -690,12 +690,14 @@ view_count[view_count > 5]
 [1] 120987    789
 ```
 
-You can combine multiple tests using `&` (both conditions are true, AND) or `|`
-(at least one of the conditions is true, OR):
+You can combine multiple tests using 
+
+-`&` (both conditions are true, AND) or
+- `|` (at least one of the conditions is true, OR)
 
 
 ``` r
-view_count[view_count > 10 | view_count < 1000]
+view_count[view_count >= 10 | view_count <= 1000]
 ```
 
 ``` output
@@ -703,7 +705,7 @@ view_count[view_count > 10 | view_count < 1000]
 ```
 
 ``` r
-view_count[view_count>= 10 & view_count <= 10000]
+view_count[view_count >= 10 & view_count <= 10000]
 ```
 
 ``` output
