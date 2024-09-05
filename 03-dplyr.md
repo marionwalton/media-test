@@ -415,7 +415,7 @@ to the `filter()` and `select()` functions any more.
 
 Some may find it helpful to read the pipe like the word "then". For instance,
 in the above example, we take the dataframe `videos`, *then* we `filter`
-for rows with `channel_title == "SABC News"`, *then* we `select` columns `channel_title:respondent_wall_type`.
+for rows with `channel_title == "SABC News"`, *then* we `select` columns `view_count:comment_count`.
 The **`dplyr`** functions by themselves are somewhat simple,
 but by combining them into linear workflows with the pipe, we can accomplish
 more complex data wrangling operations.
@@ -427,33 +427,25 @@ can assign it a new name:
 ``` r
 videos_SABC_metrics <- videos %>%
     filter(channel_title == "SABC News") %>%
-    select(channel_title:respondent_wall_type)
-```
+    select(view_count:comment_count)
 
-``` error
-Error in `select()`:
-! Can't select columns that don't exist.
-✖ Column `respondent_wall_type` doesn't exist.
-```
-
-``` r
 videos_SABC_metrics
 ```
 
 ``` output
-# A tibble: 22 × 5
-   channel_title view_count like_count favorite_count comment_count
-   <chr>              <dbl>      <dbl>          <dbl>         <dbl>
- 1 SABC News          22079        125              0           105
- 2 SABC News           3339         18              0             7
- 3 SABC News          20674        122              0           100
- 4 SABC News          19715         68              0           132
- 5 SABC News          14485         52              0            19
- 6 SABC News           2329         18              0             7
- 7 SABC News          25313        133              0           131
- 8 SABC News          11466         55              0            28
- 9 SABC News           7297         74              0            34
-10 SABC News           3147         12              0             2
+# A tibble: 22 × 4
+   view_count like_count favorite_count comment_count
+        <dbl>      <dbl>          <dbl>         <dbl>
+ 1      22079        125              0           105
+ 2       3339         18              0             7
+ 3      20674        122              0           100
+ 4      19715         68              0           132
+ 5      14485         52              0            19
+ 6       2329         18              0             7
+ 7      25313        133              0           131
+ 8      11466         55              0            28
+ 9       7297         74              0            34
+10       3147         12              0             2
 # ℹ 12 more rows
 ```
 
