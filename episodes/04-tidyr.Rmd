@@ -140,7 +140,6 @@ the topics in `topic_categories` (e.g. politics, health,
 business, society, etc.) would become the names of column variables and
 the cells would contain values of `TRUE` or `FALSE`, for whether the video fitted into that category or not.
 
-
 Once we we've created this new table, we can explore the relationship within and
 between videos. The key point here is that we are still following a tidy data
 structure, but we have **reshaped** the data according to the observations of
