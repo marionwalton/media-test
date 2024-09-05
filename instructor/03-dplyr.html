@@ -368,7 +368,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul><li>This lesson works better if you have graphics demonstrating dplyr
 commands. You can modify <a href="https://docs.google.com/presentation/d/1A9abypFdFp8urAe9z7GCMjFr4aPeIb8mZAtJA2F7H0w/edit#slide=id.g652714585f_0_114" class="external-link">this
@@ -913,7 +913,7 @@ the metrics columns with values (views, likes and comments).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1051,7 +1051,7 @@ to produce this data frame!</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1106,16 +1106,25 @@ average household size by channel_title:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
 <span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `summarize()`:
-ℹ In argument: `mean_no_membrs = mean(no_membrs)`.
-ℹ In group 1: `channel_title = "2nacheki"`.
-Caused by error:
-! object 'no_membrs' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 119 × 2
+   channel_title                 mean_views
+   &lt;chr&gt;                              &lt;dbl&gt;
+ 1 2nacheki                         54470.
+ 2 Absolute Controversy               102
+ 3 African Diaspora News Channel    18255
+ 4 Al Jazeera English              113704
+ 5 Ayanda Mafuyeka                     29.5
+ 6 Azana Jezile                     65647
+ 7 BANELE NOCUZE                      210
+ 8 Banetsi Tshetlo                      7
+ 9 Beauty recipes                  263208
+10 Blackish Blue TV                   281
+# ℹ 109 more rows</code></pre>
 </div>
 <p>You may also have noticed that the output from these calls doesn’t
 run off the screen anymore. It’s one of the advantages of
@@ -1126,121 +1135,264 @@ run off the screen anymore. It’s one of the advantages of
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">memb_assoc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">video_category_label</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `group_by()`:
-! Must group by variables found in `.data`.
-✖ Column `memb_assoc` is not found.</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 120 × 3
+# Groups:   channel_title [119]
+   channel_title                 video_category_label mean_views
+   &lt;chr&gt;                         &lt;chr&gt;                     &lt;dbl&gt;
+ 1 2nacheki                      News &amp; Politics         54470.
+ 2 Absolute Controversy          People &amp; Blogs            102
+ 3 African Diaspora News Channel News &amp; Politics         18255
+ 4 Al Jazeera English            News &amp; Politics        113704
+ 5 Ayanda Mafuyeka               People &amp; Blogs             29.5
+ 6 Azana Jezile                  Howto &amp; Style           65647
+ 7 BANELE NOCUZE                 People &amp; Blogs            210
+ 8 Banetsi Tshetlo               Entertainment               7
+ 9 Beauty recipes                Howto &amp; Style          263208
+10 Blackish Blue TV              News &amp; Politics           281
+# ℹ 110 more rows</code></pre>
 </div>
 <p>Note that the output is a grouped tibble. To obtain an ungrouped
 tibble, use the <code>ungroup</code> function:</p>
-<div class="codewrapper sourceCode" id="cb36">
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">memb_assoc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">video_category_label</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>    <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `group_by()`:
-! Must group by variables found in `.data`.
-✖ Column `memb_assoc` is not found.</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 120 × 3
+   channel_title                 video_category_label mean_views
+   &lt;chr&gt;                         &lt;chr&gt;                     &lt;dbl&gt;
+ 1 2nacheki                      News &amp; Politics         54470.
+ 2 Absolute Controversy          People &amp; Blogs            102
+ 3 African Diaspora News Channel News &amp; Politics         18255
+ 4 Al Jazeera English            News &amp; Politics        113704
+ 5 Ayanda Mafuyeka               People &amp; Blogs             29.5
+ 6 Azana Jezile                  Howto &amp; Style           65647
+ 7 BANELE NOCUZE                 People &amp; Blogs            210
+ 8 Banetsi Tshetlo               Entertainment               7
+ 9 Beauty recipes                Howto &amp; Style          263208
+10 Blackish Blue TV              News &amp; Politics           281
+# ℹ 110 more rows</code></pre>
 </div>
 <p>When grouping both by <code>channel_title</code> and
-<code>membr_assoc</code>, we see rows in our table for respondents who
-did not specify whether they were a member of an irrigation association.
+<code>default_l_audio_language</code>, we see rows in our table for
+videos where the creator did not specify their default audio language.
 We can exclude those data from our table using a filter step.</p>
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">memb_assoc</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">memb_assoc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">default_l_audio_language</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">default_l_audio_language</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 59 × 3
+# Groups:   channel_title [59]
+   channel_title                               default_l_audio_lang…¹ mean_views
+   &lt;chr&gt;                                       &lt;chr&gt;                       &lt;dbl&gt;
+ 1 2nacheki                                    en-US                      54470.
+ 2 African Diaspora News Channel               en                         18255
+ 3 Azana Jezile                                en-US                      65647
+ 4 Beauty recipes                              en                        263208
+ 5 Buhle N                                     en-GB                        405
+ 6 By.MonaLisa                                 zxx                         3802
+ 7 DoRo Lungani                                zu                         19648
+ 8 Duke University - The Fuqua School of Busi… en                          4932
+ 9 E News Mzansi                               en                          2876.
+10 Economic Freedom Fighters                   en-US                       7164
+# ℹ 49 more rows
+# ℹ abbreviated name: ¹​default_l_audio_language</code></pre>
 </div>
 <p>Once the data are grouped, you can also summarize multiple variables
 at the same time (and not necessarily on the same variable). For
 instance, we could add a column indicating the minimum household size
 for each channel_title for each group (members of an irrigation
 association vs not):</p>
-<div class="codewrapper sourceCode" id="cb40">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">memb_assoc</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">memb_assoc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span>,</span>
-<span>              min_membrs <span class="op">=</span> <span class="fu">min</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">default_l_audio_language</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">default_l_audio_language</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span>,</span>
+<span>              max_views <span class="op">=</span> <span class="fu">max</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title                     default_l_audio_lang…¹ mean_views max_views
+   &lt;chr&gt;                             &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2nacheki                          en-US                      54470.     98894
+ 2 African Diaspora News Channel     en                         18255      18255
+ 3 Azana Jezile                      en-US                      65647      65647
+ 4 Beauty recipes                    en                        263208     263208
+ 5 Buhle N                           en-GB                        405        405
+ 6 By.MonaLisa                       zxx                         3802       3802
+ 7 DoRo Lungani                      zu                         19648      39223
+ 8 Duke University - The Fuqua Scho… en                          4932       4932
+ 9 E News Mzansi                     en                          2876.      5066
+10 Economic Freedom Fighters         en-US                       7164      10996
+# ℹ 49 more rows
+# ℹ abbreviated name: ¹​default_l_audio_language</code></pre>
 </div>
 <p>It is sometimes useful to rearrange the result of a query to inspect
-the values. For instance, we can sort on <code>min_membrs</code> to put
+the values. For instance, we can sort on <code>max_views</code> to put
 the group with the smallest household first:</p>
-<div class="codewrapper sourceCode" id="cb42">
+<div class="codewrapper sourceCode" id="cb46">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">memb_assoc</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">memb_assoc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span>,</span>
-<span>              min_membrs <span class="op">=</span> <span class="fu">min</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">arrange</span><span class="op">(</span><span class="va">min_membrs</span><span class="op">)</span></span></code></pre>
+<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">default_l_audio_language</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">default_l_audio_language</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span>,</span>
+<span>              max_views <span class="op">=</span> <span class="fu">max</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">arrange</span><span class="op">(</span><span class="va">max_views</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title                     default_l_audio_lang…¹ mean_views max_views
+   &lt;chr&gt;                             &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Lit News                          en-GB                          19        19
+ 2 Peppers Echo                      en                             23        23
+ 3 GOLDGATOR TV                      en-GB                          30        30
+ 4 TalkOutLoud                       en-GB                          67        67
+ 5 Ile Eko Omoluabi                  en                            103       103
+ 6 Papa Khwatsi TOPIC                en-GB                         105       105
+ 7 The Upright Man                   en                            113       113
+ 8 Fresh Trendz                      en                            130       130
+ 9 Hidden Truth State of Decay Sout… en-GB                         151       151
+10 Newcastle Advertiser              en-GB                         172       172
+# ℹ 49 more rows
+# ℹ abbreviated name: ¹​default_l_audio_language</code></pre>
 </div>
 <p>To sort in descending order, we need to add the <code>desc()</code>
-function. If we want to sort the results by decreasing order of minimum
-household size:</p>
-<div class="codewrapper sourceCode" id="cb44">
+function. If we want to sort the results by decreasing order of views,
+or reverse alphabetical order of the audio language to see languages
+other than english:</p>
+<div class="codewrapper sourceCode" id="cb49">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">memb_assoc</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">memb_assoc</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">summarize</span><span class="op">(</span>mean_no_membrs <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span>,</span>
-<span>              min_membrs <span class="op">=</span> <span class="fu">min</span><span class="op">(</span><span class="va">no_membrs</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">min_membrs</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">default_l_audio_language</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">default_l_audio_language</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span>,</span>
+<span>              max_views <span class="op">=</span> <span class="fu">max</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">max_views</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title   default_l_audio_language mean_views max_views
+   &lt;chr&gt;           &lt;chr&gt;                         &lt;dbl&gt;     &lt;dbl&gt;
+ 1 SABC News       en                           38085.    487961
+ 2 Beauty recipes  en                          263208     263208
+ 3 eNCA            en                           46485.    138612
+ 4 Eyewitness News en-GB                       103949     103949
+ 5 2nacheki        en-US                        54470.     98894
+ 6 Morexskinglow   en                           91347      91347
+ 7 News24          en-GB                        72606.     73622
+ 8 Azana Jezile    en-US                        65647      65647
+ 9 Renaldo Gouws   en                           50694      56890
+10 Mama Shirat     en-US                        41626      41626
+# ℹ 49 more rows</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb52">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">videos</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">default_l_audio_language</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">channel_title</span>, <span class="va">default_l_audio_language</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span>mean_views <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span>,</span>
+<span>              max_views <span class="op">=</span> <span class="fu">max</span><span class="op">(</span><span class="va">view_count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">default_l_audio_language</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title             default_l_audio_language mean_views max_views
+   &lt;chr&gt;                     &lt;chr&gt;                         &lt;dbl&gt;     &lt;dbl&gt;
+ 1 By.MonaLisa               zxx                           3802       3802
+ 2 DoRo Lungani              zu                           19648      39223
+ 3 NOSIPHO NZAMA             zu                             597        597
+ 4 2nacheki                  en-US                        54470.     98894
+ 5 Azana Jezile              en-US                        65647      65647
+ 6 Economic Freedom Fighters en-US                         7164      10996
+ 7 Gemini Baby               en-US                          435        435
+ 8 Grey Net                  en-US                         2619       2619
+ 9 KHATHA WORLDWIDE          en-US                          490        490
+10 Mama Shirat               en-US                        41626      41626
+# ℹ 49 more rows</code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1250,7 +1402,7 @@ observations found for each factor or combination of factors. For this
 task, <strong><code>dplyr</code></strong> provides <code>count()</code>.
 For example, if we wanted to count the number of rows of data for each
 channel_title, we would do:</p>
-<div class="codewrapper sourceCode" id="cb46">
+<div class="codewrapper sourceCode" id="cb55">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1277,7 +1429,7 @@ channel_title, we would do:</p>
 </div>
 <p>For convenience, <code>count()</code> provides the <code>sort</code>
 argument to get results in decreasing order:</p>
-<div class="codewrapper sourceCode" id="cb48">
+<div class="codewrapper sourceCode" id="cb57">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1320,9 +1472,9 @@ represented?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb50">
+<div class="codewrapper sourceCode" id="cb59">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1359,9 +1511,9 @@ Also add the number of observations (hint: see <code>?n</code>).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb52">
+<div class="codewrapper sourceCode" id="cb61">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1404,9 +1556,9 @@ Caused by error:
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb54">
+<div class="codewrapper sourceCode" id="cb63">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
