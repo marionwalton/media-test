@@ -402,7 +402,7 @@ How do you use the `ignore.case` parameter in the grepl function?
 
 ## Vectors and data types
 
-![](fig/vector.png){alt='A graphical representation of a vector named "audio_language" showing how each value stored in the vector corresponds to an index starting at 1.'}
+![](fig/R_01_vector.png){alt='A graphical representation of a vector named "audio_language" showing how each value stored in the vector corresponds to an index starting at 1.'}
 
 
 
