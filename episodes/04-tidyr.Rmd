@@ -189,7 +189,7 @@ panel, that respondent will now have two rows, one with "television" and the
 other with "solar panel" in the `topic_categories` column.
 
 ```{r, eval=FALSE}
-separate_longer_delim(topic_categories, delim = ";")
+separate_longer_delim(topic_categories, delim = ";") %>%
 ```
 
 After this transformation, you may notice that the `topic_categories` column contains
@@ -201,7 +201,7 @@ the `NA` values in, and the value that you would like to replace the `NA`s. This
 ends up looking like this:
 
 ```{r, eval=FALSE}
-replace_na(list(topic_categories = "no_categories"))
+replace_na(list(topic_categories = "no_categories")) %>%
 ```
 
 Next, we create a new variable named `topic_categories_logical`, which has one value
@@ -212,7 +212,7 @@ with logical values describing whether the household did (`TRUE`) or didn't
 (`FALSE`) own that particular item.
 
 ```{r, eval=FALSE}
-mutate(topic_categories_logical = TRUE)
+mutate(topic_categories_logical = TRUE) %>%
 ```
 
 ![](fig/separate_longer.png){alt="Two tables shown side-by-side. The first row of the left table is highlighted in blue, and the first four rows of the right table are also highlighted in blue to show how each of the values of 'items owned' are given their own row with the separate longer delim function. The 'items owned logical' column is highlighted in yellow on the right table to show how the mutate function adds a new column."}
