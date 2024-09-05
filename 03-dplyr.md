@@ -650,15 +650,24 @@ channel_title:
 ``` r
 videos %>%
     group_by(channel_title) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+    summarize(mean_views = mean(view_count))
 ```
 
-``` error
-Error in `summarize()`:
-ℹ In argument: `mean_no_membrs = mean(no_membrs)`.
-ℹ In group 1: `channel_title = "2nacheki"`.
-Caused by error:
-! object 'no_membrs' not found
+``` output
+# A tibble: 119 × 2
+   channel_title                 mean_views
+   <chr>                              <dbl>
+ 1 2nacheki                         54470. 
+ 2 Absolute Controversy               102  
+ 3 African Diaspora News Channel    18255  
+ 4 Al Jazeera English              113704  
+ 5 Ayanda Mafuyeka                     29.5
+ 6 Azana Jezile                     65647  
+ 7 BANELE NOCUZE                      210  
+ 8 Banetsi Tshetlo                      7  
+ 9 Beauty recipes                  263208  
+10 Blackish Blue TV                   281  
+# ℹ 109 more rows
 ```
 
 You may also have noticed that the output from these calls doesn't run off the
@@ -669,14 +678,31 @@ You can also group by multiple columns:
 
 ``` r
 videos %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+    group_by(channel_title, video_category_label) %>%
+    summarize(mean_views = mean(view_count))
 ```
 
-``` error
-Error in `group_by()`:
-! Must group by variables found in `.data`.
-✖ Column `memb_assoc` is not found.
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 120 × 3
+# Groups:   channel_title [119]
+   channel_title                 video_category_label mean_views
+   <chr>                         <chr>                     <dbl>
+ 1 2nacheki                      News & Politics         54470. 
+ 2 Absolute Controversy          People & Blogs            102  
+ 3 African Diaspora News Channel News & Politics         18255  
+ 4 Al Jazeera English            News & Politics        113704  
+ 5 Ayanda Mafuyeka               People & Blogs             29.5
+ 6 Azana Jezile                  Howto & Style           65647  
+ 7 BANELE NOCUZE                 People & Blogs            210  
+ 8 Banetsi Tshetlo               Entertainment               7  
+ 9 Beauty recipes                Howto & Style          263208  
+10 Blackish Blue TV              News & Politics           281  
+# ℹ 110 more rows
 ```
 
 Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
@@ -685,34 +711,67 @@ Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
 
 ``` r
 videos %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs)) %>%
+    group_by(channel_title, video_category_label) %>%
+    summarize(mean_views = mean(view_count)) %>%
     ungroup()
 ```
 
-``` error
-Error in `group_by()`:
-! Must group by variables found in `.data`.
-✖ Column `memb_assoc` is not found.
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
 ```
 
-When grouping both by `channel_title` and `membr_assoc`, we see rows in our table for
-respondents who did not specify whether they were a member of an irrigation
-association. We can exclude those data from our table using a filter step.
+``` output
+# A tibble: 120 × 3
+   channel_title                 video_category_label mean_views
+   <chr>                         <chr>                     <dbl>
+ 1 2nacheki                      News & Politics         54470. 
+ 2 Absolute Controversy          People & Blogs            102  
+ 3 African Diaspora News Channel News & Politics         18255  
+ 4 Al Jazeera English            News & Politics        113704  
+ 5 Ayanda Mafuyeka               People & Blogs             29.5
+ 6 Azana Jezile                  Howto & Style           65647  
+ 7 BANELE NOCUZE                 People & Blogs            210  
+ 8 Banetsi Tshetlo               Entertainment               7  
+ 9 Beauty recipes                Howto & Style          263208  
+10 Blackish Blue TV              News & Politics           281  
+# ℹ 110 more rows
+```
+
+When grouping both by `channel_title` and `default_l_audio_language`, we see rows in our table for
+videos where the creator did not specify their default audio language. 
+We can exclude those data from our table using a filter step.
 
 
 ``` r
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count))
 ```
 
-``` error
-Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 59 × 3
+# Groups:   channel_title [59]
+   channel_title                               default_l_audio_lang…¹ mean_views
+   <chr>                                       <chr>                       <dbl>
+ 1 2nacheki                                    en-US                      54470.
+ 2 African Diaspora News Channel               en                         18255 
+ 3 Azana Jezile                                en-US                      65647 
+ 4 Beauty recipes                              en                        263208 
+ 5 Buhle N                                     en-GB                        405 
+ 6 By.MonaLisa                                 zxx                         3802 
+ 7 DoRo Lungani                                zu                         19648 
+ 8 Duke University - The Fuqua School of Busi… en                          4932 
+ 9 E News Mzansi                               en                          2876.
+10 Economic Freedom Fighters                   en-US                       7164 
+# ℹ 49 more rows
+# ℹ abbreviated name: ¹​default_l_audio_language
 ```
 
 Once the data are grouped, you can also summarize multiple variables at the same
@@ -723,58 +782,142 @@ column indicating the minimum household size for each channel_title for each gro
 
 ``` r
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs),
-              min_membrs = min(no_membrs))
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count))
 ```
 
-``` error
-Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title                     default_l_audio_lang…¹ mean_views max_views
+   <chr>                             <chr>                       <dbl>     <dbl>
+ 1 2nacheki                          en-US                      54470.     98894
+ 2 African Diaspora News Channel     en                         18255      18255
+ 3 Azana Jezile                      en-US                      65647      65647
+ 4 Beauty recipes                    en                        263208     263208
+ 5 Buhle N                           en-GB                        405        405
+ 6 By.MonaLisa                       zxx                         3802       3802
+ 7 DoRo Lungani                      zu                         19648      39223
+ 8 Duke University - The Fuqua Scho… en                          4932       4932
+ 9 E News Mzansi                     en                          2876.      5066
+10 Economic Freedom Fighters         en-US                       7164      10996
+# ℹ 49 more rows
+# ℹ abbreviated name: ¹​default_l_audio_language
 ```
 
 It is sometimes useful to rearrange the result of a query to inspect the values.
-For instance, we can sort on `min_membrs` to put the group with the smallest
+For instance, we can sort on `max_views` to put the group with the smallest
 household first:
 
 
 ``` r
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs),
-              min_membrs = min(no_membrs)) %>%
-    arrange(min_membrs)
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count)) %>%
+    arrange(max_views)
 ```
 
-``` error
-Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title                     default_l_audio_lang…¹ mean_views max_views
+   <chr>                             <chr>                       <dbl>     <dbl>
+ 1 Lit News                          en-GB                          19        19
+ 2 Peppers Echo                      en                             23        23
+ 3 GOLDGATOR TV                      en-GB                          30        30
+ 4 TalkOutLoud                       en-GB                          67        67
+ 5 Ile Eko Omoluabi                  en                            103       103
+ 6 Papa Khwatsi TOPIC                en-GB                         105       105
+ 7 The Upright Man                   en                            113       113
+ 8 Fresh Trendz                      en                            130       130
+ 9 Hidden Truth State of Decay Sout… en-GB                         151       151
+10 Newcastle Advertiser              en-GB                         172       172
+# ℹ 49 more rows
+# ℹ abbreviated name: ¹​default_l_audio_language
 ```
 
 To sort in descending order, we need to add the `desc()` function. If we want to
-sort the results by decreasing order of minimum household size:
+sort the results by decreasing order of views, or reverse alphabetical order of the audio language
+ to see languages other than english:
+
 
 
 ``` r
 videos %>%
-    filter(!is.na(memb_assoc)) %>%
-    group_by(channel_title, memb_assoc) %>%
-    summarize(mean_no_membrs = mean(no_membrs),
-              min_membrs = min(no_membrs)) %>%
-    arrange(desc(min_membrs))
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count)) %>%
+    arrange(desc(max_views))
 ```
 
-``` error
-Error in `filter()`:
-ℹ In argument: `!is.na(memb_assoc)`.
-Caused by error:
-! object 'memb_assoc' not found
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title   default_l_audio_language mean_views max_views
+   <chr>           <chr>                         <dbl>     <dbl>
+ 1 SABC News       en                           38085.    487961
+ 2 Beauty recipes  en                          263208     263208
+ 3 eNCA            en                           46485.    138612
+ 4 Eyewitness News en-GB                       103949     103949
+ 5 2nacheki        en-US                        54470.     98894
+ 6 Morexskinglow   en                           91347      91347
+ 7 News24          en-GB                        72606.     73622
+ 8 Azana Jezile    en-US                        65647      65647
+ 9 Renaldo Gouws   en                           50694      56890
+10 Mama Shirat     en-US                        41626      41626
+# ℹ 49 more rows
+```
+
+``` r
+videos %>%
+    filter(!is.na(default_l_audio_language)) %>%
+    group_by(channel_title, default_l_audio_language) %>%
+    summarize(mean_views = mean(view_count),
+              max_views = max(view_count)) %>%
+    arrange(desc(default_l_audio_language))
+```
+
+``` output
+`summarise()` has grouped output by 'channel_title'. You can override using the
+`.groups` argument.
+```
+
+``` output
+# A tibble: 59 × 4
+# Groups:   channel_title [59]
+   channel_title             default_l_audio_language mean_views max_views
+   <chr>                     <chr>                         <dbl>     <dbl>
+ 1 By.MonaLisa               zxx                           3802       3802
+ 2 DoRo Lungani              zu                           19648      39223
+ 3 NOSIPHO NZAMA             zu                             597        597
+ 4 2nacheki                  en-US                        54470.     98894
+ 5 Azana Jezile              en-US                        65647      65647
+ 6 Economic Freedom Fighters en-US                         7164      10996
+ 7 Gemini Baby               en-US                          435        435
+ 8 Grey Net                  en-US                         2619       2619
+ 9 KHATHA WORLDWIDE          en-US                          490        490
+10 Mama Shirat               en-US                        41626      41626
+# ℹ 49 more rows
 ```
 
 ### Counting
