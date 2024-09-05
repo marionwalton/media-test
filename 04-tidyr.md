@@ -132,16 +132,16 @@ videos %>%
 # A tibble: 10 × 3
    video_id    channel_title published_at_sql   
    <chr>       <chr>         <chr>              
- 1 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
- 2 3BkmO0M56lA eNCA          2020-09-08 6:54:04 
- 3 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
- 4 huI9qbGqNhA eNCA          2020-09-07 17:59:13
- 5 -vdIFk95vPk eNCA          2020-09-07 8:23:46 
- 6 iPUAl1jywdU eNCA          2020-09-14 16:16:44
- 7 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
- 8 EH0RpWcq66w eNCA          2020-09-08 12:50:32
- 9 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
-10 3EtH4eDceFY eNCA          2020-09-10 9:11:44 
+ 1 oYpXigYPY34 eNCA          2020-09-07 13:12:02
+ 2 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
+ 3 tVJ1JF-eIoQ eNCA          2021-09-28 13:51:41
+ 4 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
+ 5 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
+ 6 EH0RpWcq66w eNCA          2020-09-08 12:50:32
+ 7 huI9qbGqNhA eNCA          2020-09-07 17:59:13
+ 8 -vdIFk95vPk eNCA          2020-09-07 8:23:46 
+ 9 flzoE9zL_KA eNCA          2020-09-07 11:28:32
+10 3BkmO0M56lA eNCA          2020-09-08 6:54:04 
 ```
 
 We notice that the layout or format of the `videos` data is in a format that
@@ -241,7 +241,7 @@ other with "solar panel" in the `topic_categories` column.
 
 
 ``` r
-separate_longer_delim(topic_categories, delim = ";")
+separate_longer_delim(topic_categories, delim = ";") %>%
 ```
 
 After this transformation, you may notice that the `topic_categories` column contains
@@ -254,7 +254,7 @@ ends up looking like this:
 
 
 ``` r
-replace_na(list(topic_categories = "no_categories"))
+replace_na(list(topic_categories = "no_categories")) %>%
 ```
 
 Next, we create a new variable named `topic_categories_logical`, which has one value
@@ -266,7 +266,7 @@ with logical values describing whether the household did (`TRUE`) or didn't
 
 
 ``` r
-mutate(topic_categories_logical = TRUE)
+mutate(topic_categories_logical = TRUE) %>%
 ```
 
 ![](fig/separate_longer.png){alt="Two tables shown side-by-side. The first row of the left table is highlighted in blue, and the first four rows of the right table are also highlighted in blue to show how each of the values of 'items owned' are given their own row with the separate longer delim function. The 'items owned logical' column is highlighted in yellow on the right table to show how the mutate function adds a new column."}
