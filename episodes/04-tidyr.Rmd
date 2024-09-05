@@ -296,7 +296,7 @@ column names. We will do this in two steps to make this process a bit clearer.
 `pivot_longer()` takes four principal arguments:
 
 1. the data
-2. *cols* are the names of the columns we use to fill the a new values variable
+2. *cols* are the names of the columns we use to fill the new values variable
   (or to drop).
 3. the *names\_to* column variable we wish to create from the *cols* provided.
 4. the *values\_to* column variable we wish to create and fill with values
@@ -305,7 +305,7 @@ column names. We will do this in two steps to make this process a bit clearer.
 
 ```{r, purl=FALSE}
 videos_long <- videos_topics %>%
-  pivot_longer(cols = bicycle:car,
+  pivot_longer(cols = business:politics,
                names_to = "topic_categories",
                values_to = "topic_categories_logical")
 ```
@@ -320,9 +320,9 @@ We created some summary tables on `videos_topics` using `count` and
 `summarise`. We can create the same tables on `videos_long`, but this will
 require a different process.
 
-1. Make a table showing showing the number of respondents in each village who
-  owned a particular item, and include all items. The difference between this
-  format and the wide format is that you can now `count` all the items using the
+1. Make a table showing showing the number of videos from each channel categorised as a particular topic,
+ and include all items. The difference between this
+  format and the wide format is that you can now `count` all the topics using the
   `topic_categories` variable.
 
 :::::::::::::::  solution
@@ -332,8 +332,8 @@ require a different process.
 ```{r}
 videos_long %>%
   filter(topic_categories_logical) %>% 
-  group_by(village) %>% 
-  count(topic_categories)
+  group_by(channel_title) %>% 
+  count(topic_categories, sort=TRUE)
 ```
 
 :::::::::::::::::::::::::
@@ -354,11 +354,11 @@ not   an actual item, but rather the absence thereof.
 ```{r}
 videos_long %>% 
   filter(topic_categories_logical,
-         topic_categories != "no_listed_items") %>% 
-  # to keep information per household, we count key_ID
-  count(key_ID, village) %>% # we want to also keep the village variable
-  group_by(village) %>% 
-  summarise(mean_items = mean(n))
+         topic_categories != "no_topics") %>% 
+  # to keep information per video, we count video_id
+  count(video_id, channel_title) %>% # we want to also keep the channel variable
+  group_by(channel_title) %>% 
+  summarise(mean_topics = mean(n))
 ```
 
 :::::::::::::::::::::::::
@@ -373,36 +373,36 @@ and fixed a problem in the way our data is structured. In the spreadsheets lesso
 we learned that it's best practice to
 have only a single piece of information in each cell of your spreadsheet. In
 this dataset, we have another column that stores multiple values in a single
-cell. Some of the cells in the `months_lack_food` column contain multiple months
+cell. Some of the cells in the `tags` column contain multiple months
 which, as before, are separated by semi-colons (`;`).
 
 To create a data frame where each of the columns contain only one value per cell,
 we can repeat the steps we applied to `topic_categories` and apply them to
-`months_lack_food`. Since we will be using this data frame for the next episode,
+`tags`. Since we will be using this data frame for the next episode,
 we will call it `videos_plotting`.
 
 ```{r, purl=FALSE}
 videos_plotting <- videos %>%
   ## pivot wider by topic_categories
   separate_longer_delim(topic_categories, delim = ";") %>%
-  ## if there were no items listed, changing NA to no_listed_items
-  replace_na(list(topic_categories = "no_listed_items")) %>%
+  ## if there were no topics listed, changing NA to no_listed_items
+  replace_na(list(topic_categories = "no_topics")) %>%
   mutate(topic_categories_logical = TRUE) %>%
   pivot_wider(names_from = topic_categories,
               values_from = topic_categories_logical,
-              values_fill = list(topic_categories_logical = FALSE)) %>%
-  ## pivot wider by months_lack_food
-  separate_longer_delim(months_lack_food, delim = ";") %>%
-  mutate(months_lack_food_logical = TRUE) %>%
-  pivot_wider(names_from = months_lack_food,
-              values_from = months_lack_food_logical,
-              values_fill = list(months_lack_food_logical = FALSE)) %>%
+              values_fill = list(topic_categories_logical = FALSE)) #%>%
+  ## pivot wider by tags
+  #separate_longer_delim(tags, delim = ";") %>%
+  #mutate(tags_logical = TRUE) %>%
+  #pivot_wider(names_from = tags,
+  #           values_from = tags_logical
+  #          values_fill = list(tags_logical = FALSE)) %>%
   ## add some summary columns
-  mutate(number_months_lack_food = rowSums(select(., Jan:May))) %>%
-  mutate(number_items = rowSums(select(., bicycle:car)))
+  #mutate(number_tags = rowSums(select(., Jan:May))) %>% #replace with start and end tags
+  #mutate(number_topics = rowSums(select(., business:politics)))
+
+  videos_plotting
 ```
-
-
 ## Exporting data
 
 Now that you have learned how to use **`dplyr`** and **`tidyr`** to wrangle your
