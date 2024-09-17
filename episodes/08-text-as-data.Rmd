@@ -64,8 +64,8 @@ require(spacyr)
 
 ```{r}
 texts <- c("I have fought against white domination", "and I have fought against black domination")
-D <- tokens (texts) %>%
-dfm()
+d <- tokens(texts) %>%
+  dfm()
 
 convert(d, "matrix") 
 ```
