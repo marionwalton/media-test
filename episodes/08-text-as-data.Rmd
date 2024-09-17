@@ -42,8 +42,33 @@ i.e. corpus, tokens, dfm, frequency, collocation, keyness, concordance.
 - How can I visualise frequency, collocation and concordance for a corpus of textual data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+## Load required packages
 
-## The JSON data format
+```{r}
+#Load required packages
+
+require(quanteda)
+require(ggplot2)
+require(tidyverse)
+require(here)
+require(quanteda.textstats)
+#install.packages("quanteda.textplots",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("udpipe",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("spacyr",dependencies =T,repos = "http://cran.us.r-project.org")
+require(quanteda.textplots)
+require(udpipe)
+require(spacyr)
+
+```
+
+
+```{r}
+texts <- c("I have fought against white domination", "and I have fought against black domination")
+D <- tokens (texts) %>%
+dfm()
+
+convert(d, "matrix") 
+```
 
 
 ## Use the JSON package to read a JSON file
