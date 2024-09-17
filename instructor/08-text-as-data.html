@@ -291,25 +291,6 @@
         <ul><li><a href="#the-json-data-format">The JSON data format</a></li>
 <li><a href="#use-the-json-package-to-read-a-json-file">Use the JSON package to read a JSON file</a></li>
 <li><a href="#write-the-json-file-to-csv">Write the JSON file to csv</a></li>
-<li><a href="#load-required-packages">Load required packages</a></li>
-<li><a href="#cl-corpus-linguistics">CL Corpus linguistics</a></li>
-<li><a href="#cda-critical-discourse-analysis">CDA Critical discourse analysis</a></li>
-<li><a href="#frequency">Frequency</a></li>
-<li><a href="#frequency-lists">Frequency lists</a></li>
-<li><a href="#many-potential-problems">Many potential problems</a></li>
-<li><a href="#why-frequency">Why frequency?</a></li>
-<li><a href="#grammaticalfunction-words">Grammatical/Function words</a></li>
-<li><a href="#lexical-words">Lexical words</a></li>
-<li><a href="#defining-stopwords">Defining stopwords</a></li>
-<li><a href="#removing-stopwords">Removing stopwords</a></li>
-<li><a href="#wordclouds-and-visualisation">Wordclouds and visualisation</a></li>
-<li><a href="#visualising-frequencies-in-other-corpora">Visualising frequencies in other corpora</a></li>
-<li><a href="#beyond-frequency">Beyond frequency</a></li>
-<li><a href="#keyness">Keyness</a></li>
-<li><a href="#comparing-keyness-across-categories">Comparing keyness across categories</a></li>
-<li><a href="#collocation">Collocation</a></li>
-<li><a href="#concordances">Concordances</a></li>
-<li><a href="#other-important-linguistic-features">Other important linguistic features</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -393,12 +374,12 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul><li>This is an optional lesson intended to introduce approaches to text
-as data and key concepts from natural language processing, as well as
-how to apply computational approaches to qualitatively oriented
-discourse analysis.</li>
+as data by applying key concepts from corpus linguistics and natural
+language processing, with a focus on using computational approaches to
+qualitatively oriented discourse analysis.</li>
 <li>Note that his lesson was community-contributed and remains a work in
 progress. As such, it could benefit from feedback from instructors
 and/or workshop participants.</li>
@@ -413,9 +394,11 @@ and/or workshop participants.</li>
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>What is JSON format?</li>
-<li>How can I convert JSON to an R dataframe?</li>
-<li>How can I convert an array of JSON record into a table?</li>
+<ul><li>What are the most important concepts for automating text
+analysis?</li>
+<li>How can I prepare text data for analysis?</li>
+<li>How can I visualise frequency, collocation and concordance for a
+corpus of textual data?</li>
 </ul></div>
 </div>
 </div>
@@ -423,60 +406,38 @@ and/or workshop participants.</li>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Describe the JSON data format</li>
-<li>Understand where JSON is typically used</li>
-<li>Appreciate some advantages of using JSON over tabular data</li>
-<li>Appreciate some disadvantages of processing JSON documents</li>
-<li>Use the jsonLite package to read a JSON file</li>
-<li>Display formatted JSON as dataframe</li>
-<li>Select and display nested dataframe fields from a JSON document</li>
-<li>Write tabular data from selected elements from a JSON document to a
-csv file</li>
+<ul><li>Introduce key concepts needed to use the
+<strong><code>quanteda</code></strong> package for discourse analysis
+i.e. corpus, tokens, dfm, frequency, collocation, keyness,
+concordance.</li>
+<li>Prepare text for analysis with the
+<strong><code>quanteda</code></strong> functions <code>corpus</code>,
+<code>tokens</code>, <code>dfm</code>, and <code>dfm_remove</code>.</li>
+<li>Investigate the most frequent features in a dfm using the
+<strong><code>quanteda</code></strong> function
+<code>textstat_frequency</code> and .</li>
+<li>Plot frequencies using <strong><code>ggplot</code></strong>
+</li>
+<li>Select and modify a list of stopwords to remove unwanted words,
+query terms and spam from a dataset.</li>
+<li>Visualise frequencies as a wordcloud using the
+<strong><code>quanteda</code></strong> function
+<code>textplot_wordcloud</code> and the
+<strong><code>wordcloud2</code></strong> function
+<code>wordcloud2</code>.</li>
+<li>Identify the strengths and weaknesses of these approaches to
+visualising text data.</li>
+<li>Use <code>summarize</code>, <code>group_by</code>, and
+<code>count</code> to split a dataframe into groups of observations,
+apply a summary statistics for each group, and then combine the
+results.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
 <section><h2 class="section-heading" id="the-json-data-format">The JSON data format<a class="anchor" aria-label="anchor" href="#the-json-data-format"></a></h2>
-<hr class="half-width"><p>The JSON data format was designed as a way of allowing different
-machines or processes within machines to communicate with each other by
-sending messages constructed in a well defined format. JSON is now the
-preferred data format used by APIs (Application Programming
-Interfaces).</p>
-<p>The JSON format although somewhat verbose is not only Human readable
-but it can also be mapped very easily to an R dataframe.</p>
-<p>We are going to read a file of data formatted as JSON, convert it
-into a dataframe in R then selectively create a csv file from the
-extracted data.</p>
-<p>The JSON file we are going to use is the <a href="../data/SAFI.json">SAFI.json</a> file. This is the output file from
-an electronic survey system called ODK. The JSON represents the answers
-to a series of survey questions. The questions themselves have been
-replaced with unique Keys, the values are the answers.</p>
-<p>Because detailed surveys are by nature nested structures making it
-possible to record different levels of detail or selectively ask a set
-of specific questions based on the answer given to a previous question,
-the structure of the answers for the survey can not only be complex and
-convoluted, it could easily be different from one survey respondent’s
-set of answers to another.</p>
-<div class="section level3">
-<h3 id="advantages-of-json">Advantages of JSON<a class="anchor" aria-label="anchor" href="#advantages-of-json"></a></h3>
-<ul><li>Very popular data format for APIs (e.g. results from an Internet
-search)</li>
-<li>Human readable</li>
-<li>Each record (or document as they are called) is self contained. The
-equivalent of the column name and column values are in every
-record.</li>
-<li>Documents do not all have to have the same structure within the same
-file</li>
-<li>Document structures can be complex and nested</li>
-</ul></div>
-<div class="section level3">
-<h3 id="disadvantages-of-json">Disadvantages of JSON<a class="anchor" aria-label="anchor" href="#disadvantages-of-json"></a></h3>
-<ul><li>It is more verbose than the equivalent data in csv format</li>
-<li>Can be more difficult to process and display than csv formatted
-data</li>
-</ul></div>
-</section><section><h2 class="section-heading" id="use-the-json-package-to-read-a-json-file">Use the JSON package to read a JSON file<a class="anchor" aria-label="anchor" href="#use-the-json-package-to-read-a-json-file"></a></h2>
+<hr class="half-width"></section><section><h2 class="section-heading" id="use-the-json-package-to-read-a-json-file">Use the JSON package to read a JSON file<a class="anchor" aria-label="anchor" href="#use-the-json-package-to-read-a-json-file"></a></h2>
 <hr class="half-width"><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -793,577 +754,7 @@ example:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">write_csv</span><span class="op">(</span><span class="va">json_data</span><span class="op">$</span><span class="va">F_liv</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="st">"data_output/F_liv_row1.csv"</span><span class="op">)</span></span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="load-required-packages">Load required packages<a class="anchor" aria-label="anchor" href="#load-required-packages"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb19">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Load required packages</span></span>
-<span></span>
-<span><span class="kw">require</span><span class="op">(</span><span class="va">quanteda</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: quanteda</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Package version: 4.1.0
-Unicode version: 14.0
-ICU version: 70.1</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Parallel computing: disabled</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>See https://quanteda.io for tutorials and examples.</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb24">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">require</span><span class="op">(</span><span class="va">ggplot2</span><span class="op">)</span></span>
-<span><span class="kw">require</span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></span>
-<span><span class="kw">require</span><span class="op">(</span><span class="va">here</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: here</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>here() starts at /home/runner/work/media-test/media-test/site/built</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">require</span><span class="op">(</span><span class="va">quanteda.textstats</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: quanteda.textstats</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb29">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#install.packages("quanteda.textplots",dependencies =T,repos = "http://cran.us.r-project.org")</span></span>
-<span><span class="co">#install.packages("udpipe",dependencies =T,repos = "http://cran.us.r-project.org")</span></span>
-<span><span class="co">#install.packages("spacyr",dependencies =T,repos = "http://cran.us.r-project.org")</span></span>
-<span><span class="kw">require</span><span class="op">(</span><span class="va">quanteda.textplots</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: quanteda.textplots</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb31">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">require</span><span class="op">(</span><span class="va">udpipe</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: udpipe</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb33">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">require</span><span class="op">(</span><span class="va">spacyr</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: spacyr</code></pre>
-</div>
-</section><section><h2 class="section-heading" id="cl-corpus-linguistics">CL Corpus linguistics<a class="anchor" aria-label="anchor" href="#cl-corpus-linguistics"></a></h2>
-<hr class="half-width"><p>A collection of different methods which are related by the fact that
-they are performed on large collections of electronically stored,
-naturally occurring texts.</p>
-<ul><li><p>Many quantitative and/or make use of statistical tests,</p></li>
-<li><p>Performed by computer software</p></li>
-<li><p>CL requires considerable human input, which often includes
-qualitative analysis (such as examining concordance lines).</p></li>
-<li><p>Related to NLP or natural language processing (subfield of
-computer science and artificial intelligence).</p></li>
-</ul><p>(Baker et al 2008:273)</p>
-</section><section><h2 class="section-heading" id="cda-critical-discourse-analysis">CDA Critical discourse analysis<a class="anchor" aria-label="anchor" href="#cda-critical-discourse-analysis"></a></h2>
-<hr class="half-width"><p>A way of doing discourse analysis from a critical perspective, which
-often focuses on theoretical concepts such as power, ideology and
-domination. (Baker et al, 2008)</p>
-<ul><li><p>Tends towards qualitative approach</p></li>
-<li><p>Social, political, historical and intertextual contexts</p></li>
-</ul></section><section><h2 class="section-heading" id="frequency">Frequency<a class="anchor" aria-label="anchor" href="#frequency"></a></h2>
-<hr class="half-width"><p>Goal - Introducing the uses and potential dangers of frequency lists
-and wordclouds</p>
-<p>Frequency is a key concept underpinning the analysis of text and
-corpora.</p>
-<p>Nonetheless, as a purely quantitative measure it needs to be used
-with a sensitivity to</p>
-<ol style="list-style-type: decimal"><li><p>The word-distribution patterns in human languages.</p></li>
-<li><p>The importance of context for meaning</p></li>
-</ol></section><section><h2 class="section-heading" id="frequency-lists">Frequency lists<a class="anchor" aria-label="anchor" href="#frequency-lists"></a></h2>
-<hr class="half-width"><ul><li>Help direct researcher’s investigations</li>
-<li>Measures of dispersion can reveal trends across texts</li>
-<li>Can provide a sociological profile of a given word or phrase</li>
-</ul></section><section><h2 class="section-heading" id="many-potential-problems">Many potential problems<a class="anchor" aria-label="anchor" href="#many-potential-problems"></a></h2>
-<hr class="half-width"><ul><li>Can be reductive and generalising</li>
-<li>Can oversimplify</li>
-<li>Focus on differences between word distributions can obscure more
-interesting interpretations.</li>
-</ul></section><section><h2 class="section-heading" id="why-frequency">Why frequency?<a class="anchor" aria-label="anchor" href="#why-frequency"></a></h2>
-<hr class="half-width"><ul><li>Language is not a random affair - rule based / rule-generating</li>
-<li>Words tend to occur in relationship to other words with high levels
-of predictability!</li>
-<li>Rule-generating - people have choices “No terms are neutral. Choice
-of words expresses an ideological position”. (Stubbs, 1996:107; Baker,
-47)</li>
-<li>“If people speak or write in an unexpected way, or make one
-linguistic choice over another, more obvious one, then that reveals
-something about their intentions, whether conscious or not.”
-(Baker:48)</li>
-<li>Only certain choices are available at any one time
-(e.g. historically)</li>
-</ul><div class="codewrapper sourceCode" id="cb35">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load file with video metadata (you tube data tools)</span></span>
-<span><span class="va">videos</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
-<span>  <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"youtube-27082024-open-refine-200-na.csv"</span><span class="op">)</span>,</span>
-<span>  na<span class="op">=</span> <span class="st">""</span></span>
-<span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Rows: 200 Columns: 32
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (22): channel_id, channel_title, video_id, url, published_at_sql, video...
-dbl   (8): position, randomise, year, month, day, duration_sec, view_count, ...
-lgl   (1): caption
-dttm  (1): published_at
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb37">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">videos_text</span> <span class="op">&lt;-</span> <span class="va">videos</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>text <span class="op">=</span> <span class="va">video_description</span><span class="op">)</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>post_id <span class="op">=</span> <span class="va">video_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>date <span class="op">=</span> <span class="va">published_at_sql</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>category <span class="op">=</span> <span class="va">video_category_label</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">subset</span><span class="op">(</span>select <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="va">post_id</span>,<span class="va">text</span>,<span class="va">date</span>,<span class="va">category</span><span class="op">)</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">corpus</span><span class="op">(</span><span class="va">videos_text</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span> </span>
-<span> <span class="co"># dfm_remove(mystopwords)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">tstat_freq_d</span> <span class="op">&lt;-</span> <span class="fu">textstat_frequency</span><span class="op">(</span><span class="va">d</span>, n <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">feature_freq</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tstat_freq_d</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">frequency</span>, y <span class="op">=</span> <span class="fu">reorder</span><span class="op">(</span><span class="va">feature</span>, <span class="va">frequency</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
-<span><span class="va">feature_freq</span></span></code></pre>
-</div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="grammaticalfunction-words">Grammatical/Function words<a class="anchor" aria-label="anchor" href="#grammaticalfunction-words"></a></h2>
-<hr class="half-width"><p>These words are most commonly used in a language and seldom
-change.</p>
-<p>For this reason, they are often included on lists of “stop words”</p>
-<p>As our “corpus” is generated as a match to a specific query, we
-should include our query words in our stop lists.</p>
-<p>Can compare to standard corpus e.g. frequency of “you” in
-advertising</p>
-</section><section><h2 class="section-heading" id="lexical-words">Lexical words<a class="anchor" aria-label="anchor" href="#lexical-words"></a></h2>
-<hr class="half-width"><p>The frequencies of lexical words show us what a text or corpus is
-about.</p>
-</section><section><h2 class="section-heading" id="defining-stopwords">Defining stopwords<a class="anchor" aria-label="anchor" href="#defining-stopwords"></a></h2>
-<hr class="half-width"><p>Here are some stopwords that will be useful for this corpus:</p>
-<div class="codewrapper sourceCode" id="cb38">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## exclude common english words</span></span>
-<span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="fu">stopwords</span><span class="op">(</span><span class="st">"english"</span>,</span>
-<span>                         source<span class="op">=</span><span class="st">"snowball"</span><span class="op">)</span></span>
-<span><span class="co">## exclude search terms, branding features and other spam</span></span>
-<span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"news"</span>,<span class="st">"via"</span>,<span class="st">"newzroom"</span>,<span class="st">"dstv"</span>,<span class="st">"social"</span>,<span class="st">"media"</span>,<span class="st">"visit"</span>,<span class="st">"us"</span>,</span>
-<span>                 <span class="st">"online"</span>,<span class="st">"sabcnews.com"</span>,<span class="st">"copyright"</span>,<span class="st">"clicks"</span>,<span class="st">"hair"</span>,</span>
-<span>                 <span class="st">"advertisement"</span>,<span class="st">"ad"</span>,<span class="st">"advertise"</span>,<span class="st">"south"</span>,<span class="st">"africa"</span>,</span>
-<span>                 <span class="st">"ft"</span>,<span class="st">"thumbnail"</span>,<span class="st">"kabza"</span>,<span class="st">"semi"</span>,<span class="st">"tee"</span>,<span class="st">"vigro"</span>,<span class="st">"njelic"</span>,<span class="st">"mthuda"</span></span>
-<span>                 ,<span class="st">"ntokzin"</span>,<span class="st">"focalistic"</span>,</span>
-<span>                 <span class="st">"na"</span>,</span>
-<span>                 <span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
-</div>
-</section><section><h2 class="section-heading" id="removing-stopwords">Removing stopwords<a class="anchor" aria-label="anchor" href="#removing-stopwords"></a></h2>
-<hr class="half-width"><p>Now we can chart frequencies for the most common lexical words.</p>
-<div class="codewrapper sourceCode" id="cb39">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tstat_freq_d</span> <span class="op">&lt;-</span> <span class="fu">textstat_frequency</span><span class="op">(</span><span class="va">d</span>, n <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">feature_freq</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tstat_freq_d</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">frequency</span>, y <span class="op">=</span> <span class="fu">reorder</span><span class="op">(</span><span class="va">feature</span>, <span class="va">frequency</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
-<span><span class="va">feature_freq</span></span></code></pre>
-</div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="wordclouds-and-visualisation">Wordclouds and visualisation<a class="anchor" aria-label="anchor" href="#wordclouds-and-visualisation"></a></h2>
-<hr class="half-width"><p>Wordclouds are a popular visualisation format for frequencies because
-they allow us to focus on meanings.</p>
-<p>Can you think of some of the disadvantages of representing data in
-this way?</p>
-<div class="codewrapper sourceCode" id="cb40">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d</span> <span class="op">=</span> <span class="fu">corpus</span><span class="op">(</span><span class="va">videos_text</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
-<span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="visualising-frequencies-in-other-corpora">Visualising frequencies in other corpora<a class="anchor" aria-label="anchor" href="#visualising-frequencies-in-other-corpora"></a></h2>
-<hr class="half-width"><p>Frequency charts Here we will use a frequency chart to compare the
-words used in the video description text of our sample with the words
-used by Google Vision to describe key frames from the videos.</p>
-<div class="codewrapper sourceCode" id="cb41">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#load file with Google vision machine learning labels for video keyframes</span></span>
-<span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
-<span>  <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"machine_learning"</span>,<span class="st">"convert-google-vision-to-csv-f7fdf13f677ad1f913e22e79c0446dc3.csv"</span><span class="op">)</span>,</span>
-<span>  na<span class="op">=</span> <span class="st">""</span></span>
-<span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Rows: 6251 Columns: 3
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (3): labelAnnotations, fullTextAnnotation, image_file
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb43">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">labels_text</span> <span class="op">&lt;-</span> <span class="va">labels</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>text <span class="op">=</span> <span class="va">labelAnnotations</span><span class="op">)</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>post_id<span class="op">=</span><span class="fu">paste</span><span class="op">(</span><span class="va">image_file</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">subset</span><span class="op">(</span>select <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="va">post_id</span>,<span class="va">text</span><span class="op">)</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="fu">stopwords</span><span class="op">(</span><span class="st">"english"</span>,</span>
-<span>                         source<span class="op">=</span><span class="st">"snowball"</span><span class="op">)</span></span>
-<span><span class="co">#mystopwords &lt;- c("clicks","hair","advertisement","ad","south","africa","na",mystopwords)</span></span>
-<span><span class="co">#glue("Now {length(mystopwords)} stopwords:")</span></span>
-<span></span>
-<span><span class="va">d</span> <span class="op">=</span> <span class="fu">corpus</span><span class="op">(</span><span class="va">labels_text</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">tstat_freq_d</span> <span class="op">&lt;-</span> <span class="fu">textstat_frequency</span><span class="op">(</span><span class="va">d</span>, n <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">feature_freq</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tstat_freq_d</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">frequency</span>, y <span class="op">=</span> <span class="fu">reorder</span><span class="op">(</span><span class="va">feature</span>, <span class="va">frequency</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
-<span><span class="va">feature_freq</span></span></code></pre>
-</div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: wordcloud2</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Loading required package: RColorBrewer</code></pre>
-</div>
-<!--html_preserve-->
-<div id="htmlwidget-9eca9c4c91b339b0155a" class="wordcloud2 html-widget html-fill-item" style="width:504px;height:504px;">
-
-</div>
-<script type="application/json" data-for="htmlwidget-9eca9c4c91b339b0155a">{"x":{"word":["customer","floor","fixture","luggage","bags","door","job","flooring","standing","building","event","hand","gesture","dish","thumb","food","cuisine","drink","ingredient","wood","finger","skin","ear","happy","leisure","eyelash","eyebrow","beauty","fun","hairstyle","eyewear","smile","community","neck","stole","retail","fashion","design","chin","hair","eye","facial","expression","forehead","organ","face","twig","electric","blue","hardwood","grey","darkness","font","pattern","midnight","jaw","hearing","vision","care","glasses","mouth","nose","necklace","audio","equipment","chest","human","body","glass","accessory","sunglasses","jewelry","sleeve","jewellery","curtain","shoulder","photograph","cool","team","trousers","red","recreation","t-shirt","hat","baseball","cap","shorts","shirt","jeans","clothing","crowd","headgear","carmine","fan","audience","public","space","rebellion","product","mammal","city","magenta","art","chair","suit","engineering","stadium","vest","arena","snapshot","escalator","stairs","automotive","windshield","motor","vehicle","personal","luxury","car","lighting","exterior","tints","shades","hood","mirror","tire","steering","wheel","window","air","travel","workwear","auto","part","beard","family","passenger","sitting","plant","parking","road","liquid","ceiling","room","metal","transport","rim","cricket","shopping","mode","pedestrian","bumper","youth","jersey","visual","arts","competition","player","sport","venue","handrail","steel","jacket","flag","sports","crew","world","field","house","stage","sportswear","goggles","protective","championship","logo","advertising","machine","shield","idiophone","fictional","character","leg","fence","helmet","uniform","microphone","coat","tradition","street","sun","town","belt","television","backpack","games","elbow","gadget","entertainment","costume","outerwear","bag","thigh","organism","physical","fitness","performing","polo","interaction","pink","social","group","textile","paint","artist","fur","moustache","flesh","knit","beanie","beret","ushanka","natural","material","coquelicot","macro","photography","petal","peach","santa","claus","holiday","festival","cloud","sky","display","device","tourism","hoodie","conversation","gas","muscle","athlete","glove","child","service","ritual","rite","employment","temple","active","tie","fedora","people","wind","instrument","arm","watch","windbreaker","scarf","head","zombie","cooking","fiction","mask","gear","footwear","blazer","cleanliness","winter","official","sweatpant","light","facade","signage","electronic","graphics","line","night","bird","parrot","feather","vertebrate","snout","wool","tail","wing","rectangle","comfort","collar","apron","security","military","person","high-visibility","hard","purple","cosplay","balloon","tartan","mario","blind","shooting","tree","top","close-up","rose","order","linens","baby","toddler","dye","camouflage","marines","army","soldier","toy","non-commissioned","officer","organization","monk","ceremony","adaptation","lifejacket","bottle","sneakers","shoe","musical","boxing","trunk","waist","justice","league","barechested","wrist","digital","camera","cameras","optics","reflex","photographer","sleeveless","shadow","christmas","snow","precipitation","party","supply","fruit","system","geological","phenomenon","cumulus","landscape","atmospheric","woolen","cornrows","mobile","phone","bow","formal","wear","selfie","nail","lamp","superman","boot","covering","squad","brand","grille","technology","walking","property","wrinkle","ball","dance","football","friendship","lens","white","dastar","knee","denim","joint","black","calf","knee-high","freezing","working","animal","pack","performance","musician","music","hulk","green","lap","dress","protest","masque","chinese","new","year","sharing","headphones","science","sign","language","gun","buzz","cut","throat","video","videographer","cinematographer","operator","megaphone","documentary","water","single-lens","yellow","umbrella","smoke","journalist","woodwind","shotgun","celebrating","environment","morning","exhibition","emergency","firefighter","reflection","orange","brick","painting","handshake","polar","fleece","american","government","agency","law","enforcement","white-collar","worker","terrestrial","photomontage","daylighting","cheek","lip","scar","skyscraper","parka","wall","foot","grass","drawing","stalagmite","stalactite","recipe","asphalt","abdomen","stuffed","kiss","shawl","rain","earrings","clown","slr","mirrorless","interchangeable-lens","back","publication","avengers","symmetry","chanter","train","drum","afro","bovine","livestock","statue","sculpture","tread","beak","wig","sphere","cotton","candy","wine","communication","action","film","turban","flowering","dog","breed","companion","dairy","cow","concert","flash","drinking","shelf","trade","convenience","store","shelving","pet","plastic","hospital","gown","medical","health","cargo","pants","greeting","mascot","peaked","brass","spokesperson","presenter","news","interior","headpiece","pedicel","laptop","speech","software","screenshot","history","circle","number","multimedia","blond","program","chef","computer","photo","caption","projector","presentation","address","speaking","tower","block","orator","liver","led-backlit","lcd","flat","panel","poster","set","portable","communications","azure","astronomical","object","globe","map","atmosphere","tournament","bat-and-ball","game","cricketer","nature","soil","surface","lipstick","liner","document","triangle","parallel","slope","clock","iris","yoga","pant","weights","strength","training","jheri","curl","monochrome","portrait","graphic","brassiere","ringlet","nickel","handle","major","appliance","aluminium","web","page","transparent","colorfulness","collage","urban","table","band","plays","picture","frame","layered","architecture","tile","mass","production","industry","factory","black-and-white","style","newscaster","real","estate","pleased","media","step","cutting","astronomy","horizon","cabinetry","box","composite","concrete","grocery","smartphone","daytime","billboard","output","star","metropolitan","area","sidewalk","telephone","booth","siding","desk","coloring","violet","stain","aqua","telephony","cylinder","fluid","tooth","stomach","solution","cosmetics","symbol","dishware","tableware","wedding","barware","stemware","drinkware","cosmetic","dentistry","makeover","artificial","integrations","creative","brown","cookware","bakeware","cable","wire","aluminum","can","tin","beverage","flower","arranging","photographic","grooming","bun","croydon","facelift","solvent","chemical","compound","stopper","saver","alcoholic","payment","card","label","long","dreadlocks","felidae","handwriting","book","bookcase","monitor","keyboard","desktop","home","jigsaw","puzzle","one-piece","garment","cartoon","deep","frying","baked","goods","fast","fried","produce","french","fries","meat","pakora","gluten","drawer","staple","panko","fritter","dessert","button","serveware","suburb","indoor","shipping","cowboy","square","boa","cocktail","underwater","diving","divemaster","cup","coffee","piercing","trademark","learning"],"freq":[91,12,40,132,132,40,224,75,23,111,6121,98,1589,16,183,44,18,17,18,109,106,62,80,569,1446,336,195,11,3543,86,458,381,237,124,1,69,184,173,117,428,23,392,112,329,42,83,15,151,158,17,21,36,578,91,21,196,8,83,86,45,217,142,31,126,745,81,236,31,59,63,74,6,1741,114,3,27,31,93,1806,297,877,1702,3799,3414,2160,5402,605,302,405,108,3118,753,324,640,69,632,16,16,239,29,73,1255,116,15,147,56,9,163,5,59,7,8,178,15,87,114,593,8,14,40,43,81,81,15,7,36,2,8,44,7,72,44,18,30,831,3,33,19,35,1,14,15,18,271,36,46,3,122,13,4,13,9,156,110,53,110,305,53,12,13,6,6,578,43,87,54,57,1,5,40,184,53,573,16,139,154,32,8,8,300,300,97,2,40,327,198,40,559,26,84,1,86,153,40,9,59,28,388,247,286,57,116,8,3,3,56,45,56,148,198,198,41,25,22,498,160,150,10,13,27,1,12,24,7,5,82,16,7,14,14,59,13,9,47,130,201,9,68,29,39,144,4,99,41,26,1,3,3,70,53,44,37,127,3,10,49,64,69,20,73,16,12,2,8,17,15,50,8,147,34,2,7,35,56,42,23,20,3,2,1,8,32,2,7,3,3,77,7,81,7,35,361,127,6,2,5,4,7,6,2,4,6,46,11,1,5,2,2,1,4,2,170,40,17,20,5,19,21,6,1,3,38,2,26,11,32,4,1,9,26,3,3,6,35,9,166,14,14,12,30,3,8,2,5,1,12,9,1,4,1,2,1,8,1,1,2,17,16,3,49,49,9,30,1,2,14,3,22,116,8,70,5,13,4,6,5,4,3,8,12,1,40,8,27,81,9,1,11,13,20,5,4,2,27,3,18,1,32,3,2,3,3,3,62,3,7,14,8,4,6,7,9,39,19,4,3,3,1,6,5,12,2,1,4,2,1,32,2,1,5,2,1,2,5,3,9,1,2,2,2,11,11,3,3,11,11,8,2,1,94,133,1,2,2,6,9,6,3,1,1,15,11,5,2,1,1,1,24,2,1,1,1,1,14,2,7,1,4,2,2,1,3,1,3,1,1,8,2,1,1,1,31,1,2,1,1,3,2,1,1,1,2,74,2,21,15,5,6,13,1,13,2,2,1,2,6,7,1,1,1,1,43,68,129,9,5,1,14,11,49,128,3,33,15,109,1,56,5,35,36,36,1,9,2,4,1,1,1,6,1,1,4,4,4,8,3,3,2,5,5,1,1,2,1,1,1,1,1,2,5,42,1,5,2,6,5,2,3,1,1,1,1,1,24,24,5,1,5,1,2,1,1,1,3,2,3,3,2,1,3,5,7,1,1,12,12,3,1,2,2,2,1,1,2,2,7,1,1,1,7,1,1,1,4,4,3,2,1,1,1,1,1,3,1,1,1,1,1,1,2,3,2,3,5,1,1,6,10,3,1,3,4,3,1,17,1,2,1,6,3,3,7,2,2,1,3,1,1,1,1,1,3,1,2,2,1,1,2,2,1,1,1,2,2,1,1,1,1,1,1,3,1,1,4,3,3,4,3,1,2,1,1,4,4,1,6,6,3,3,10,10,6,7,7,1,2,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,2,3,1,3,1,1,1,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":["#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#C6DBEF","#08519C","#3182BD","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#3182BD","#08519C","#08519C","#08519C","#6BAED6","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#3182BD","#08519C","#08519C","#08519C","#08519C","#08519C","#3182BD","#08519C","#08519C","#3182BD","#9ECAE1","#6BAED6","#3182BD","#C6DBEF","#08519C","#08519C","#08519C","#08519C","#6BAED6","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#3182BD","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C","#08519C"],"minSize":0,"weightFactor":0.02940695964711649,"backgroundColor":"white","gridSize":0,"minRotation":0,"maxRotation":0,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script><!--/html_preserve--></section><section><h2 class="section-heading" id="beyond-frequency">Beyond frequency<a class="anchor" aria-label="anchor" href="#beyond-frequency"></a></h2>
-<hr class="half-width"><p>Need to go beyond simple frequency - context plays an important role
-in meaning.</p>
-<p>For discourse analysis, frequent clusters of words are more revealing
-than just looking at individual words in isolation</p>
-<p>Therefore need to consider: - keyness, - collocation and -
-concordances.</p>
-</section><section><h2 class="section-heading" id="keyness">Keyness<a class="anchor" aria-label="anchor" href="#keyness"></a></h2>
-<hr class="half-width"><p>“Keyness is defined as the statistically significantly higher
-frequency of particular words or clusters in the corpus under analysis
-in comparison with another corpus, either a general reference corpus, or
-a comparable specialised corpus. Its purpose is to point towards
-the”aboutness” of a text or homogeneous corpus (Scott, 1999), that is,
-its topic, and the central elements of its content.”</p>
-</section><section><h2 class="section-heading" id="comparing-keyness-across-categories">Comparing keyness across categories<a class="anchor" aria-label="anchor" href="#comparing-keyness-across-categories"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb46">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d</span> <span class="op">=</span> <span class="fu">corpus</span><span class="op">(</span><span class="va">videos_text</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Create subcorpus from the News/poltics and People/Blogs + Entertainment categories</span></span>
-<span><span class="va">corp_category</span> <span class="op">&lt;-</span> <span class="fu">corpus_subset</span><span class="op">(</span><span class="va">d</span>,</span>
-<span>                 <span class="va">category</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"News &amp; Politics"</span>,</span>
-<span>                                 <span class="st">"Entertainment"</span>,<span class="st">"People &amp; Blogs"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Create a dfm grouped by category</span></span>
-<span><span class="va">dfmat_cat</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">corp_category</span>, remove_punct <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                    remove_symbols<span class="op">=</span><span class="cn">TRUE</span>, remove_url <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tokens_keep</span><span class="op">(</span><span class="st">"^\\p{LETTER}"</span>, valuetype<span class="op">=</span><span class="st">"regex"</span><span class="op">)</span><span class="op">|&gt;</span></span>
-<span>  <span class="fu">tokens_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tokens_group</span><span class="op">(</span>groups <span class="op">=</span> <span class="va">category</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Calculate keyness and determine News as target</span></span>
-<span><span class="va">tstat_keyness</span> <span class="op">&lt;-</span> <span class="fu">textstat_keyness</span><span class="op">(</span><span class="va">dfmat_cat</span>, target <span class="op">=</span> <span class="st">"News &amp; Politics"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Plot estimated word keyness</span></span>
-<span><span class="fu">textplot_keyness</span><span class="op">(</span><span class="va">tstat_keyness</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="collocation">Collocation<a class="anchor" aria-label="anchor" href="#collocation"></a></h2>
-<hr class="half-width"><p>The above-chance frequent co-occurrence of two words within a
-pre-determined span, usually five words on either side of the word under
-investigation (the node) (see Sinclair, 1991)</p>
-<p>The statistical calculation of collocation is based on three
-measures:</p>
-<ul><li><p>The frequency the node,</p></li>
-<li><p>The frequency of the collocates, and</p></li>
-<li><p>The frequency of the collocation.</p></li>
-</ul><p>“Because the collocates of a node contribute to its meaning
-(Nattinger and De Carrico, 1992), they can provide ‘a semantic analysis
-of a word’ (Sinclair, 1991), but can also ‘convey messages implicitly’
-(Hunston, 2002).” (Baker)</p>
-<p>We will explore collocation in the most commented videos in our
-random sample (n=35)</p>
-<div class="codewrapper sourceCode" id="cb47">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#for youtube comments</span></span>
-<span><span class="va">comments</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
-<span>  <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"sample_60_all_comments.csv"</span><span class="op">)</span>,</span>
-<span>  na<span class="op">=</span> <span class="st">""</span></span>
-<span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Rows: 3417 Columns: 13
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (10): id, replyCount, authorName, text, authorChannelId, authorChannelU...
-dbl   (2): likeCount, isReply
-dttm  (1): publishedAt
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb49">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">comments_text</span> <span class="op">&lt;-</span> <span class="va">comments</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>date <span class="op">=</span> <span class="va">publishedAt</span><span class="op">)</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>post_id<span class="op">=</span><span class="fu">paste</span><span class="op">(</span><span class="va">id</span>,<span class="va">authorName</span>,sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">subset</span><span class="op">(</span>select <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="va">post_id</span>,<span class="va">date</span>,<span class="va">text</span><span class="op">)</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">corpus</span><span class="op">(</span><span class="va">comments_text</span><span class="op">)</span><span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tokens_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">toks_comments</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">d</span>, remove_punct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">tstat_col_caps</span> <span class="op">&lt;-</span> <span class="fu">tokens_select</span><span class="op">(</span><span class="va">toks_comments</span>, pattern <span class="op">=</span> <span class="st">"^[A-Z]"</span>,</span>
-<span>                                valuetype <span class="op">=</span> <span class="st">"regex"</span>,</span>
-<span>                                case_insensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                                padding <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">textstat_collocations</span><span class="op">(</span>min_count <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu">head</span><span class="op">(</span><span class="va">tstat_col_caps</span>, <span class="fl">20</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>     collocation count count_nested length    lambda         z
-1   south africa    58            0      2  7.423782 28.299700
-2  south african    21            0      2  5.689695 19.581277
-3 south africans    15            0      2  6.104332 16.714600
-4  julius malema     9            0      2  6.801750 15.070387
-5      FINE FLAT     5            0      2  9.624543 11.588454
-6  pure egyptian     6            0      2  9.540098 10.086395
-7 money strategy     5            0      2 11.059720  9.898023
-8       viva EFF     7            0      2  5.051634  9.716125
-9    aneeza gold    10            0      2 11.469704  7.731952</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb51">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dfm</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">topfeatures</span><span class="op">(</span><span class="va">dfm</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code> black   hair people    eff  white clicks    can   like   just racist
-   747    703    702    456    407    388    357    346    331    271 </code></pre>
-</div>
-</section><section><h2 class="section-heading" id="concordances">Concordances<a class="anchor" aria-label="anchor" href="#concordances"></a></h2>
-<hr class="half-width"><p>Also referred to as a key word in context (kwic)</p>
-<div class="codewrapper sourceCode" id="cb53">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">kw_comp</span> <span class="op">&lt;-</span> <span class="fu">kwic</span><span class="op">(</span><span class="va">toks_comments</span>, pattern <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"person*"</span>, <span class="st">"people*"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">head</span><span class="op">(</span><span class="va">kw_comp</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>Keyword-in-context with 10 matches.
-  [text21, 6] @Thokomagonya Ndlovu brother atleast job |  people  |
-  [text25, 1]                                          |  person  |
-  [text25, 7]        realises ad also commenting white | person's |
-  [text37, 5]                         EFF mercy us old |  people  |
- [text45, 11]         blind EFF embodies keeping black |  people  |
-  [text57, 4]                      Malema just tweeted |  people  |
-  [text58, 3]                  @lsgtsoo3298yes tweeted |  people  |
-  [text60, 4]                   @lsgtsoo3298 say black |  people  |
-  [text60, 8]   black people particular problem assume |  people  |
- [text60, 12]             assume people say think said |  people  |
-
- anything Take care brother
- realises ad also commenting white
- hair Adverts tell us hair
- need medicstion
- work just know better ways
- gathered lol trust leads
- gathered ignorant think independently master
- particular problem assume people say
- say think said people used
- used pronoun means speaking general         </code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb55">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#We will select two tokens objects for words inside and outside of the 10-word windows of the keywords (sa).</span></span>
-<span></span>
-<span><span class="va">eff</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"eff"</span>,<span class="st">"fighter*"</span><span class="op">)</span></span>
-<span><span class="va">white_people</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"white people"</span>, <span class="st">"whites"</span><span class="op">)</span></span>
-<span><span class="va">black_people</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"black people"</span>, <span class="st">"blacks"</span><span class="op">)</span></span>
-<span><span class="va">keyword</span> <span class="op">&lt;-</span> <span class="va">black_people</span></span>
-<span><span class="co">#keyword &lt;- white_people</span></span>
-<span><span class="va">toks_inside</span> <span class="op">&lt;-</span> <span class="fu">tokens_keep</span><span class="op">(</span><span class="va">toks_comments</span>, pattern <span class="op">=</span> <span class="va">keyword</span>, window <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
-<span><span class="va">toks_inside</span> <span class="op">&lt;-</span> <span class="fu">tokens_remove</span><span class="op">(</span><span class="va">toks_inside</span>, pattern <span class="op">=</span> <span class="va">keyword</span><span class="op">)</span> <span class="co"># remove the keywords</span></span>
-<span><span class="va">toks_outside</span> <span class="op">&lt;-</span> <span class="fu">tokens_remove</span><span class="op">(</span><span class="va">toks_comments</span>, pattern <span class="op">=</span> <span class="va">keyword</span>, window <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#We can compute words’ association with the keywords using textstat_keyness().</span></span>
-<span><span class="va">dfmat_inside</span> <span class="op">&lt;-</span> <span class="fu">dfm</span><span class="op">(</span><span class="va">toks_inside</span><span class="op">)</span></span>
-<span><span class="va">dfmat_outside</span> <span class="op">&lt;-</span> <span class="fu">dfm</span><span class="op">(</span><span class="va">toks_outside</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tstat_key_inside</span> <span class="op">&lt;-</span> <span class="fu">textstat_keyness</span><span class="op">(</span><span class="fu">rbind</span><span class="op">(</span><span class="va">dfmat_inside</span>, <span class="va">dfmat_outside</span><span class="op">)</span>,</span>
-<span>                                     target <span class="op">=</span> <span class="fu">seq_len</span><span class="op">(</span><span class="fu">ndoc</span><span class="op">(</span><span class="va">dfmat_inside</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">tstat_key_inside</span> <span class="op">&lt;-</span> <span class="fu">arrange</span><span class="op">(</span><span class="va">tstat_key_inside</span>,<span class="va">p</span><span class="op">)</span></span>
-<span><span class="fu">head</span><span class="op">(</span><span class="va">tstat_key_inside</span>, <span class="fl">50</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>         feature      chi2            p n_target n_reference
-1         whites 204.58938 0.000000e+00       12          40
-2              2 164.53968 0.000000e+00       10          34
-3  investigation  97.41770 0.000000e+00        2           0
-4       included  63.95410 1.221245e-15        2           1
-5       coloured  41.55397 1.146612e-10        5          31
-6           team  25.49025 4.446235e-07        4          30
-7    #justsaying  21.31712 3.892395e-06        1           0
-8             13  21.31712 3.892395e-06        1           0
-9       @melin24  21.31712 3.892395e-06        1           0
-10      abelungu  21.31712 3.892395e-06        1           0
-11    afrikaaner  21.31712 3.892395e-06        1           0
-12        agrees  21.31712 3.892395e-06        1           0
-13           ala  21.31712 3.892395e-06        1           0
-14    apologises  21.31712 3.892395e-06        1           0
-15         babes  21.31712 3.892395e-06        1           0
-16      belonged  21.31712 3.892395e-06        1           0
-17         birth  21.31712 3.892395e-06        1           0
-18         cared  21.31712 3.892395e-06        1           0
-19        clciks  21.31712 3.892395e-06        1           0
-20      coconuts  21.31712 3.892395e-06        1           0
-21  collectively  21.31712 3.892395e-06        1           0
-22  demonization  21.31712 3.892395e-06        1           0
-23      devacurl  21.31712 3.892395e-06        1           0
-24            ef  21.31712 3.892395e-06        1           0
-25     exhibited  21.31712 3.892395e-06        1           0
-26         fking  21.31712 3.892395e-06        1           0
-27      flighted  21.31712 3.892395e-06        1           0
-28          grew  21.31712 3.892395e-06        1           0
-29      immgrant  21.31712 3.892395e-06        1           0
-30  impoverished  21.31712 3.892395e-06        1           0
-31      incensed  21.31712 3.892395e-06        1           0
-32   inequitably  21.31712 3.892395e-06        1           0
-33 institutional  21.31712 3.892395e-06        1           0
-34       keepers  21.31712 3.892395e-06        1           0
-35           l8a  21.31712 3.892395e-06        1           0
-36      labeling  21.31712 3.892395e-06        1           0
-37        lookup  21.31712 3.892395e-06        1           0
-38       loosing  21.31712 3.892395e-06        1           0
-39    non-whites  21.31712 3.892395e-06        1           0
-40        outlet  21.31712 3.892395e-06        1           0
-41        owners  21.31712 3.892395e-06        1           0
-42  problem.with  21.31712 3.892395e-06        1           0
-43        prompt  21.31712 3.892395e-06        1           0
-44         pssst  21.31712 3.892395e-06        1           0
-45         scott  21.31712 3.892395e-06        1           0
-46          shun  21.31712 3.892395e-06        1           0
-47          slow  21.31712 3.892395e-06        1           0
-48   socialistic  21.31712 3.892395e-06        1           0
-49         taxes  21.31712 3.892395e-06        1           0
-50     townships  21.31712 3.892395e-06        1           0</code></pre>
-</div>
-</section><section><h2 class="section-heading" id="other-important-linguistic-features">Other important linguistic features<a class="anchor" aria-label="anchor" href="#other-important-linguistic-features"></a></h2>
-<hr class="half-width"><p>These are important linguistic features for discourse analysis. Do
-you think that we can investigate them using frequency measures?</p>
-<ul><li>pronoun use</li>
-<li>modality</li>
-<li>metaphors</li>
-<li>agency</li>
-<li>passivisation</li>
-<li>nominalisation etc</li>
-</ul><div id="keypoints1" class="callout keypoints">
+<div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
