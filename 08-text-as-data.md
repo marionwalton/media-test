@@ -39,8 +39,95 @@ i.e. corpus, tokens, dfm, frequency, collocation, keyness, concordance.
 - How can I visualise frequency, collocation and concordance for a corpus of textual data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+## Load required packages
 
-## The JSON data format
+
+``` r
+#Load required packages
+
+require(quanteda)
+```
+
+``` output
+Loading required package: quanteda
+```
+
+``` output
+Package version: 4.1.0
+Unicode version: 14.0
+ICU version: 70.1
+```
+
+``` output
+Parallel computing: disabled
+```
+
+``` output
+See https://quanteda.io for tutorials and examples.
+```
+
+``` r
+require(ggplot2)
+require(tidyverse)
+require(here)
+```
+
+``` output
+Loading required package: here
+```
+
+``` output
+here() starts at /home/runner/work/media-test/media-test/site/built
+```
+
+``` r
+require(quanteda.textstats)
+```
+
+``` output
+Loading required package: quanteda.textstats
+```
+
+``` r
+#install.packages("quanteda.textplots",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("udpipe",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("spacyr",dependencies =T,repos = "http://cran.us.r-project.org")
+require(quanteda.textplots)
+```
+
+``` output
+Loading required package: quanteda.textplots
+```
+
+``` r
+require(udpipe)
+```
+
+``` output
+Loading required package: udpipe
+```
+
+``` r
+require(spacyr)
+```
+
+``` output
+Loading required package: spacyr
+```
+
+
+
+``` r
+texts <- c("I have fought against white domination", "and I have fought against black domination")
+D <- tokens (texts) %>%
+dfm()
+
+convert(d, "matrix") 
+```
+
+``` error
+Error in eval(expr, envir, enclos): object 'd' not found
+```
 
 
 ## Use the JSON package to read a JSON file
