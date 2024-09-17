@@ -1,0 +1,559 @@
+---
+title: Text as data (Optional)
+teaching: 30
+exercises: 15
+source: Rmd
+---
+
+```{r setup, include=FALSE}
+source("data/download_data.R")
+library(tidyverse)
+```
+
+:::: instructor
+
+- This is an optional lesson intended to introduce approaches to text as data and 
+  key concepts from natural language processing, as well as how to
+  apply computational approaches to qualitatively oriented discourse analysis.
+- Note that his lesson was community-contributed and remains a work in progress. As such, it could
+  benefit from feedback from instructors and/or workshop participants.
+
+::::::::::::
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Describe the JSON data format
+- Understand where JSON is typically used
+- Appreciate some advantages of using JSON over tabular data
+- Appreciate some disadvantages of processing JSON documents
+- Use the jsonLite package to read a JSON file
+- Display formatted JSON as dataframe
+- Select and display nested dataframe fields from a JSON document
+- Write tabular data from selected elements from a JSON document to a csv file
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What is JSON format?
+- How can I convert JSON to an R dataframe?
+- How can I convert an array of JSON record into a table?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## The JSON data format
+
+The JSON data format was designed as a way of allowing different machines or processes within machines to communicate with each other by sending messages constructed in a well defined format. JSON is now the preferred data format used by APIs (Application Programming Interfaces).
+
+The JSON format although somewhat verbose is not only Human readable but it can also be mapped very easily to an R dataframe.
+
+We are going to read a file of data formatted as JSON, convert it into a dataframe in R then selectively create a csv file from the extracted data.
+
+The JSON file we are going to use is the [SAFI.json](data/SAFI.json) file. This is the output file from an electronic survey system called ODK. The JSON represents the answers to a series of survey questions. The questions themselves have been replaced with unique Keys, the values are the answers.
+
+Because detailed surveys are by nature nested structures making it possible to record different levels of detail or selectively ask a set of specific questions based on the answer given to a previous question, the structure of the answers for the survey can not only be complex and convoluted, it could easily be different from one survey respondent's set of answers to another.
+
+### Advantages of JSON
+
+- Very popular data format for APIs (e.g. results from an Internet search)
+- Human readable
+- Each record (or document as they are called) is self contained. The equivalent of the column name and column values are in every record.
+- Documents do not all have to have the same structure within the same file
+- Document structures can be complex and nested
+
+### Disadvantages of JSON
+
+- It is more verbose than the equivalent data in csv format
+- Can be more difficult to process and display than csv formatted data
+
+## Use the JSON package to read a JSON file
+
+```{r, message=FALSE}
+library(jsonlite)
+```
+
+As with reading in a CSV, you have a couple of options for how to access the JSON file.
+
+You can read the JSON file directly into R with `read_json()` or the comparable `fromJSON()`
+function, though this does not download the file.
+
+```{r eval=FALSE}
+json_data <- read_json(
+  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json"
+  )
+```
+
+To download the file you can copy and paste the contents of the file on
+[GitHub](https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI.json),
+creating a `SAFI.json` file in your `data` directory, or you can download the file with R.
+
+```{r download-data, eval=FALSE}
+download.file(
+  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json",
+   "data/SAFI.json", mode = "wb")
+```
+
+Once you have the data downloaded, you can read it into R with `read_json()`:
+
+```{r eval=FALSE}
+json_data <- read_json("data/SAFI.json")
+```
+
+We can see that a new object called json\_data has appeared in our Environment. It is described as a Large list (131 elements). In this current form, our data is messy. You can have a glimpse of it with the `head()` or `view()` functions. It will look not much more structured than if you were to open the JSON file with a text editor.
+
+This is because, by default, the `read_json()` function's parameter `simplifyVector`, which specifies whether or not to simplify vectors is set to FALSE. This means that the default setting does not simplify nested lists into vectors and data frames. However, we can set this to TRUE, and our data will be read directly as a dataframe:
+
+```{r}
+json_data <- read_json("data/SAFI.json", simplifyVector = TRUE)
+```
+
+Now we can see we have this json data in a dataframe format. For consistency with the rest of
+the lesson, let's coerce it to be a tibble and use `glimpse` to take a peek
+inside (these functions were loaded by `library(tidyverse)`):
+
+```{r}
+json_data <- json_data %>% as_tibble()
+glimpse(json_data)
+```
+
+Looking good, but you might notice that actually we have a variable, *F\_liv* that is a list of dataframes! It is very important to know what you are expecting from your data to be able to look for things like this. For example, if you are getting your JSON from an API, have a look at the API documentation, so you know what to look for.
+
+Often when we have a very large number of columns, it can become difficult to determine all the variables which may require some special attention, like lists. Fortunately, we can use special verbs like `where` to quickly select all the list columns.
+
+```{r}
+json_data %>%
+    select(where(is.list)) %>%
+    glimpse()
+```
+
+So what can we do about *F\_liv*, the column of dataframes? Well first things first, we can access each one. For  example to access the dataframe in the first row, we can use the  bracket (`[`) subsetting. Here we use single bracket, but you could also use double bracket (`[[`). The `[[` form allows only a single element to be selected using integer or character indices, whereas `[` allows indexing by vectors.
+
+```{r}
+json_data$F_liv[1]
+```
+
+We can also choose to view the nested dataframes at all the rows of our main dataframe where a particular condition is met (for example where the value for the variable *C06\_rooms* is equal to 4):
+
+```{r}
+json_data$F_liv[which(json_data$C06_rooms == 4)]
+```
+
+## Write the JSON file to csv
+
+If we try to write our json\_data dataframe to a csv as we would usually in a regular dataframe, we won't get the desired result. Using the `write_csv` function from the `{readr}` package won't give you an error for list columns, but you'll only see missing (i.e. `NA`) values in these columns. Let's try it out to confirm:
+
+```{r, eval=FALSE}
+write_csv(json_data, "json_data_with_list_columns.csv")
+read_csv("json_data_with_list_columns.csv")
+```
+
+To write out as a csv while maintaining the data within the list columns, we will need to "flatten" these columns. One way to do this is to convert these list columns into character types. (However, we don't want to change the data types for any of the other columns). Here's one way to do this using tidyverse. This command only applies the `as.character` command to those columns 'where' `is.list` is `TRUE`.
+
+```{r}
+flattened_json_data <- json_data %>% 
+  mutate(across(where(is.list), as.character))
+flattened_json_data
+```
+
+Now you can write this to a csv file:
+
+```{r, eval=FALSE}
+write_csv(flattened_json_data, "data_output/json_data_with_flattened_list_columns.csv")
+```
+
+Note: this means that when you read this csv back into R, the column of the nested dataframes will now be read in as a character vector. Converting it back to list to extract elements might be complicated, so it is probably better to keep storing these data in a JSON format if you will have to do this.
+
+You can also write out the individual nested dataframes to a csv. For example:
+
+```{r, eval=FALSE}
+write_csv(json_data$F_liv[[1]], "data_output/F_liv_row1.csv")
+```
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+## Load required packages
+
+```{r}
+#Load required packages
+
+require(quanteda)
+require(ggplot2)
+require(tidyverse)
+require(here)
+require(quanteda.textstats)
+#install.packages("quanteda.textplots",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("udpipe",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("spacyr",dependencies =T,repos = "http://cran.us.r-project.org")
+require(quanteda.textplots)
+require(udpipe)
+require(spacyr)
+
+```
+
+## CL Corpus linguistics 
+
+A collection of different methods which are related by the fact that they are performed on large collections of electronically stored, naturally occurring texts.
+
+-   Many quantitative and/or make use of statistical tests,
+
+-   Performed by computer software
+
+-    CL requires considerable human input, which often includes qualitative analysis (such as examining concordance lines).
+
+-   Related to NLP or natural language processing (subfield of computer science and artificial intelligence).
+
+(Baker et al 2008:273)
+
+## CDA Critical discourse analysis 
+
+A way of doing discourse analysis from a critical perspective, which often focuses on theoretical concepts such as power, ideology and domination. (Baker et al, 2008)
+
+-   Tends towards qualitative approach
+
+-   Social, political, historical and intertextual contexts
+
+## Frequency
+
+Goal - Introducing the uses and potential dangers of frequency lists and wordclouds
+
+Frequency is a key concept underpinning the analysis of text and corpora.
+
+Nonetheless, as a purely quantitative measure it needs to be used with a sensitivity to
+
+1.  The word-distribution patterns in human languages.
+
+2.  The importance of context for meaning
+
+## Frequency lists
+
+-   Help direct researcher's investigations
+-   Measures of dispersion can reveal trends across texts
+-   Can provide a sociological profile of a given word or phrase
+
+## Many potential problems
+
+-   Can be reductive and generalising
+-   Can oversimplify
+-   Focus on differences between word distributions can obscure more interesting interpretations.
+
+## Why frequency?
+
+-   Language is not a random affair - rule based / rule-generating
+-   Words tend to occur in relationship to other words with high levels of predictability!
+-   Rule-generating - people have choices "No terms are neutral. Choice of words expresses an ideological position". (Stubbs, 1996:107; Baker, 47)
+-   "If people speak or write in an unexpected way, or make one linguistic choice over another, more obvious one, then that reveals something about their intentions, whether conscious or not." (Baker:48)
+-   Only certain choices are available at any one time (e.g. historically)
+
+```{r}
+
+# load file with video metadata (you tube data tools)
+videos <- read_csv(
+  here("data","youtube-27082024-open-refine-200-na.csv"),
+  na= ""
+)
+
+videos_text <- videos %>%
+  rename(text = video_description)  %>%
+  rename(post_id = video_id) %>%
+  rename(date = published_at_sql) %>%
+  rename(category = video_category_label) %>%
+  subset(select = c(post_id,text,date,category) )
+
+d <- corpus(videos_text) %>%
+  tokens(remove_punct=T) %>%
+  dfm() 
+ # dfm_remove(mystopwords)
+
+
+tstat_freq_d <- textstat_frequency(d, n = 60)
+
+feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, frequency))) +
+  geom_point() +
+  labs(x = "Frequency", y = "Feature")
+feature_freq
+```
+
+## Grammatical/Function words
+
+These words are most commonly used in a language and seldom change.
+
+For this reason, they are often included on lists of "stop words"
+
+As our "corpus" is generated as a match to a specific query, we should include our query words in our stop lists.
+
+Can compare to standard corpus e.g. frequency of "you" in advertising
+
+## Lexical words
+
+The frequencies of lexical words show us what a text or corpus is about.
+
+## Defining stopwords
+
+Here are some stopwords that will be useful for this corpus:
+
+```{r}
+## exclude common english words
+mystopwords <- stopwords("english",
+                         source="snowball")
+## exclude search terms, branding features and other spam
+mystopwords <- c("news","via","newzroom","dstv","social","media","visit","us",
+                 "online","sabcnews.com","copyright","clicks","hair",
+                 "advertisement","ad","advertise","south","africa",
+                 "ft","thumbnail","kabza","semi","tee","vigro","njelic","mthuda"
+                 ,"ntokzin","focalistic",
+                 "na",
+                 mystopwords)
+```
+
+## Removing stopwords
+
+Now we can chart frequencies for the most common lexical words.
+
+```{r}
+d <- d %>%
+  dfm_remove(mystopwords)
+
+tstat_freq_d <- textstat_frequency(d, n = 60)
+
+feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, frequency))) +
+  geom_point() +
+  labs(x = "Frequency", y = "Feature")
+feature_freq
+```
+
+## Wordclouds and visualisation
+
+Wordclouds are a popular visualisation format for frequencies because they allow us to focus on meanings.
+
+Can you think of some of the disadvantages of representing data in this way?
+
+```{r}
+d = corpus(videos_text) %>%
+  tokens(remove_punct=T) %>%
+  dfm() %>%
+  dfm_remove(mystopwords)
+textplot_wordcloud(d, max_words=100)
+```
+
+## Visualising frequencies in other corpora
+
+Frequency charts
+Here we will use a frequency chart to compare the words used in the video description text of our sample with the words used by Google Vision to describe key frames from the videos.
+
+```{r}
+
+#load file with Google vision machine learning labels for video keyframes
+labels <- read_csv(
+  here("data","machine_learning","convert-google-vision-to-csv-f7fdf13f677ad1f913e22e79c0446dc3.csv"),
+  na= ""
+)
+
+labels_text <- labels %>%
+  rename(text = labelAnnotations)  %>%
+  mutate(post_id=paste(image_file)) %>%
+  subset(select = c(post_id,text) )
+
+mystopwords <- stopwords("english",
+                         source="snowball")
+#mystopwords <- c("clicks","hair","advertisement","ad","south","africa","na",mystopwords)
+#glue("Now {length(mystopwords)} stopwords:")
+
+d = corpus(labels_text) %>%
+  tokens(remove_punct=T) %>%
+  dfm() %>%
+  dfm_remove(mystopwords)
+
+
+tstat_freq_d <- textstat_frequency(d, n = 60)
+
+feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, frequency))) +
+  geom_point() +
+  labs(x = "Frequency", y = "Feature")
+feature_freq
+
+```
+
+```{r}
+#| echo: false
+require(wordcloud2)
+require(RColorBrewer)
+
+
+labels_text <- labels %>%
+  rename(text = labelAnnotations)  %>%
+  mutate(post_id=paste(image_file)) %>%
+  subset(select = c(post_id,text) )
+
+mystopwords <- stopwords("english",
+                         source="snowball")
+#mystopwords <- c("clicks","hair","advertisement","ad","south","africa","na",mystopwords)
+#glue("Now {length(mystopwords)} stopwords:")
+
+d = corpus(labels_text) %>%
+  tokens(remove_punct=T) %>%
+  dfm() %>%
+  dfm_remove(mystopwords)
+
+#make the graph
+
+f <- colSums(d)
+col <- rev(tail(brewer.pal(6, "Blues"), 5))
+
+
+p <- wordcloud2(data.frame(names(f), f), minRotation = 0, maxRotation = 0,
+                color = col[as.integer(cut(f, length(col)))], shape="circle")
+p
+
+```
+
+```{r}
+
+```
+
+## Beyond frequency
+
+Need to go beyond simple frequency - context plays an important role in meaning.
+
+For discourse analysis, frequent clusters of words are more revealing than just looking at individual words in isolation
+
+Therefore need to consider: - keyness, - collocation and - concordances.
+
+## Keyness
+
+"Keyness is defined as the statistically significantly higher frequency of particular words or clusters in the corpus under analysis in comparison with another corpus, either a general reference corpus, or a comparable specialised corpus. Its purpose is to point towards the "aboutness" of a text or homogeneous corpus (Scott, 1999), that is, its topic, and the central elements of its content."
+
+## Comparing keyness across categories
+
+```{r}
+
+d = corpus(videos_text)
+
+
+# Create subcorpus from the News/poltics and People/Blogs + Entertainment categories
+corp_category <- corpus_subset(d,
+                 category %in% c("News & Politics",
+                                 "Entertainment","People & Blogs"))
+
+# Create a dfm grouped by category
+dfmat_cat <- tokens(corp_category, remove_punct = TRUE,
+                    remove_symbols=TRUE, remove_url = T) |>
+  tokens_keep("^\\p{LETTER}", valuetype="regex")|>
+  tokens_remove(mystopwords) |>
+  tokens_group(groups = category) |>
+  dfm()
+
+# Calculate keyness and determine News as target
+tstat_keyness <- textstat_keyness(dfmat_cat, target = "News & Politics")
+
+# Plot estimated word keyness
+textplot_keyness(tstat_keyness)
+
+```
+
+## Collocation
+
+The above-chance frequent co-occurrence of two words within a pre-determined span, usually five words on either side of the word under investigation (the node) (see Sinclair, 1991)
+
+The statistical calculation of collocation is based on three measures:
+
+-   The frequency the node,
+
+-   The frequency of the collocates, and
+
+-   The frequency of the collocation.
+
+"Because the collocates of a node contribute to its meaning (Nattinger and De Carrico, 1992), they can provide 'a semantic analysis of a word' (Sinclair, 1991), but can also 'convey messages implicitly' (Hunston, 2002)." (Baker)
+
+We will explore collocation in the most commented videos in our random sample (n=35)
+
+```{r}
+#for youtube comments
+comments <- read_csv(
+  here("data","sample_60_all_comments.csv"),
+  na= ""
+)
+```
+
+```{r}
+
+comments_text <- comments %>%
+  rename(date = publishedAt)  %>%
+  mutate(post_id=paste(id,authorName,sep = "_")) %>%
+  subset(select = c(post_id,date,text) )
+
+d <- corpus(comments_text)%>%
+  tokens(remove_punct=T)%>%
+  tokens_remove(mystopwords)
+
+toks_comments <- tokens(d, remove_punct = TRUE)
+tstat_col_caps <- tokens_select(toks_comments, pattern = "^[A-Z]",
+                                valuetype = "regex",
+                                case_insensitive = FALSE,
+                                padding = TRUE) %>%
+  textstat_collocations(min_count = 5)
+head(tstat_col_caps, 20)
+
+dfm <- d %>%
+  dfm()
+
+topfeatures(dfm)
+
+
+```
+
+
+## Concordances
+
+Also referred to as a key word in context (kwic)
+
+
+```{r}
+
+kw_comp <- kwic(toks_comments, pattern = c("person*", "people*"))
+head(kw_comp, 10)
+
+#We will select two tokens objects for words inside and outside of the 10-word windows of the keywords (sa).
+
+eff <- c("eff","fighter*")
+white_people <- c("white people", "whites")
+black_people <- c("black people", "blacks")
+keyword <- black_people
+#keyword <- white_people
+toks_inside <- tokens_keep(toks_comments, pattern = keyword, window = 6)
+toks_inside <- tokens_remove(toks_inside, pattern = keyword) # remove the keywords
+toks_outside <- tokens_remove(toks_comments, pattern = keyword, window = 6)
+
+#We can compute words’ association with the keywords using textstat_keyness().
+dfmat_inside <- dfm(toks_inside)
+dfmat_outside <- dfm(toks_outside)
+
+tstat_key_inside <- textstat_keyness(rbind(dfmat_inside, dfmat_outside),
+                                     target = seq_len(ndoc(dfmat_inside)))
+tstat_key_inside <- arrange(tstat_key_inside,p)
+head(tstat_key_inside, 50)
+
+```
+
+## Other important linguistic features
+
+These are important linguistic features for discourse analysis. Do you think that we can investigate them using frequency measures?
+
+-   pronoun use
+-   modality
+-   metaphors
+-   agency
+-   passivisation
+-   nominalisation etc
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- JSON is a popular data format for transferring data used by a great many Web based APIs
+- The complex structure of a JSON document means that it cannot easily be 'flattened' into tabular data
+- We can use R code to extract values of interest and place them in a csv file
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

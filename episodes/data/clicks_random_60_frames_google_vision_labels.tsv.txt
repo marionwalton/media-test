@@ -1,0 +1,720 @@
+Event	5224
+T-shirt	3799
+Fun	3543
+Hat	3313
+Crowd	3118
+Cap	3107
+Baseball cap	2160
+Team	1806
+Sleeve	1741
+Recreation	1702
+Gesture	1589
+Leisure	1446
+Magenta	1255
+Red	877
+Beard	831
+Headgear	753
+Fan	640
+Shorts	605
+Public event	598
+Font	578
+Jacket	578
+Personal protective equipment	573
+Happy	569
+Tradition	559
+Fur	469
+Eyewear	458
+Jeans	405
+Entertainment	388
+Smile	381
+Eyelash	336
+Forehead	329
+Carmine	324
+Fictional character	300
+Competition event	299
+Trousers	296
+Outerwear	286
+Facial hair	280
+Room	271
+Product	239
+Community	237
+Costume	233
+Job	224
+Mouth	217
+Microphone	198
+Social group	198
+Jaw	196
+Eyebrow	195
+Sportswear	184
+Thumb	183
+Uniform	183
+Shirt	182
+Vest	163
+Moustache	160
+Youth	156
+Advertising	154
+Electric blue	151
+Flesh	150
+Human	150
+Pink	148
+Winter	147
+Suit	145
+Muscle	144
+Nose	142
+Logo	139
+Lip	133
+Luggage and bags	132
+News	129
+Screenshot	128
+Military person	127
+Audio equipment	126
+Military camouflage	126
+People	126
+Display device	125
+Neck	124
+Cricket cap	122
+Chin	117
+Brand	116
+Thigh	116
+Jewellery	114
+Art	112
+Facial expression	112
+Building	111
+Finger	105
+Wood	104
+Multimedia	101
+Jersey	100
+Military uniform	100
+Glove	99
+Hand	98
+Camera	94
+Cheek	94
+Cool	93
+Customer	91
+Pattern	91
+Fashion design	89
+Motor vehicle	87
+Belt	86
+Hairstyle	86
+Sun hat	84
+Face	83
+Vision care	83
+Chest	81
+Collar	81
+Tints and shades	81
+Ear	80
+Rectangle	77
+Flash photography	74
+Sunglasses	74
+City	73
+Flooring	73
+Head	73
+Clothing	72
+Hair	71
+Technology	70
+Temple	70
+Audience	69
+Retail	69
+Travel	69
+Windbreaker	69
+Hoodie	68
+Television presenter	68
+Watch	64
+Black hair	62
+Human leg	62
+Sharing	62
+Skin	62
+Elbow	59
+Holiday	59
+Snapshot	59
+Bag	57
+World	57
+Automotive design	56
+Engineering	56
+Fashion accessory	56
+Interaction	56
+Performing arts	56
+Television program	56
+Glass	54
+Goggles	53
+Player	53
+Visual arts	53
+Active shirt	52
+Signage	52
+Blazer	50
+Arm	49
+Formal wear	49
+Sky	47
+Tree	46
+Glasses	45
+Polo shirt	45
+Camouflage	44
+Sports uniform	44
+Workwear	44
+Automotive exterior	43
+Flag	43
+Spokesperson	43
+Lipstick	42
+Organ	42
+Child	41
+Crew	41
+Software	41
+Textile	41
+Tie	41
+Backpack	40
+Coat	40
+Helmet	40
+Knee	40
+Marines	40
+Stage equipment	40
+Fashion	39
+Fixture	39
+Video camera	39
+Adaptation	38
+Electronic device	38
+Gas	38
+Fedora	37
+Darkness	36
+Metal	36
+Photo caption	36
+Facade	35
+Leg	35
+Security	35
+Wrist	35
+Official	34
+Circle	33
+Passenger	33
+Automotive lighting	32
+Celebrating	32
+Machine	32
+Shoe	32
+Vertebrate	32
+Communication Device	31
+Necklace	31
+Photograph	31
+Photographer	30
+Conversation	29
+Fur clothing	29
+Mammal	29
+Nail	29
+Gadget	28
+Plant	28
+Beret	27
+Joint	27
+Shoulder	27
+Automotive tire	26
+Street	26
+Waist	26
+Door	25
+Window	25
+Earrings	24
+Human body	24
+Jheri curl	24
+Paint	24
+Service	24
+Graphics	23
+Standing	23
+Transport	23
+Squad	22
+Grey	21
+Midnight	21
+Shelf	21
+Dress shirt	20
+Eye	20
+Line	20
+Music	20
+Scarf	20
+Soldier	20
+Black	19
+Non-commissioned officer	19
+Public transport	19
+Sitting	19
+Videographer	19
+Auto part	18
+Ceiling	18
+Cuisine	18
+Food	18
+Green	18
+Ingredient	18
+Army	17
+Computer	17
+Drink	17
+Hardwood	17
+Sports gear	17
+Tableware	17
+Artist	16
+Bottle	16
+Championship	16
+Dish	16
+Mobile phone	16
+Petal	16
+Rebellion	16
+Zombie	16
+Chair	15
+Footwear	15
+Hood	15
+Liquid	15
+Number	15
+Recipe	15
+Trade	15
+Twig	15
+Vehicle door	15
+Windshield	15
+Cameras & optics	14
+Costume hat	14
+Laptop	14
+Publication	14
+Santa claus	14
+Beanie	13
+Boot	13
+Festival	13
+Pedestrian	13
+Shelving	13
+Shopping	13
+Working animal	13
+Automotive window part	12
+Cooking	12
+Dress	12
+Floor	12
+Picture frame	12
+Sport venue	12
+Television crew	12
+Vehicle	12
+White	12
+Yellow	12
+Asphalt	11
+Beauty	11
+Freezing	11
+Government agency	11
+Material property	11
+Sneakers	11
+Speech	11
+Sports	11
+Top	11
+White-collar worker	11
+Fast food	10
+Fluid	10
+Fried food	10
+Knit cap	10
+Personal computer	10
+Sports jersey	10
+Tire	10
+Bumper	9
+Calf	9
+Cloud	9
+Design	9
+Foot	9
+Interior design	9
+Natural material	9
+Painting	9
+Presentation	9
+Public space	9
+Road	9
+Selfie	9
+Stadium	9
+Television	9
+Throat	9
+Tourism	9
+Trunk	9
+Camera lens	8
+Cleanliness	8
+Denim	8
+Digital camera	8
+Grille	8
+Hearing	8
+Idiophone	8
+Lighting	8
+Multimedia software	8
+Organism	8
+Personal luxury car	8
+Plastic	8
+Shadow	8
+Shield	8
+Sign language	8
+Stairs	8
+Television set	8
+Wig	8
+Apron	7
+Automotive mirror	7
+Balloon	7
+Blue	7
+Coquelicot	7
+Escalator	7
+Feather	7
+French fries	7
+Games	7
+Landscape	7
+Makeover	7
+Media	7
+Newscaster	7
+Party supply	7
+Peach	7
+Reflex camera	7
+Science	7
+Space	7
+Symmetry	7
+Table	7
+Wool	7
+Barechested	6
+Body jewelry	6
+Buzz cut	6
+Cargo pants	6
+Competition	6
+Cylinder	6
+Deep frying	6
+Drinkware	6
+Grass	6
+Handrail	6
+High-visibility clothing	6
+Light	6
+Liver	6
+Mask	6
+Military organization	6
+Music artist	6
+Parallel	6
+Produce	6
+Shooting	6
+Sign	6
+Steel	6
+Tartan	6
+Terrestrial plant	6
+Wall	6
+Water	6
+Abdomen	5
+Arena	5
+Astronomical object	5
+Ball	5
+Car	5
+Chef	5
+Comfort	5
+Convenience store	5
+Dance	5
+Document	5
+Exhibition	5
+Graphic design	5
+Headpiece	5
+Macro photography	5
+Orange	5
+Pack animal	5
+Party	5
+Plastic bottle	5
+Purple	5
+Road surface	5
+Single-lens reflex camera	5
+Slope	5
+Snow	5
+Urban design	5
+Walking	5
+Wood stain	5
+Air gun	4
+Athlete	4
+Cabinetry	4
+Cinematographer	4
+Computer monitor	4
+Cosmetics	4
+Cosplay	4
+Electronic signage	4
+Flat panel display	4
+Handwriting	4
+Horizon	4
+House	4
+Journalist	4
+Mode of transport	4
+Musical instrument	4
+One-piece garment	4
+Poster	4
+Public speaking	4
+Sports equipment	4
+Train	4
+Wheel	4
+Window blind	4
+Wrinkle	4
+Air travel	3
+Baked goods	3
+Book	3
+Bookcase	3
+Bow tie	3
+Brick	3
+Camera operator	3
+Chinese new year	3
+Collage	3
+Computer keyboard	3
+Cosmetic dentistry	3
+Curtain	3
+Desk	3
+Drawing	3
+Employment	3
+Friendship	3
+Hair accessory	3
+Headphones	3
+History	3
+Hulk	3
+Iris	3
+Justice league	3
+Law enforcement	3
+Layered hair	3
+Livestock	3
+Long hair	3
+Megaphone	3
+Monochrome photography	3
+Night	3
+Output device	3
+Performance art	3
+Physical fitness	3
+Portable communications device	3
+Protest	3
+Rim	3
+Rite	3
+Sculpture	3
+Sleeveless shirt	3
+Solution	3
+Staple food	3
+Symbol	3
+Tail	3
+Toddler	3
+Tooth	3
+Toy	3
+Violet	3
+Web page	3
+Wind instrument	3
+Window covering	3
+Wing	3
+Afro	2
+Aluminium	2
+American football	2
+Artificial hair integrations	2
+Atmosphere	2
+Automotive wheel system	2
+Avengers	2
+Azure	2
+Barware	2
+Bird	2
+Black-and-white	2
+Bottle cap	2
+Box	2
+Brown hair	2
+Bun	2
+Ceremony	2
+Chemical compound	2
+Christmas	2
+Clock	2
+Clown	2
+Comfort food	2
+Composite material	2
+Concert	2
+Cornrows	2
+Cup	2
+Dog breed	2
+Drinking	2
+Drum	2
+Dye	2
+Emergency service	2
+Eye glass accessory	2
+Fence	2
+Fiction	2
+Glass bottle	2
+Hair coloring	2
+Hard hat	2
+Health care	2
+Home appliance	2
+Hospital gown	2
+Lifejacket	2
+Linens	2
+Mario	2
+Masque	2
+Mass production	2
+Military officer	2
+Monochrome	2
+Musician	2
+Natural environment	2
+Pakora	2
+Parka	2
+Personal grooming	2
+Photomontage	2
+Polar fleece	2
+Property	2
+Public address system	2
+Reflection	2
+Ringlet	2
+Rose family	2
+Rose order	2
+Siding	2
+Skyscraper	2
+Snout	2
+Soil	2
+Sphere	2
+Steering wheel	2
+Stuffed toy	2
+Style	2
+Superman	2
+sweatpant	2
+Terrestrial animal	2
+Tile flooring	2
+Transparent material	2
+Triangle	2
+Umbrella	2
+Woodwind instrument	2
+Action film	1
+Active pants	1
+Alcoholic beverage	1
+Aluminum can	1
+Aqua	1
+Architecture	1
+Art paint	1
+Astronomy	1
+Atmospheric phenomenon	1
+Baby & toddler clothing	1
+Back	1
+Ball game	1
+Band plays	1
+Bat-and-ball games	1
+Beak	1
+Beverage can	1
+Billboard	1
+Blond	1
+Body piercing	1
+Bottle stopper & saver	1
+Bovine	1
+Boxing	1
+Brass instrument	1
+Brassiere	1
+Brown	1
+Button	1
+Cable	1
+Camera accessory	1
+Cartoon	1
+Chanter	1
+Close-up	1
+Cocktail	1
+Coffee cup	1
+Colorfulness	1
+Companion dog	1
+Concrete	1
+Cookware and bakeware	1
+Cotton candy	1
+Cowboy hat	1
+Creative arts	1
+Crew cut	1
+Cricketer	1
+Croydon facelift	1
+Cumulus	1
+Dairy cow	1
+Dastar	1
+Daylighting	1
+Daytime	1
+Desktop computer	1
+Dessert	1
+Digital SLR	1
+Dishware	1
+Divemaster	1
+Diving equipment	1
+Diving mask	1
+Documentary	1
+Drawer	1
+Dreadlocks	1
+Eye liner	1
+Factory	1
+Family car	1
+Feather boa	1
+Felidae	1
+Field house	1
+Finger food	1
+Firefighter	1
+Flower	1
+Flower Arranging	1
+Flowering plant	1
+Football	1
+Football equipment	1
+Fritter	1
+Fruit	1
+Gas mask	1
+Geological phenomenon	1
+Globe	1
+Gluten	1
+Greeting	1
+Grocery store	1
+Handle	1
+Handshake	1
+Indoor games and sports	1
+Industry	1
+Jigsaw puzzle	1
+Kiss	1
+Knee-high boot	1
+Label	1
+Lamp	1
+Lap	1
+Learning	1
+Led-backlit lcd display	1
+Light fixture	1
+Major appliance	1
+Map	1
+Mascot	1
+Meat	1
+Medical	1
+Metropolitan area	1
+Mirrorless interchangeable-lens camera	1
+Mobile device	1
+Monk	1
+Morning	1
+Music venue	1
+Nail care	1
+Natural landscape	1
+Nickel	1
+Orator	1
+Panko	1
+Parking	1
+Parrot	1
+Payment card	1
+Peaked cap	1
+Pedicel	1
+People in nature	1
+Performance	1
+Pet supply	1
+Photographic film	1
+Pleased	1
+Portrait	1
+Precipitation	1
+Projector accessory	1
+Rain suit	1
+Real estate	1
+Ritual	1
+Rose	1
+Scar	1
+Serveware	1
+Shawl	1
+Shipping box	1
+Shotgun	1
+Sidewalk	1
+Smartphone	1
+Smoke	1
+Solvent	1
+Square	1
+Stalactite	1
+Stalagmite	1
+Star	1
+Statue	1
+Stemware	1
+Step cutting	1
+Stole	1
+Stomach	1
+Strength training	1
+Suburb	1
+Suit trousers	1
+Telephone booth	1
+Telephony	1
+Tin can	1
+Tournament	1
+Tower block	1
+Town	1
+Trademark	1
+Tread	1
+Turban	1
+Underwater	1
+Underwater diving	1
+Ushanka	1
+Wedding ceremony supply	1
+Weights	1
+Wine glass	1
+Wire	1
+Woolen	1
+yoga pant	1
