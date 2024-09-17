@@ -119,14 +119,17 @@ Loading required package: spacyr
 
 ``` r
 texts <- c("I have fought against white domination", "and I have fought against black domination")
-D <- tokens (texts) %>%
-dfm()
+d <- tokens(texts) %>%
+  dfm()
 
 convert(d, "matrix") 
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'd' not found
+``` output
+       features
+docs    i have fought against white domination and black
+  text1 1    1      1       1     1          1   0     0
+  text2 1    1      1       1     0          1   1     1
 ```
 
 
