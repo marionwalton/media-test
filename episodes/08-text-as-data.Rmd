@@ -547,9 +547,6 @@ These are important linguistic features for discourse analysis. Do you think tha
 -   passivisation
 -   nominalisation etc
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - JSON is a popular data format for transferring data used by a great many Web based APIs
