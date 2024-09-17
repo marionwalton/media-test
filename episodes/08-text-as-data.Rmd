@@ -12,9 +12,9 @@ library(tidyverse)
 
 :::: instructor
 
-- This is an optional lesson intended to introduce approaches to text as data and 
-  key concepts from natural language processing, as well as how to
-  apply computational approaches to qualitatively oriented discourse analysis.
+- This is an optional lesson intended to introduce approaches to text as data by applying
+  key concepts from corpus linguistics and natural language processing, with a focus on using
+   computational approaches to qualitatively oriented discourse analysis.
 - Note that his lesson was community-contributed and remains a work in progress. As such, it could
   benefit from feedback from instructors and/or workshop participants.
 
@@ -22,49 +22,29 @@ library(tidyverse)
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the JSON data format
-- Understand where JSON is typically used
-- Appreciate some advantages of using JSON over tabular data
-- Appreciate some disadvantages of processing JSON documents
-- Use the jsonLite package to read a JSON file
-- Display formatted JSON as dataframe
-- Select and display nested dataframe fields from a JSON document
-- Write tabular data from selected elements from a JSON document to a csv file
+- Introduce key concepts needed to use the **`quanteda`** package for discourse analysis 
+i.e. corpus, tokens, dfm, frequency, collocation, keyness, concordance.
+- Prepare text for analysis with the **`quanteda`** functions `corpus`, `tokens`, `dfm`, and `dfm_remove`.
+- Investigate the most frequent features in a dfm using the **`quanteda`** function `textstat_frequency` and .
+- Plot frequencies using **`ggplot`** 
+- Select and modify a list of stopwords to remove unwanted words, query terms and spam from a dataset. 
+- Visualise frequencies as a wordcloud using the **`quanteda`** function `textplot_wordcloud` and the **`wordcloud2`** function  `wordcloud2`.
+- Identify the strengths and weaknesses of these approaches to visualising text data.
+- Use `summarize`, `group_by`, and `count` to split a dataframe into groups of observations, apply a summary statistics for each group, and then combine the results.
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What is JSON format?
-- How can I convert JSON to an R dataframe?
-- How can I convert an array of JSON record into a table?
+- What are the most important concepts for automating text analysis?
+- How can I prepare text data for analysis?
+- How can I visualise frequency, collocation and concordance for a corpus of textual data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## The JSON data format
 
-The JSON data format was designed as a way of allowing different machines or processes within machines to communicate with each other by sending messages constructed in a well defined format. JSON is now the preferred data format used by APIs (Application Programming Interfaces).
-
-The JSON format although somewhat verbose is not only Human readable but it can also be mapped very easily to an R dataframe.
-
-We are going to read a file of data formatted as JSON, convert it into a dataframe in R then selectively create a csv file from the extracted data.
-
-The JSON file we are going to use is the [SAFI.json](data/SAFI.json) file. This is the output file from an electronic survey system called ODK. The JSON represents the answers to a series of survey questions. The questions themselves have been replaced with unique Keys, the values are the answers.
-
-Because detailed surveys are by nature nested structures making it possible to record different levels of detail or selectively ask a set of specific questions based on the answer given to a previous question, the structure of the answers for the survey can not only be complex and convoluted, it could easily be different from one survey respondent's set of answers to another.
-
-### Advantages of JSON
-
-- Very popular data format for APIs (e.g. results from an Internet search)
-- Human readable
-- Each record (or document as they are called) is self contained. The equivalent of the column name and column values are in every record.
-- Documents do not all have to have the same structure within the same file
-- Document structures can be complex and nested
-
-### Disadvantages of JSON
-
-- It is more verbose than the equivalent data in csv format
-- Can be more difficult to process and display than csv formatted data
 
 ## Use the JSON package to read a JSON file
 
