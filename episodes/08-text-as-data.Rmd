@@ -59,10 +59,7 @@ i.e. corpus, tokens, dfm, frequency, collocation, keyness, concordance.
 
 
 ```{r}
-texts <- c(
-      "I have fought against white domination", 
-      "and I have fought against black domination")
-
+texts <- c("I have fought against white domination", "and I have fought against black domination")
 d <- tokens(texts) %>%
   dfm()
 
