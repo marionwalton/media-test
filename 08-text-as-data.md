@@ -139,12 +139,17 @@ Now we will load the full text of the speech from the `rivonia_speech_sentences.
 # load file with video metadata (you tube data tools)
 speech <- read_csv(
   here("data","rivonia_speech_sentences.csv"),
-  na= ""
-)
+  na= "")
 ```
 
-``` error
-Error: '/home/runner/work/media-test/media-test/site/built/data/rivonia_speech_sentences.csv' does not exist.
+``` output
+Rows: 487 Columns: 1
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): text
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 Once we have loaded the full text of the speech we will need to use the `corpus()`, `tokens()` and `dfm()`functions to represent the speech as a DTM which will allow us to investigate its linguistic patterns.
@@ -154,10 +159,6 @@ Once we have loaded the full text of the speech we will need to use the `corpus(
 d <- corpus(speech) %>%
   tokens(remove_punct=T) %>%
   dfm()
-```
-
-``` error
-Error in eval(expr, envir, enclos): object 'speech' not found
 ```
 
 Using the `dim()` function we see that the resulting DFM has 487 sentences and 2154 tokens. The `head()` function tells us that it is a sparse matrix, (99.03% sparse). In other words, very few (0,97%) of the 2154 words are ever repeated. Even from the first few rows of the DTM, we can see that the most repeated words are the common words in English such as "I", "the", "a" and "in". Interpreting these relative frequencies requires us to understand an important concept in computational analysis of text, namely **frequency**.
