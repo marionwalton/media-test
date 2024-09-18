@@ -233,7 +233,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="03-dplyr.html">4. Text as data (Optional)</a>
+        <a href="03-dplyr.html">4. Data Wrangling with dplyr</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -421,10 +421,7 @@ results.</li>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">texts</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span></span>
-<span>      <span class="st">"I have fought against white domination"</span>, </span>
-<span>      <span class="st">"and I have fought against black domination"</span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="va">texts</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"I have fought against white domination"</span>, <span class="st">"and I have fought against black domination"</span><span class="op">)</span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">texts</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>

@@ -233,7 +233,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="03-dplyr.html">4. Text as data (Optional)</a>
+        <a href="03-dplyr.html">4. Data Wrangling with dplyr</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -373,7 +373,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul><li>This is an optional lesson intended to introduce approaches to text
 as data by applying key concepts from corpus linguistics and natural
@@ -440,10 +440,7 @@ results.</li>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">texts</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span></span>
-<span>      <span class="st">"I have fought against white domination"</span>, </span>
-<span>      <span class="st">"and I have fought against black domination"</span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="va">texts</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"I have fought against white domination"</span>, <span class="st">"and I have fought against black domination"</span><span class="op">)</span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">texts</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
