@@ -466,15 +466,19 @@ many Web based APIs</li>
 be ‘flattened’ into tabular data</li>
 <li>We can use R code to extract values of interest and place them in a
 csv file</li>
-</ul></section><section id="08-text-as-data"><h2 class="section-heading"><a href="08-text-as-data.html">Text as data (Optional)</a></h2>
+</ul></section><section id="08-text-as-data"><h2 class="section-heading"><a href="08-text-as-data.html">Text as data (Optional)Frequency lists<a class="anchor" aria-label="anchor" href="#frequency-lists"></a>Many potential problems<a class="anchor" aria-label="anchor" href="#many-potential-problems"></a></a></h2>
 <hr class="half-width">
 <ul>
-<li>JSON is a popular data format for transferring data used by a great
-many Web based APIs</li>
-<li>The complex structure of a JSON document means that it cannot easily
-be ‘flattened’ into tabular data</li>
-<li>We can use R code to extract values of interest and place them in a
-csv file</li>
+<li>Use the <strong><code>quanteda</code></strong> package to analyse
+text data.</li>
+<li>Use <code>corpus()</code>, <code>tokens()</code>,<code>dfm()</code>,
+<code>dfm_remove()</code> and stopword lists to prepare text for
+analysis.</li>
+<li>Use <code>textstat_frequency</code> to investigate the most
+frequently used tokens or features in a dfm.</li>
+<li>Plot frequencies using <strong><code>ggplot</code></strong> and the
+<strong><code>quanteda</code></strong> function
+<code>textplot_wordcloud</code>.</li>
 </ul></section>
 </div>
     </main>

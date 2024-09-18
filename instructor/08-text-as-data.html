@@ -288,8 +288,11 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#load-required-packages">Load required packages</a></li>
-<li><a href="#use-the-quanteda-package-to">Use the quanteda package to …</a></li>
+        <ul><li><a href="#load-quanteda-package">Load quanteda package</a></li>
+<li><a href="#computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics</a></li>
+<li><a href="#corpus">Corpus</a></li>
+<li><a href="#document-term-matrix">Document-Term Matrix</a></li>
+<li><a href="#frequency">Frequency</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -414,7 +417,7 @@ concordance.</li>
 <code>tokens</code>, <code>dfm</code>, and <code>dfm_remove</code>.</li>
 <li>Investigate the most frequent features in a dfm using the
 <strong><code>quanteda</code></strong> function
-<code>textstat_frequency</code> and .</li>
+<code>textstat_frequency</code>.</li>
 <li>Plot frequencies using <strong><code>ggplot</code></strong>
 </li>
 <li>Select and modify a list of stopwords to remove unwanted words,
@@ -426,41 +429,287 @@ query terms and spam from a dataset.</li>
 <code>wordcloud2</code>.</li>
 <li>Identify the strengths and weaknesses of these approaches to
 visualising text data.</li>
-<li>Use <code>summarize</code>, <code>group_by</code>, and
-<code>count</code> to split a dataframe into groups of observations,
-apply a summary statistics for each group, and then combine the
-results.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="load-required-packages">Load required packages<a class="anchor" aria-label="anchor" href="#load-required-packages"></a></h2>
+<section><h2 class="section-heading" id="load-quanteda-package">Load quanteda package<a class="anchor" aria-label="anchor" href="#load-quanteda-package"></a></h2>
 <hr class="half-width"><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">texts</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"I have fought against white domination"</span>, <span class="st">"and I have fought against black domination"</span><span class="op">)</span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">texts</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw">require</span><span class="op">(</span><span class="va">quanteda</span><span class="op">)</span></span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics<a class="anchor" aria-label="anchor" href="#computational-linguistics-and-corpus-linguistics"></a></h2>
+<hr class="half-width"><p>Computational linguistics and Corpus Linguistics are two related
+areas of study in linguistics. Both of these areas provide approaches
+media scholars can use when analysing textual data in media texts.</p>
+<p>Computational linguistics is a broad inter-disciplinary area of study
+where software and algorithms are developed to analyse and synthesise
+language and speech for applications such as machine translation, speech
+recognition, machine learning and deep learning (“AI”). Corpus
+linguistics has developed methods to study trends and patterns in
+language use by analysing large collections of electronically stored,
+naturally occurring texts. Both of these areas are related to Natural
+Language Processing (NLP) which is a subfield of computer science.</p>
+<p>While Computational Linguistics has a strongly quantitative focus,
+Corpus Linguistics often includes qualitative analysis (such as
+examining concordance lines). Corpus linguistics involves much
+qualitative work interpreting text, and so can be used to extend the
+scope of traditional media studies approaches to linguistic discourse
+such as Critical Discourse Analysis (CDA).</p>
+<p>For more see:</p>
+<p>(Baker et al 2008:273)</p>
+</section><section><h2 class="section-heading" id="corpus">Corpus<a class="anchor" aria-label="anchor" href="#corpus"></a></h2>
+<hr class="half-width"><p>A <em>corpus</em> is a set of documents which stores large quantities
+of real-life text. The plural form of the word is <em>corpora</em>.</p>
+<p>You can find a set of South African language corpora on the <a href="https://corpus.sadilar.org/corpusportal/explore/corpus" class="external-link">SADILAR
+corpus portal</a> website.</p>
+</section><section><h2 class="section-heading" id="document-term-matrix">Document-Term Matrix<a class="anchor" aria-label="anchor" href="#document-term-matrix"></a></h2>
+<hr class="half-width"><p>Computers work by using numbers, and so corpora are analysed by
+generating a numerical representations of text.</p>
+<p>A popular representation of text in CL is the <em>Document-Term
+Matrix</em> or <em>DTM</em> (also known as Term-Document Matrix (TDM) or
+Document-Feature Matrix (DTM). A DTM represents a corpus as a large
+table (known as a matrix).</p>
+<p>We will study a small example of a document-term matrix, using this
+famous quotation from Nelson Mandela’s 1964 speech during the Rivonia
+Trial:</p>
+<blockquote>
+<p>“I have cherished the ideal of a democratic and free society in which
+all persons will live together in harmony and with equal opportunities.
+It is an idea for which I hope to live for and to see realized. But, my
+Lord, if it needs be, it is an ideal for which I am prepared to
+die.”</p>
+</blockquote>
+<p>In <strong>quanteda</strong> the function to create a DTM is
+<code>dfm()</code>, as it can be used for textual features other than
+individual words or tokens (e.g. emojis or punctuation marks).</p>
+<p>Each document has a separate row, each word has a separate column,
+and each cell has a number showing how often a particular word appears
+in a particular document.</p>
+<p>We start by creating a list of the individual words in the sentences,
+which in <strong>quanteda</strong> uses the <code>tokens()</code>
+function. Our second step is to convert these words into a DTM using
+<code>dfm()</code>. For the purposes of this example, we will treat each
+sentence as a separate “text”.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">texts</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span></span>
+<span>      <span class="st">"I have cherished the ideal of a democratic and free society in which all persons will live together in harmony and with equal opportunities"</span>, </span>
+<span><span class="st">"It is an idea for which I hope to live for and to see realized"</span>, </span>
+<span><span class="st">"But my Lord if it needs be it is an ideal for which I am prepared to die"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">convert</span><span class="op">(</span><span class="va">d</span>, <span class="st">"matrix"</span><span class="op">)</span> </span></code></pre>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">texts</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<p>We will take this DTM and look at its matrix structure, using the
+<code>convert()</code> function.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">convert</span><span class="op">(</span><span class="va">d</span>, <span class="st">"matrix"</span><span class="op">)</span> </span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>       features
-docs    i have fought against white domination and black
-  text1 1    1      1       1     1          1   0     0
-  text2 1    1      1       1     0          1   1     1</code></pre>
+docs    i have cherished the ideal of a democratic and free society in which
+  text1 1    1         1   1     1  1 1          1   2    1       1  2     1
+  text2 1    0         0   0     0  0 0          0   1    0       0  0     1
+  text3 1    0         0   0     1  0 0          0   0    0       0  0     1
+       features
+docs    all persons will live together harmony with equal opportunities it is
+  text1   1       1    1    1        1       1    1     1             1  0  0
+  text2   0       0    0    1        0       0    0     0             0  1  1
+  text3   0       0    0    0        0       0    0     0             0  2  1
+       features
+docs    an idea for hope to see realized but my lord if needs be am prepared
+  text1  0    0   0    0  0   0        0   0  0    0  0     0  0  0        0
+  text2  1    1   2    1  2   1        1   0  0    0  0     0  0  0        0
+  text3  1    0   1    0  1   0        0   1  1    1  1     1  1  1        1
+       features
+docs    die
+  text1   0
+  text2   0
+  text3   1</code></pre>
 </div>
-</section><section><h2 class="section-heading" id="use-the-quanteda-package-to">Use the quanteda package to …<a class="anchor" aria-label="anchor" href="#use-the-quanteda-package-to"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb3">
+<p>The example matrix above shows that we have certainly lost a lot when
+we represent the closing sentences of Mandela’s speech from the dock as
+a DTM. We have lost the original word order of the conclusion to his
+four hour long speech, which means we lose Mandela’s poetic use of
+repetition and the carefully crafted drama of his final statement.</p>
+<p>When we represent the speech in a numeric matrix format we move away
+from the original sequence of the words are quantifying Mandela’s
+linguistic choices so that we can see the patterns in the speech, which
+helps us to notice some of his rhetorical strategies, such as the
+repetition of the first person pronoun “I” and the words “ideal” and
+“live”, as well as the poignant shift from the repeated positive terms
+“cherished”, “democratic”, “free”, “equal”, “hope”, and harmony” to the
+determination of the final shocking negative, “die”.</p>
+<p>Nonetheless, by converting the whole speech into the quantitative DTM
+format, we can more easily use computational methods to compare
+Mandela’s 1964 speech to his other famous speeches, or to speeches made
+by other political leaders and statesmen.</p>
+<p>Now we will load the full text of the speech from the
+<code>rivonia_speech_sentences.csv</code> to investigate these
+linguistic patterns.</p>
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">library</span><span class="op">(</span><span class="va">quanteda</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="co"># load file with video metadata (you tube data tools)</span></span>
+<span><span class="va">speech</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
+<span>  <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"rivonia_speech_sentences.csv"</span><span class="op">)</span>,</span>
+<span>  na<span class="op">=</span> <span class="st">""</span></span>
+<span><span class="op">)</span></span></code></pre>
 </div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error: '/home/runner/work/media-test/media-test/site/built/data/rivonia_speech_sentences.csv' does not exist.</code></pre>
+</div>
+<p>Once we have loaded the full text of the speech we will need to use
+the <code>corpus()</code>, <code>tokens()</code> and
+<code>dfm()</code>functions to represent the speech as a DTM which will
+allow us to investigate its linguistic patterns.</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">corpus</span><span class="op">(</span><span class="va">speech</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'speech' not found</code></pre>
+</div>
+<p>Using the <code>dim()</code> function we see that the resulting DFM
+has 487 sentences and 2154 tokens. The <code>head()</code> function
+tells us that it is a sparse matrix, (99.03% sparse). In other words,
+very few (0,97%) of the 2154 words are ever repeated. Even from the
+first few rows of the DTM, we can see that the most repeated words are
+the common words in English such as “I”, “the”, “a” and “in”.
+Interpreting these relative frequencies requires us to understand an
+important concept in computational analysis of text, namely
+<strong>frequency</strong>.</p>
+</section><section><h2 class="section-heading" id="frequency">Frequency<a class="anchor" aria-label="anchor" href="#frequency"></a></h2>
+<hr class="half-width"><p>Frequency is a key concept underpinning the analysis of text and
+corpora. As a purely quantitative measure, media researchers need to use
+word frequencies with a sensitivity to the word-distribution patterns in
+human languages, and the importance of context for meaning</p>
+</section><div class="section level1">
+<h1 id="frequency-lists">Frequency lists<a class="anchor" aria-label="anchor" href="#frequency-lists"></a></h1>
+<ul><li>Help direct researcher’s investigations</li>
+<li>Measures of dispersion can reveal trends across texts</li>
+<li>Can provide a sociological profile of a given word or phrase</li>
+</ul></div>
+<div class="section level1">
+<h1 id="many-potential-problems">Many potential problems<a class="anchor" aria-label="anchor" href="#many-potential-problems"></a></h1>
+<ul><li>Can be reductive and generalising</li>
+<li>Can oversimplify</li>
+<li>Focus on differences between word distributions can obscure more
+interesting interpretations.</li>
+</ul><div class="section level2">
+<h2 id="why-is-frequency-important">Why is frequency important?<a class="anchor" aria-label="anchor" href="#why-is-frequency-important"></a></h2>
+<p>Language is not a random affair - it is <em>rule based</em>. Words
+are likely to occur predictably in relationship to other words.</p>
+<p>At the same time, human beings use language creatively and people can
+make many choices about how they want to use language. Language has
+<em>rule-generating</em> qualities which is why it changes over time and
+varies depending on the context where it is used.</p>
+</div>
+<div class="section level2">
+<h2 id="why-are-our-linguistic-choices-important">Why are our linguistic choices important?<a class="anchor" aria-label="anchor" href="#why-are-our-linguistic-choices-important"></a></h2>
+<p>Media studies builds on the insights of discourse analysis and corpus
+linguistics, which have sensitised researchers to the ideological
+implications of people’s linguistic choices.</p>
+<blockquote>
+<p>“No terms are neutral. Choice of words expresses an ideological
+position”. (Stubbs, 1996:107; Baker, 47)</p>
+</blockquote>
+<blockquote>
+<p>“If people speak or write in an unexpected way, or make one
+linguistic choice over another, more obvious one, then that reveals
+something about their intentions, whether conscious or not.”
+(Baker:48)</p>
+</blockquote>
+</div>
+<div class="section level2">
+<h2 id="charting-frequencies-with-quanteda">Charting frequencies with quanteda<a class="anchor" aria-label="anchor" href="#charting-frequencies-with-quanteda"></a></h2>
+<p>Using the <code>textstat_frequency()</code> function and
+<code>ggplot()</code> we can chart the most frequently used 60 words
+(features) from Mandela’s speech:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tstat_freq_d</span> <span class="op">&lt;-</span> <span class="fu">textstat_frequency</span><span class="op">(</span><span class="va">d</span>, n <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">feature_freq</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tstat_freq_d</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">frequency</span>, y <span class="op">=</span> <span class="fu">reorder</span><span class="op">(</span><span class="va">feature</span>, <span class="va">frequency</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
+<span><span class="va">feature_freq</span></span></code></pre>
+</div>
+<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<div class="section level2">
+<h2 id="grammaticalfunction-words">Grammatical/Function words<a class="anchor" aria-label="anchor" href="#grammaticalfunction-words"></a></h2>
+<p>The chart shows us that the most commonly used words in the speech as
+a whole are similar to the common English words we saw repeated in the
+final sentences.These words are known as grammatical or function words
+and are the most commonly used in a language. They seldom change over
+short periods of time.</p>
+<p>For this reason, grammatical and function words are on lists of words
+to be excluded from frequency counts. These lists are known as “stop
+words”</p>
+</div>
+<div class="section level2">
+<h2 id="lexical-words">Lexical words<a class="anchor" aria-label="anchor" href="#lexical-words"></a></h2>
+<p>By contrast, the frequencies of the lexical words in Mandela’s speech
+(“African”, “ANC”, “Africans”, “people”, “political”, “umkhonto”,
+“Africa”, “white”, “South”,“violence”,
+“government”,“policy”,“against”,“communist”) show us what a specific
+text or corpus is about.</p>
+</div>
+<div class="section level2">
+<h2 id="defining-stopwords">Defining stopwords<a class="anchor" aria-label="anchor" href="#defining-stopwords"></a></h2>
+<p>Let us start by excluding common English words from our analysis:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## exclude common english words</span></span>
+<span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="fu">stopwords</span><span class="op">(</span><span class="st">"english"</span>,</span>
+<span>                         source<span class="op">=</span><span class="st">"snowball"</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="removing-stopwords">Removing stopwords<a class="anchor" aria-label="anchor" href="#removing-stopwords"></a></h2>
+<p>After removing stopwords from the DTM using the function
+<code>dfm_remove()</code> we can chart frequencies for the most common
+lexical words.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tstat_freq_d</span> <span class="op">&lt;-</span> <span class="fu">textstat_frequency</span><span class="op">(</span><span class="va">d</span>, n <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">feature_freq</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tstat_freq_d</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">frequency</span>, y <span class="op">=</span> <span class="fu">reorder</span><span class="op">(</span><span class="va">feature</span>, <span class="va">frequency</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
+<span><span class="va">feature_freq</span></span></code></pre>
+</div>
+<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>With the stop words excluded, the chart shows us more clearly what
+the speech was about.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -468,12 +717,16 @@ docs    i have fought against white domination and black
 <div class="callout-inner">
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
-<ul><li>JSON is a popular data format for transferring data used by a great
-many Web based APIs</li>
-<li>The complex structure of a JSON document means that it cannot easily
-be ‘flattened’ into tabular data</li>
-<li>We can use R code to extract values of interest and place them in a
-csv file</li>
+<ul><li>Use the <strong><code>quanteda</code></strong> package to analyse
+text data.</li>
+<li>Use <code>corpus()</code>, <code>tokens()</code>,<code>dfm()</code>,
+<code>dfm_remove()</code> and stopword lists to prepare text for
+analysis.</li>
+<li>Use <code>textstat_frequency</code> to investigate the most
+frequently used tokens or features in a dfm.</li>
+<li>Plot frequencies using <strong><code>ggplot</code></strong> and the
+<strong><code>quanteda</code></strong> function
+<code>textplot_wordcloud</code>.</li>
 </ul></div>
 </div>
 </div>
@@ -481,7 +734,12 @@ csv file</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></div> <!-- / div.lesson-content -->
+</div>
+</div>
+
+
+
+      </div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/07-json.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="../instructor/index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
