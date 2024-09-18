@@ -1,545 +1,123 @@
 ---
-title: Data Wrangling with dplyr
-teaching: 25
+title: Text as data (Optional)
+teaching: 30
 exercises: 15
 source: Rmd
 ---
 
 ```{r setup, include=FALSE}
-source("data/download_data.R")
+#Load required packages
+
+require(quanteda)
+require(ggplot2)
+require(tidyverse)
+require(here)
+require(quanteda.textstats)
+#install.packages("quanteda.textplots",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("udpipe",dependencies =T,repos = "http://cran.us.r-project.org")
+#install.packages("spacyr",dependencies =T,repos = "http://cran.us.r-project.org")
+require(quanteda.textplots)
+require(udpipe)
+require(spacyr)
+
 ```
+
 :::: instructor
 
-- This lesson works better if you have graphics demonstrating dplyr commands.
-  You can modify [this Google Slides deck](https://docs.google.com/presentation/d/1A9abypFdFp8urAe9z7GCMjFr4aPeIb8mZAtJA2F7H0w/edit#slide=id.g652714585f_0_114) and use it for your workshop.
-- For this lesson make sure that learners are comfortable using pipes.
-- There is also sometimes some confusion on what the arguments of `group_by`
-  should be, and when to use `filter()` and `select()`.
+- This is an optional lesson intended to introduce approaches to text as data by applying
+  key concepts from corpus linguistics and natural language processing, with a focus on using
+   computational approaches to qualitatively oriented discourse analysis.
+- Note that his lesson was community-contributed and remains a work in progress. As such, it could
+  benefit from feedback from instructors and/or workshop participants.
 
 ::::::::::::
 
-
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the purpose of an R package and the **`dplyr`** package.
-- Select certain columns in a dataframe with the **`dplyr`** function `select`.
-- Select certain rows in a dataframe according to filtering conditions with the **`dplyr`** function `filter`.
-- Link the output of one **`dplyr`** function to the input of another function with the 'pipe' operator `%>%`.
-- Add new columns to a dataframe that are functions of existing columns with `mutate`.
-- Use the split-apply-combine concept for data analysis.
-- Use `summarize`, `group_by`, and `count` to split a dataframe into groups of observations, apply a summary statistics for each group, and then combine the results.
+- Introduce key concepts needed to use the **`quanteda`** package for discourse analysis 
+i.e. corpus, tokens, dfm, frequency, collocation, keyness, concordance.
+- Prepare text for analysis with the **`quanteda`** functions `corpus`, `tokens`, `dfm`, and `dfm_remove`.
+- Investigate the most frequent features in a dfm using the **`quanteda`** function `textstat_frequency`.
+- Plot frequencies using **`ggplot`** 
+- Select and modify a list of stopwords to remove unwanted words, query terms and spam from a dataset. 
+- Visualise frequencies as a wordcloud using the **`quanteda`** function `textplot_wordcloud` and the **`wordcloud2`** function  `wordcloud2`.
+- Identify the strengths and weaknesses of these approaches to visualising text data.
+
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How can I select specific rows and/or columns from a dataframe?
-- How can I combine multiple commands into a single command?
-- How can I create new columns or remove existing columns from a dataframe?
+- What are the most important concepts for automating text analysis?
+- How can I prepare text data for analysis?
+- How can I visualise frequency, collocation and concordance for a corpus of textual data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**`dplyr`** is a package for making tabular data wrangling easier by using a
-limited set of functions that can be combined to extract and summarize insights
-from your data.
+## Load quanteda package
 
-Like **`readr`**, **`dplyr`** is a part of the tidyverse. These packages were loaded
-in R's memory when we called `library(tidyverse)` earlier.
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-## Note
-
-The packages in the tidyverse, namely **`dplyr`**, **`tidyr`** and **`ggplot2`**
-accept both the British (e.g. *summarise*) and American (e.g. *summarize*) spelling
-variants of different function and option names. For this lesson, we utilize
-the American spellings of different functions; however, feel free to use
-the regional variant for where you are teaching.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## What is an R package?
-
-The package **`dplyr`** provides easy tools for the most common data
-wrangling tasks. It is built to work directly with dataframes, with many
-common tasks optimized by being written in a compiled language (C++) (not all R
-packages are written in R!).
-
-There are also packages available for a wide range of tasks including building plots
-(**`ggplot2`**, which we'll see later), downloading data from the NCBI database, or
-performing statistical analysis on your data set. Many packages such as these are
-housed on, and downloadable from, the **C**omprehensive **R** **A**rchive **N**etwork
-(CRAN) using `install.packages`. This function makes the package accessible by your R
-installation with the command `library()`, as you did with `tidyverse` earlier.
-
-To easily access the documentation for a package within R or RStudio, use
-`help(package = "package_name")`.
-
-To learn more about **`dplyr`** after the workshop, you may want to check out this
-[handy data transformation with **`dplyr`** cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf).
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-## Note
-
-There are alternatives to the `tidyverse` packages for data wrangling, including
-the package [`data.table`](https://rdatatable.gitlab.io/data.table/). See this
-[comparison](https://mgimond.github.io/rug_2019_12/Index.html)
-for example to get a sense of the differences between using `base`, `tidyverse`, and
-`data.table`.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Learning **`dplyr`**
-
-To make sure everyone will use the same dataset for this lesson, we'll read
-again the SAFI dataset that we downloaded earlier.
-
-
-```{r, eval=TRUE, message=FALSE, purl=FALSE}
-library(tidyverse)
-library(here)
-
-videos <- read_csv(
-  here("data", "youtube-27082024-open-refine-200-na.csv"), 
-  na = "na")
-```  
-```{r, eval=TRUE, message=FALSE, purl=FALSE}
-## inspect the data
-videos
-
-## preview the data
-# view(videos)
+```{r, message=FALSE}
+require(quanteda)
 ```
 
-We're going to learn some of the most common **`dplyr`** functions:
 
-- `select()`: subset columns
-- `filter()`: subset rows on conditions
-- `mutate()`: create new columns by using information from other columns
-- `group_by()` and `summarize()`: create summary statistics on grouped data
-- `arrange()`: sort results
-- `count()`: count discrete values
+## Computational linguistics and Corpus Linguistics
 
-## Selecting columns and filtering rows
+Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches media scholars can use when analysing textual data in media texts.
 
-To select columns of a dataframe, use `select()`. The first argument to this
-function is the dataframe (`videos`), and the subsequent arguments are the
-columns to keep, separated by commas. Alternatively, if you are selecting
-columns adjacent to each other, you can use a `:` to select a range of columns,
-read as "select columns from \_\_\_ to \_\_\_." You may have done something similar in
-the past using subsetting. `select()` is essentially doing the same thing as
-subsetting, using a package (`dplyr`) instead of R's base functions.
+Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are related to Natural Language Processing (NLP) which is a subfield of computer science.
 
-```{r, results="hide", purl=FALSE}
-# to select columns throughout the dataframe
-select(videos, channel_title, view_count, )
-# to do the same thing with subsetting
-videos[c("channel_title","view_count","comment_count")]
-# to select a series of connected columns
-select(videos,"view_count":"comment_count")
-# to select columns by name as well as a series of connected columns
-select(videos,"channel_title","published_at_sql","view_count":"comment_count")
-```
+While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics often includes qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of traditional media studies approaches to linguistic discourse such as Critical Discourse Analysis (CDA).
 
-To choose rows based on specific criteria, we can use the `filter()` function.
-The argument after the dataframe is the condition we want our final
-dataframe to adhere to (e.g. channel_title name is SABC News):
+For more see:
 
-```{r, purl=FALSE}
-# filters observations where channel title is "SABC News"
-filter(videos, channel_title == "SABC News")
-```
+(Baker et al 2008:273)
 
-We can also specify multiple conditions within the `filter()` function. We can
-combine conditions using either "and" or "or" statements. In an "and"
-statement, an observation (row) must meet **every** criteria to be included
-in the resulting dataframe. To form "and" statements within dplyr, we can  pass
-our desired conditions as arguments in the `filter()` function, separated by
-commas:
+## Corpus
 
-```{r, purl=FALSE}
+A *corpus* is a set of documents which stores large quantities of real-life text. The plural form of the word is *corpora*.
 
-# filters observations with "and" operator (comma)
-# output dataframe satisfies ALL specified conditions
-filter(videos, channel_title == "SABC News",
-                   view_count > 1000,
-                   comment_count > 20)
-```
+You can find a set of South African language corpora on the [SADILAR corpus portal](https://corpus.sadilar.org/corpusportal/explore/corpus) website.
 
-We can also form "and" statements with the `&` operator instead of commas:
+## Document-Term Matrix
 
-```{r, purl=FALSE}
-# filters observations with "&" logical operator
-# output dataframe satisfies ALL specified conditions
-filter(videos, channel_title == "SABC News" &
-                   view_count > 1000 &
-                   comment_count > 20)
-```
+Computers work by using numbers, and so corpora are analysed by generating a numerical representations of text.
 
-In an "or" statement, observations must meet *at least one* of the specified conditions.
-To form "or" statements we use the logical operator for "or," which is the vertical bar (|):
+A popular representation of text in CL is the *Document-Term Matrix* or *DTM* (also known as Term-Document Matrix (TDM) or Document-Feature Matrix (DTM). 
+A DTM represents a corpus as a large table (known as a matrix). Each document has a separate row, each word has a separate column, and each cell has a number showing how often a particular word appears in a particular document.
 
-```{r, purl=FALSE}
-# filters observations with "|" logical operator
-# output dataframe satisfies AT LEAST ONE of the specified conditions
-filter(videos, channel_title == "SABC News" | channel_title == "eNCA")
-```
+We will study a small example of a document-term matrix, using this famous quotation from Nelson Mandela's 1964 speech during the Rivonia Trial: 
 
-## Pipes
+"I have cherished the ideal of a democratic and free society in which all persons will live together in harmony and with equal opportunities. It is an idea for which I hope to live for and to see realized. But, my Lord, if it needs be, it is an ideal for which I am prepared to die."
 
-What if you want to select and filter at the same time? There are three
-ways to do this: use intermediate steps, nested functions, or pipes.
+For the purposes of this example, we will treat each sentence as a separate "text".
 
-With intermediate steps, you create a temporary dataframe and use
-that as input to the next function, like this:
-
-```{r, purl=FALSE}
-videos2 <- filter(videos, channel_title == "SABC News")
-videos_SABC_metrics <- select(videos2, channel_title,view_count:comment_count)
-```
-
-This is readable, but can clutter up your workspace with lots of objects that
-you have to name individually. With multiple steps, that can be hard to keep
-track of.
-
-You can also nest functions (i.e. one function inside of another), like this:
-
-```{r, purl=FALSE}
-videos_SABC_metrics <- select(filter(videos, channel_title == "SABC News"),
-                         channel_title,view_count:comment_count)
-videos_SABC_metrics
-```
-
-This is handy, but can be difficult to read if too many functions are nested, as
-R evaluates the expression from the inside out (in this case, filtering, then
-selecting).
-
-The last option, *pipes*, are a recent addition to R. Pipes let you take the
-output of one function and send it directly to the next, which is useful when
-you need to do many things to the same dataset. There are two Pipes in R: 1) `%>%` (called magrittr pipe; made available via the **`magrittr`** package, installed automatically with
-**`dplyr`**) or 2) `|>` (called native R pipe and it comes preinstalled with R v4.1.0 onwards). Both the pipes are, by and large, function similarly with a few differences (For more information, check: https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). The choice of which pipe to be used can be changed in the Global settings in R studio and once that is done, you can type the pipe with:
-
-- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a PC or <kbd>Cmd</kbd> +
-  <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.
-
-```{r, purl=FALSE}
-# the following example is run using magrittr pipe but the output will be same with the native pipe
-videos %>%
-    filter(channel_title == "SABC News") %>%
-    select(channel_title,view_count:comment_count)
-#videos |>
-#   filter(channel_title == "SABC News") |>
-#   select(channel_title,view_count:comment_count)
-```
-
-In the above code, we use the pipe to send the `videos` dataset first
-through `filter()` to keep rows where `channel_title` is "SABC News", then through
-`select()` to keep only the columns from `channel_title` to `respondent_wall_type`. Since `%>%`
-takes the object on its left and passes it as the first argument to the function
-on its right, we don't need to explicitly include the dataframe as an argument
-to the `filter()` and `select()` functions any more.
-
-Some may find it helpful to read the pipe like the word "then". For instance,
-in the above example, we take the dataframe `videos`, *then* we `filter`
-for rows with `channel_title == "SABC News"`, *then* we `select` columns `view_count:comment_count`.
-The **`dplyr`** functions by themselves are somewhat simple,
-but by combining them into linear workflows with the pipe, we can accomplish
-more complex data wrangling operations.
-
-If we want to create a new object with this smaller version of the data, we
-can assign it a new name:
-
-```{r, purl=FALSE}
-videos_SABC_metrics <- videos %>%
-    filter(channel_title == "SABC News") %>%
-    select(view_count:comment_count)
-
-videos_SABC_metrics
-
-```
-
-Note that the final dataframe (`videos_SABC_metrics`) is the leftmost part of this
-expression.
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise
-
-Using pipes, subset the `videos` data to include videos
-where the video is categorised as "News & Politics" 
-and retain only the metrics columns with values (views, likes and comments).
-
-:::::::::::::::  solution
-
-## Solution
 
 ```{r}
-videos %>%
-    filter(video_category_label == "News & Politics") %>%
-    select(view_count,like_count,comment_count)
+texts <- c(
+      "I have cherished the ideal of a democratic and free society in which all persons will live together in harmony and with equal opportunities", 
+"It is an idea for which I hope to live for and to see realized", 
+"But my Lord if it needs be it is an ideal for which I am prepared to die")
+
+d <- tokens(texts) %>%
+  dfm()
+
+convert(d, "matrix") 
 ```
 
-:::::::::::::::::::::::::
+This representation loses the poetry of repetition and the carefully crafted dramatic conclusion of the four hour long speech. Instead the numeric matrix format allows Mandela's linguistic choices in 1964 to be more easily compared to his other famous speeches, or to speeches made by other political leaders and statesmen.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Mutate
-
-Frequently you'll want to create new columns based on the values in existing
-columns, for example to do unit conversions, or to find the ratio of values in
-two columns. For this we'll use `mutate()`.
-
-We might be interested in the ratio of likes
-to comments:
-
-```{r, purl=FALSE}
-videos %>%
-    mutate(ratio = like_count / comment_count)
-```
-
-We may be interested in investigating whether mentioning the EFF in the video title
- had any effect on the ratio of likes to comments. 
- 
- To look at this relationship, we will first remove
-data from our dataset where comments were not recorded.
-These cases are recorded as "NA" in the dataset.
-
-To remove these cases, we could insert a `filter()` in the chain:
-
-```{r, purl=FALSE}
-videos %>%
-    filter(!is.na(comment_count)) %>%
-    mutate(ratio = like_count / comment_count)
-```
-
-The `!` symbol negates the result of the `is.na()` function. Thus, if `is.na()`
-returns a value of `TRUE` (because the `comment_count` is missing), the `!` symbol
-negates this and says we only want values of `FALSE`, where `comment_count **is
-not** missing.
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise
-
-Create a new dataframe from the `videos` data that meets the following
-criteria: contains only the `channel_title` column and, for all the videos which received at least one comment,
- a new column called
-`ratio` containing a value that is equal to the likes divided by the comments.
-Only the rows where `ratio` is greater than 20 should be shown in the
-final dataframe.
-
-**Hint**: think about how the commands should be ordered to produce this data
-frame!
-
-:::::::::::::::  solution
-
-## Solution
-
-```{r}
-videos_ratio <- videos %>%
-    filter(comment_count>0) %>%
-    mutate(ratio =  view_count/comment_count) %>%
-    filter(ratio > 20) %>%
-    select(channel_title, ratio)
-videos_ratio
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Split-apply-combine data analysis and the summarize() function
-
-Many data analysis tasks can be approached using the *split-apply-combine*
-paradigm: split the data into groups, apply some analysis to each group, and
-then combine the results. **`dplyr`** makes this very easy through the use of
-the `group_by()` function.
-
-### The `summarize()` function
-
-`group_by()` is often used together with `summarize()`, which collapses each
-group into a single-row summary of that group.  `group_by()` takes as arguments
-the column names that contain the **categorical** variables for which you want
-to calculate the summary statistics. So to compute the average household size by
-channel_title:
-
-```{r, purl=FALSE}
-videos %>%
-    group_by(channel_title) %>%
-    summarize(mean_views = mean(view_count))
-```
-
-You may also have noticed that the output from these calls doesn't run off the
-screen anymore. It's one of the advantages of `tbl_df` over dataframe.
-
-You can also group by multiple columns:
-
-```{r, purl=FALSE}
-videos %>%
-    group_by(channel_title, video_category_label) %>%
-    summarize(mean_views = mean(view_count))
-```
-
-Note that the output is a grouped tibble. To obtain an ungrouped tibble, use the
-`ungroup` function:
-
-```{r, purl=FALSE}
-videos %>%
-    group_by(channel_title, video_category_label) %>%
-    summarize(mean_views = mean(view_count)) %>%
-    ungroup()
-```
-
-When grouping both by `channel_title` and `default_l_audio_language`, we see rows in our table for
-videos where the creator did not specify their default audio language. 
-We can exclude those data from our table using a filter step.
-
-```{r, purl=FALSE}
-videos %>%
-    filter(!is.na(default_l_audio_language)) %>%
-    group_by(channel_title, default_l_audio_language) %>%
-    summarize(mean_views = mean(view_count))
-```
-
-Once the data are grouped, you can also summarize multiple variables at the same
-time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum household size for each channel_title for each group
-(members of an irrigation association vs not):
-
-```{r, purl=FALSE}
-videos %>%
-    filter(!is.na(default_l_audio_language)) %>%
-    group_by(channel_title, default_l_audio_language) %>%
-    summarize(mean_views = mean(view_count),
-              max_views = max(view_count))
-```
-
-It is sometimes useful to rearrange the result of a query to inspect the values.
-For instance, we can sort on `max_views` to put the group with the smallest
-household first:
-
-```{r, purl=FALSE}
-videos %>%
-    filter(!is.na(default_l_audio_language)) %>%
-    group_by(channel_title, default_l_audio_language) %>%
-    summarize(mean_views = mean(view_count),
-              max_views = max(view_count)) %>%
-    arrange(max_views)
-```
-
-To sort in descending order, we need to add the `desc()` function. If we want to
-sort the results by decreasing order of views, or reverse alphabetical order of the audio language
- to see languages other than english:
+In this DTM each sentence has a separate row. Each word has its own column. The number in the cells show how often a particular word appears in a particular sentence. 
 
 
-```{r, purl=FALSE}
-videos %>%
-    filter(!is.na(default_l_audio_language)) %>%
-    group_by(channel_title, default_l_audio_language) %>%
-    summarize(mean_views = mean(view_count),
-              max_views = max(view_count)) %>%
-    arrange(desc(max_views))
-```
-```{r, purl=FALSE}
-videos %>%
-    filter(!is.na(default_l_audio_language)) %>%
-    group_by(channel_title, default_l_audio_language) %>%
-    summarize(mean_views = mean(view_count),
-              max_views = max(view_count)) %>%
-    arrange(desc(default_l_audio_language))
-```
-
-### Counting
-
-When working with data, we often want to know the number of observations found
-for each factor or combination of factors. For this task, **`dplyr`** provides
-`count()`. For example, if we wanted to count the number of rows of data for
-each channel_title, we would do:
-
-```{r, purl=FALSE}
-videos %>%
-    count(channel_title)
-```
-
-For convenience, `count()` provides the `sort` argument to get results in
-decreasing order:
-
-```{r, purl=FALSE}
-videos %>%
-    count(channel_title, sort = TRUE)
-```
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise
-
-Which YouTube video categories are used to describe the videos in the sample? (Use the video_category_label column.) 
-Create a tibble of these categories and the number of videos in each of them, arranged in descending order.
-
-:::::::::::::::  solution
-
-## Solution
-
-```{r}
-videos %>%
-   count(video_category_label, sort=TRUE) 
-```
-
-:::::::::::::::::::::::::
-
-Use `group_by()` and `summarize()` to find the mean, min, and max
-number of views for each YouTube channel (channel_title). Also add the number of
-observations (hint: see `?n`).  Arrange the channels in descending order by the channel's maximum views.
-
-:::::::::::::::  solution
-
-## Solution
-
-```{r}
-videos %>%
-  group_by(channel_title) %>%
-  summarize(
-      mean_views = mean(view_count),
-      min_views = min(view_count),
-      max_views = max(view_count),
-      n = n()  )%>%
-      arrange(desc(max_views))
-```
-
-:::::::::::::::::::::::::
-
-Excluding those videos that were set to not allow comments (comment_count =NA),
- what was the total number of comments posted on the videos in each month?
-
-:::::::::::::::  solution
-
-## Solution
-
-```{r}
-# if not already included, add month, year, and day columns
-library(lubridate) # load lubridate if not already loaded
-videos %>%
-    filter(!is.na(comment_count)) %>%
-    mutate(month = month(published_at_sql),
-           day = day(published_at_sql),
-           year = year(published_at_sql)) %>%
-    group_by(year, month) %>%
-    summarize(total_comments = sum(comment_count)) %>%
-    arrange(year,month)
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use the `dplyr` package to manipulate dataframes.
-- Use `select()` to choose variables from a dataframe.
-- Use `filter()` to choose data based on values.
-- Use `group_by()` and `summarize()` to work with subsets of data.
-- Use `mutate()` to create new variables.
+- Use the **`quanteda`** package to analyse text data.
+- Use `corpus()`, `tokens()`,`dfm()`, `dfm_remove()` and stopword lists to prepare text for analysis.
+- Use `textstat_frequency` to investigate the most frequently used tokens or features in a dfm. 
+- Plot frequencies using **`ggplot`** and the **`quanteda`** function `textplot_wordcloud`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
