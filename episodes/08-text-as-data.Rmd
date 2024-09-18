@@ -128,8 +128,7 @@ Now we will load the full text of the speech from the `rivonia_speech_sentences.
 # load file with video metadata (you tube data tools)
 speech <- read_csv(
   here("data","rivonia_speech_sentences.csv"),
-  na= ""
-)
+  na= "")
 ```
 
 Once we have loaded the full text of the speech we will need to use the `corpus()`, `tokens()` and `dfm()`functions to represent the speech as a DTM which will allow us to investigate its linguistic patterns.
