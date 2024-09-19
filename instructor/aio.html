@@ -418,7 +418,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul>
 <li>The main goal here is to help the learners be comfortable with the
@@ -862,7 +862,7 @@ the tidyverse installed.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Scroll through packages tab down to ‘tidyverse’. You can also type a
 few characters into the searchbox. The ‘tidyverse’ package is really a
@@ -6171,7 +6171,7 @@ any links that you are not going to use.
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <ul>
 <li>This is an optional lesson intended to introduce learners to R
@@ -6739,7 +6739,7 @@ the output.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Solution to Exercise </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Create a chunk with <code>{r eval = FALSE, echo = FALSE}</code>, then
 create another chunk with <code>{r include = FALSE}</code> to compare.
@@ -6844,7 +6844,7 @@ the <code>interviews_plotting</code> data frame.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Solution to Exercise </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -7001,7 +7001,7 @@ any links that you are not going to use.
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul>
 <li>This is an optional lessons intended to introduce learners to JSON
@@ -7534,6 +7534,10 @@ text analysis functions.</p>
 </section><section><h2 class="section-heading" id="computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics<a class="anchor" aria-label="anchor" href="#computational-linguistics-and-corpus-linguistics"></a>
 </h2>
 <hr class="half-width">
+<p>This tutorial is intended to provide a foundation for media
+researchers who would like to use computational tools for discourse
+analysis. We will be drawing on both computational linguistics and
+corpus linguistics.</p>
 <p>Computational linguistics and Corpus Linguistics are two related
 areas of study in linguistics. Both of these areas provide approaches
 which media scholars can use when analysing textual data in media
@@ -7552,19 +7556,14 @@ examining concordance lines). Corpus linguistics involves much
 qualitative work interpreting text, and so can be used to extend the
 scope of traditional media studies approaches to linguistic discourse
 such as Critical Discourse Analysis (CDA).</p>
-<p>For more see these additional readings: (Baker et al 2008:273)</p>
-</section><section><h2 class="section-heading" id="what-is-a-corpus">What is a Corpus?<a class="anchor" aria-label="anchor" href="#what-is-a-corpus"></a>
-</h2>
-<hr class="half-width">
-<p>A <em>corpus</em> is a set of documents which stores large quantities
-of real-life text. The plural form of the word is <em>corpora</em>.</p>
+<p>For more about these approaches, see these additional readings:
+(Baker et al 2008:273). ## What is a Corpus? A <em>corpus</em> is a set
+of documents which stores large quantities of real-life text. The plural
+form of the word is <em>corpora</em>.</p>
 <p>You can find a set of South African language corpora on the <a href="https://corpus.sadilar.org/corpusportal/explore/corpus" class="external-link">SADILAR
-corpus portal</a> website.</p>
-</section><section><h2 class="section-heading" id="using-a-document-term-matrix">Using a Document-Term Matrix<a class="anchor" aria-label="anchor" href="#using-a-document-term-matrix"></a>
-</h2>
-<hr class="half-width">
-<p>Computers work by using numbers, and so corpora are analysed by
-generating a numerical representations of text.</p>
+corpus portal</a> website. ## Using a Document-Term Matrix Computers
+work by using numbers, and so corpora are analysed by generating a
+numerical representations of text.</p>
 <p>A popular representation of text in CL is the <em>Document-Term
 Matrix</em> or <em>DTM</em> (also known as Term-Document Matrix (TDM) or
 Document-Feature Matrix (DTM). A DTM represents a corpus as a large
