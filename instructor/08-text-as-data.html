@@ -291,10 +291,11 @@
         <ul><li><a href="#using-quanteda-for-text-analysis">Using <strong><code>quanteda</code></strong> for text analysis</a></li>
 <li><a href="#example-data">Example data</a></li>
 <li><a href="#computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics</a></li>
+<li><a href="#what-is-a-corpus">What is a Corpus?</a></li>
 <li><a href="#using-a-document-term-matrix">Using a Document-Term Matrix</a></li>
-<li><a href="#tokens">Tokens</a></li>
 <li><a href="#creating-a-corpus">Creating a corpus</a></li>
 <li><a href="#tokens---preparing-for-analysis">Tokens - preparing for analysis</a></li>
+<li><a href="#starting-analysis---the-dtm">Starting Analysis - the DTM</a></li>
 <li><a href="#charting-frequencies-with-quanteda">Charting frequencies with
 <strong><code>quanteda</code></strong></a></li>
 <li><a href="#grammaticalfunction-words">Grammatical/Function words</a></li>
@@ -384,7 +385,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul><li>This is an optional lesson intended to introduce approaches to text
 as data by applying key concepts from corpus linguistics and natural
@@ -490,10 +491,16 @@ examining concordance lines). Corpus linguistics involves much
 qualitative work interpreting text, and so can be used to extend the
 scope of Critical Discourse Analysis (CDA) and other smaller-scale media
 studies approaches to analysing linguistic discourse.</p>
-<p>For more about these approaches, see these additional readings:
-(Baker et al 2008:273). ## What is a Corpus? A <em>corpus</em> is a set
-of documents which stores large quantities of real-life text. The plural
-form of the word is <em>corpora</em>.</p>
+<p>For more about these approaches, see these additional readings:</p>
+<p>Baker, P. et al. (2008) A useful methodological synergy? Combining
+critical discourse analysis and corpus linguistics to examine discourses
+of refugees and asylum seekers in the UK press. Discourse &amp; society.
+[19 (3), 273–306.</p>
+<p>Baker, P. 2006. Using Corpora in Discourse Analysis. Continuum:
+London.</p>
+</section><section><h2 class="section-heading" id="what-is-a-corpus">What is a Corpus?<a class="anchor" aria-label="anchor" href="#what-is-a-corpus"></a></h2>
+<hr class="half-width"><p>A <em>corpus</em> is a set of documents which stores large quantities
+of real-life text. The plural form of the word is <em>corpora</em>.</p>
 <p>You can find a set of South African language corpora on the <a href="https://corpus.sadilar.org/corpusportal/explore/corpus" class="external-link">SADILAR
 corpus portal</a> website.</p>
 <p>In this tutorial you can think of the corpus as your back-up or raw
@@ -523,8 +530,6 @@ die.”</p>
 numerically as a DFM, we will use a larger DFM to compare Mandela’s
 linguistic choices across different speeches made in 1964 and in
 1994.</p>
-</section><section><h2 class="section-heading" id="tokens">Tokens<a class="anchor" aria-label="anchor" href="#tokens"></a></h2>
-<hr class="half-width"><p>To create a DFM we first need to create a</p>
 <p>In <strong>quanteda</strong> the function to create a DTM is
 <code>dfm()</code>, as it can be used for textual features other than
 individual words or tokens (e.g. emojis or punctuation marks).</p>
@@ -640,9 +645,9 @@ dataframe to a corpus object.</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># select only the Rivonia speech and convert to a DTM</span></span>
 <span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">speeches</span> <span class="op">%&gt;%</span></span>
+<span><span class="va">d_corpus</span> <span class="op">&lt;-</span> <span class="va">speeches</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>doc_id<span class="op">=</span><span class="fu">paste</span><span class="op">(</span><span class="fu">year</span><span class="op">(</span><span class="va">date</span><span class="op">)</span>, <span class="va">president</span>, <span class="va">delivery</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">filter</span><span class="op">(</span><span class="fu">year</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="st">"1994"</span> <span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">filter</span><span class="op">(</span><span class="fu">year</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="st">"1964"</span> <span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">corpus</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -669,16 +674,17 @@ analysis, we would keep them intact!</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tokenize, remove punctuation and number, and convert to a DTM</span></span>
 <span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">%&gt;%</span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d_corpus</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error: tokens() only works on character, corpus, list, tokens, tokens_xptr objects.</code></pre>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'd_corpus' not found</code></pre>
 </div>
-<p>Once the speech is converted to a DTM with the <code>dtm()</code>
+</section><section><h2 class="section-heading" id="starting-analysis---the-dtm">Starting Analysis - the DTM<a class="anchor" aria-label="anchor" href="#starting-analysis---the-dtm"></a></h2>
+<hr class="half-width"><p>Once the speech is converted to a DTM with the <code>dtm()</code>
 function, we can start exploring its linguistic patterns.</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -703,6 +709,16 @@ few of the 2154 words are ever repeated.</p>
 <p>The function <code>topfeatures()</code> highlights the most commonly
 used words in the speech. Unsurprisingly, these are common words in
 English such as “I”, “the”, “a” and “in”.</p>
+<p>We will likely need to remove these words - unless we are
+specifically interested in Mandela’s use of pronouns. But first let us
+see what the frequency distribution looks like with them in the
+text.</p>
+</section><section><h2 class="section-heading" id="charting-frequencies-with-quanteda">Charting frequencies with
+<strong><code>quanteda</code></strong>
+<a class="anchor" aria-label="anchor" href="#charting-frequencies-with-quanteda"></a></h2>
+<hr class="half-width"><p>Using the <code>textstat_frequency()</code> function and
+<code>ggplot()</code> we can chart the most frequently used 60 words
+(features) from Mandela’s speech:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -715,25 +731,7 @@ English such as “I”, “the”, “a” and “in”.</p>
 <pre class="output" tabindex="0"><code>    i   and which    it   for    to ideal    in  live    is
     3     3     3     3     3     3     2     2     2     2 </code></pre>
 </div>
-</section><section><h2 class="section-heading" id="charting-frequencies-with-quanteda">Charting frequencies with
-<strong><code>quanteda</code></strong>
-<a class="anchor" aria-label="anchor" href="#charting-frequencies-with-quanteda"></a></h2>
-<hr class="half-width"><p>Using the <code>textstat_frequency()</code> function and
-<code>ggplot()</code> we can chart the most frequently used 60 words
-(features) from Mandela’s speech:</p>
 <div class="codewrapper sourceCode" id="cb17">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">topfeatures</span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>    i   and which    it   for    to ideal    in  live    is
-    3     3     3     3     3     3     2     2     2     2 </code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -745,7 +743,7 @@ English such as “I”, “the”, “a” and “in”.</p>
 <span></span>
 <span><span class="va">feature_freq</span></span></code></pre>
 </div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="grammaticalfunction-words">Grammatical/Function words<a class="anchor" aria-label="anchor" href="#grammaticalfunction-words"></a></h2>
+<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="grammaticalfunction-words">Grammatical/Function words<a class="anchor" aria-label="anchor" href="#grammaticalfunction-words"></a></h2>
 <hr class="half-width"><p>The chart shows us that the most commonly used words in the speech as
 a whole are similar to the common English words we saw repeated in the
 final sentences.These words are known as grammatical or function words
@@ -763,19 +761,76 @@ we’re interested in what this specific text or corpus is about.</p>
 </section><section><h2 class="section-heading" id="defining-stopwords">Defining stopwords<a class="anchor" aria-label="anchor" href="#defining-stopwords"></a></h2>
 <hr class="half-width"><p>We can start identifying these important lexical words by excluding
 common English words from our analysis:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## exclude common english words</span></span>
 <span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="fu">stopwords</span><span class="op">(</span><span class="st">"english"</span>,</span>
-<span>                         source<span class="op">=</span><span class="st">"snowball"</span><span class="op">)</span></span></code></pre>
+<span>                         source<span class="op">=</span><span class="st">"snowball"</span><span class="op">)</span></span>
+<span><span class="fu">str</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
 </div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code> chr [1:175] "i" "me" "my" "myself" "we" "our" "ours" "ourselves" "you" ...</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mystopwords</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>  [1] "i"          "me"         "my"         "myself"     "we"
+  [6] "our"        "ours"       "ourselves"  "you"        "your"
+ [11] "yours"      "yourself"   "yourselves" "he"         "him"
+ [16] "his"        "himself"    "she"        "her"        "hers"
+ [21] "herself"    "it"         "its"        "itself"     "they"
+ [26] "them"       "their"      "theirs"     "themselves" "what"
+ [31] "which"      "who"        "whom"       "this"       "that"
+ [36] "these"      "those"      "am"         "is"         "are"
+ [41] "was"        "were"       "be"         "been"       "being"
+ [46] "have"       "has"        "had"        "having"     "do"
+ [51] "does"       "did"        "doing"      "would"      "should"
+ [56] "could"      "ought"      "i'm"        "you're"     "he's"
+ [61] "she's"      "it's"       "we're"      "they're"    "i've"
+ [66] "you've"     "we've"      "they've"    "i'd"        "you'd"
+ [71] "he'd"       "she'd"      "we'd"       "they'd"     "i'll"
+ [76] "you'll"     "he'll"      "she'll"     "we'll"      "they'll"
+ [81] "isn't"      "aren't"     "wasn't"     "weren't"    "hasn't"
+ [86] "haven't"    "hadn't"     "doesn't"    "don't"      "didn't"
+ [91] "won't"      "wouldn't"   "shan't"     "shouldn't"  "can't"
+ [96] "cannot"     "couldn't"   "mustn't"    "let's"      "that's"
+[101] "who's"      "what's"     "here's"     "there's"    "when's"
+[106] "where's"    "why's"      "how's"      "a"          "an"
+[111] "the"        "and"        "but"        "if"         "or"
+[116] "because"    "as"         "until"      "while"      "of"
+[121] "at"         "by"         "for"        "with"       "about"
+[126] "against"    "between"    "into"       "through"    "during"
+[131] "before"     "after"      "above"      "below"      "to"
+[136] "from"       "up"         "down"       "in"         "out"
+[141] "on"         "off"        "over"       "under"      "again"
+[146] "further"    "then"       "once"       "here"       "there"
+[151] "when"       "where"      "why"        "how"        "all"
+[156] "any"        "both"       "each"       "few"        "more"
+[161] "most"       "other"      "some"       "such"       "no"
+[166] "nor"        "not"        "only"       "own"        "same"
+[171] "so"         "than"       "too"        "very"       "will"      </code></pre>
+</div>
+<p>It’s always a good idea to look carefully at what stopwords are being
+removed. In this case, notice that pronoouns (e.g. “us” and “them”) as
+well as negative terms (“not” or “no”) are on the stoplist. These could
+be important for understanding discourse around collective identity, and
+so we may want to come back to add or remove words from the list at a
+later stage.</p>
 </section><section><h2 class="section-heading" id="removing-stopwords">Removing stopwords<a class="anchor" aria-label="anchor" href="#removing-stopwords"></a></h2>
 <hr class="half-width"><p>After removing stopwords from the DTM using the function
 <code>dfm_remove()</code> we can chart frequencies for the most common
 lexical words used in the Rivonia speech.</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -789,10 +844,10 @@ lexical words used in the Rivonia speech.</p>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
 <span><span class="va">feature_freq</span></span></code></pre>
 </div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Once the grammatical/function words have been excluded with the
+<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Once the grammatical/function words have been excluded with the
 stopword list, the frequency chart shows more clearly what the speech
 was about.</p>
-<p>As we start to make sense of these word frequencies in Mandela’s
+<p>Before we start to make sense of these word frequencies in Mandela’s
 speech, we should pause briefly and reflect on an important concept in
 computational analysis of text, namely <strong>frequency</strong>.</p>
 </section><div class="section level1">
@@ -835,7 +890,7 @@ something about their intentions, whether conscious or not.”
 <h2 id="wordclouds-and-visualisation">Wordclouds and visualisation<a class="anchor" aria-label="anchor" href="#wordclouds-and-visualisation"></a></h2>
 <p>Wordclouds are a popular visualisation format for frequencies because
 they allow us to focus on meanings.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -849,7 +904,51 @@ they allow us to focus on meanings.</p>
   together    harmony      equal
          1          1          1 </code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3</code></pre>
+</div>
+<p>We notice the duplication of related words, such as “africa”,
+“african” or “africans”. It is possible to combine these by using by
+using the <code>tokens_wordstem()</code> function, which will reduce all
+words to their stems.</p>
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">topfeatures</span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>     ideal       live  cherished democratic       free    society    persons
+         2          2          1          1          1          1          1
+  together    harmony      equal
+         1          1          1 </code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb29">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d_corpus</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">tokens_wordstem</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span>  <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'd_corpus' not found</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -878,9 +977,9 @@ President on 10 May 1994?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -901,7 +1000,7 @@ President on 10 May 1994?</p>
 Caused by error in `as.POSIXlt.character()`:
 ! character string is not in a standard unambiguous format</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -915,7 +1014,60 @@ Caused by error in `as.POSIXlt.character()`:
   together    harmony      equal
          1          1          1 </code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb37">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="exercise" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="exercise" class="callout-inner">
+<h3 class="callout-title">Exercise<em> (continued)</em>
+</h3>
+<div class="callout-content">
+<p>The most frequent word in the 1994 speech is “us”. Edit the stopword
+list to check for frequency of other pronouns which may be used to
+construct a group identity.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb39">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## edit the list of stopwords</span></span>
+<span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="va">mystopwords</span><span class="op">[</span><span class="op">!</span> <span class="va">mystopwords</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">'we'</span>, <span class="st">'they'</span>, <span class="st">'i'</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d_corpus</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">tokens</span><span class="op">(</span>remove_punct <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'd_corpus' not found</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -943,12 +1095,12 @@ represent textual data?</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p><strong>Using a wordcloud</strong></p>
 <p>Pro: The wordcloud allows quick exploration of the meaning of a
