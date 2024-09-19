@@ -278,7 +278,7 @@ textplot_wordcloud(d, max_words=20)
 
 What are the pros and cons of using ggplot and textplot_wordcloud to represent textual data?
 
-
+:::::::::::::::  solution
 
 ## Solution
 
@@ -298,9 +298,9 @@ Con: As a visualisation it is not as intuitively read for meaning.
 
 Both visualisations rely on simple frequency counts, which split up multi-word concepts like "south africa".
 
+:::::::::::::::::::::::::
 
-
-
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
