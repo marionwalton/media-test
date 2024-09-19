@@ -27,8 +27,6 @@ source: Rmd
 - Visualise frequencies as a wordcloud using the **`quanteda`** function `textplot_wordcloud` and the **`wordcloud2`** function  `wordcloud2`.
 - Identify the strengths and weaknesses of these approaches to visualising text data.
 
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
@@ -39,16 +37,16 @@ source: Rmd
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Using **`quanteda`**
+## Using **`quanteda`** for text analysis
 
-We will need to load the **`quanteda`** package which offers many useful text analysis functions.
+Before conducting automated text analysis, we will need to install and load a suitable package.
+For this tutorial we will be using the **`quanteda`** package which offers many useful text analysis functions.
 
 
 ``` r
+# install.packages("quanteda")
 library(quanteda)
 ```
-
-
 ## Computational linguistics and Corpus Linguistics
 
 Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches which media scholars can use when analysing textual data in media texts.
@@ -57,7 +55,7 @@ Computational linguistics is a broad inter-disciplinary area of study where soft
 
 While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics often includes qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of traditional media studies approaches to linguistic discourse such as Critical Discourse Analysis (CDA).
 
-For more 
+For more see these additional readings:
 
 (Baker et al 2008:273)
 
@@ -86,7 +84,6 @@ We start by creating a list of the individual words in the sentences, which in *
 Our second step is to convert these words into a DTM using `dfm()`. For the purposes of this example, we will treat each sentence as a separate "text".
 
 
-
 ``` r
 texts <- c(
       "I have cherished the ideal of a democratic and free society in which all persons will live together in harmony and with equal opportunities", 
@@ -97,7 +94,7 @@ d <- tokens(texts) %>%
   dfm()
 ```
 
-We will take this DTM and look at its matrix structure, using the `convert()` function. 
+Let's take the DTM created by the dfm() function and look more closely at its matrix structure, using the `convert()` function. 
 
 
 ``` r
@@ -155,7 +152,6 @@ chr (7): first_name, president, date, delivery, type, party, text
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
-
 Now that we have loaded the collection we can select only the Rivonia speech using `filter()`. 
 
 Then we will use the `corpus()`, `tokens()` and `dfm()`functions to represent the speech as a DTM. 
@@ -197,7 +193,6 @@ topfeatures(d)
  the   of   to  and   in    i    a that  was this 
  751  461  387  339  264  179  171  152  140  107 
 ```
-
 Making sense of such frequencies requires us to understand an important concept in computational analysis of text, namely **frequency**.
 
 # Using Word Frequencies to Analyse Text
@@ -221,11 +216,19 @@ Media studies builds on the insights of discourse analysis and corpus linguistic
 
 > "If people speak or write in an unexpected way, or make one linguistic choice over another, more obvious one, then that reveals something about their intentions, whether conscious or not." (Baker:48)
 
-
 ## Charting frequencies with **`quanteda`**
 
 Using the `textstat_frequency()` function and `ggplot()` we can chart the most frequently used 60 words (features) from Mandela's speech:
 
+
+``` r
+topfeatures(d)
+```
+
+``` output
+ the   of   to  and   in    i    a that  was this 
+ 751  461  387  339  264  179  171  152  140  107 
+```
 
 ``` r
 tstat_freq_d <- textstat_frequency(d, n = 60)
@@ -233,11 +236,11 @@ tstat_freq_d <- textstat_frequency(d, n = 60)
 feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, frequency))) +
   geom_point() +
   labs(x = "Frequency", y = "Feature")
+
 feature_freq
 ```
 
 <img src="fig/08-text-as-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
-
 
 ## Grammatical/Function words
 
@@ -259,7 +262,6 @@ We can start identifying these important lexical words by excluding common Engli
 mystopwords <- stopwords("english",
                          source="snowball")
 ```
-
 ## Removing stopwords
 
 After removing stopwords from the DTM using the function `dfm_remove()` we can chart frequencies for the most common lexical words used in the Rivonia speech.
@@ -302,8 +304,6 @@ textplot_wordcloud(d, max_words=100)
 ```
 
 <img src="fig/08-text-as-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
-
-
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -357,11 +357,11 @@ Con: Wordclouds can give undue emphasis to long words.
 
 Pro: The frequency plot using ggplot allows for precise comparisons and shows the exact frequency for each word. 
 
-Con: As a visualisation it is not as intuitively read for meaning.
+Con: As a visualisation a frequency plot is not as intuitively read for meaning.
 
 **Using any visualisation of simple frequencies**
 
-Both visualisations rely on simple frequency counts, which split up multi-word concepts like "south africa".
+Wordclouds and frequency plots both rely on simple frequency counts, which don't handle negatives well e.g. ("not violent" vs "violent") and also split up multi-word concepts like "south africa".
 
 :::::::::::::::::::::::::
 
