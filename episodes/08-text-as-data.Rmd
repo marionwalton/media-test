@@ -281,6 +281,71 @@ topfeatures(d)
 textplot_wordcloud(d, max_words=100)
 
 ```
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Exercise
+
+Which YouTube video categories are used to describe the videos in the sample? (Use the video_category_label column.) 
+Create a tibble of these categories and the number of videos in each of them, arranged in descending order.
+
+:::::::::::::::  solution
+
+## Solution
+
+```{r}
+videos %>%
+   count(video_category_label, sort=TRUE) 
+```
+
+:::::::::::::::::::::::::
+
+Use `group_by()` and `summarize()` to find the mean, min, and max
+number of views for each YouTube channel (channel_title). Also add the number of
+observations (hint: see `?n`).  Arrange the channels in descending order by the channel's maximum views.
+
+:::::::::::::::  solution
+
+## Solution
+
+```{r}
+videos %>%
+  group_by(channel_title) %>%
+  summarize(
+      mean_views = mean(view_count),
+      min_views = min(view_count),
+      max_views = max(view_count),
+      n = n()  )%>%
+      arrange(desc(max_views))
+```
+
+:::::::::::::::::::::::::
+
+Excluding those videos that were set to not allow comments (comment_count =NA),
+ what was the total number of comments posted on the videos in each month?
+
+:::::::::::::::  solution
+
+## Solution
+
+```{r}
+# if not already included, add month, year, and day columns
+library(lubridate) # load lubridate if not already loaded
+videos %>%
+    filter(!is.na(comment_count)) %>%
+    mutate(month = month(published_at_sql),
+           day = day(published_at_sql),
+           year = year(published_at_sql)) %>%
+    group_by(year, month) %>%
+    summarize(total_comments = sum(comment_count)) %>%
+    arrange(year,month)
+```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Use the **`quanteda`** package to analyse text data.
