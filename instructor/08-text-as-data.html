@@ -292,6 +292,12 @@
 <li><a href="#computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics</a></li>
 <li><a href="#what-is-a-corpus">What is a Corpus?</a></li>
 <li><a href="#using-a-document-term-matrix">Using a Document-Term Matrix</a></li>
+<li><a href="#charting-frequencies-with-quanteda">Charting frequencies with
+<strong><code>quanteda</code></strong></a></li>
+<li><a href="#grammaticalfunction-words">Grammatical/Function words</a></li>
+<li><a href="#lexical-words">Lexical words</a></li>
+<li><a href="#defining-stopwords">Defining stopwords</a></li>
+<li><a href="#removing-stopwords">Removing stopwords</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -375,7 +381,7 @@
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <ul><li>This is an optional lesson intended to introduce approaches to text
 as data by applying key concepts from corpus linguistics and natural
@@ -463,8 +469,7 @@ examining concordance lines). Corpus linguistics involves much
 qualitative work interpreting text, and so can be used to extend the
 scope of traditional media studies approaches to linguistic discourse
 such as Critical Discourse Analysis (CDA).</p>
-<p>For more see these additional readings:</p>
-<p>(Baker et al 2008:273)</p>
+<p>For more see these additional readings: (Baker et al 2008:273)</p>
 </section><section><h2 class="section-heading" id="what-is-a-corpus">What is a Corpus?<a class="anchor" aria-label="anchor" href="#what-is-a-corpus"></a></h2>
 <hr class="half-width"><p>A <em>corpus</em> is a set of documents which stores large quantities
 of real-life text. The plural form of the word is <em>corpora</em>.</p>
@@ -633,50 +638,10 @@ English such as “I”, “the”, “a” and “in”.</p>
 <pre class="output" tabindex="0"><code> the   of   to  and   in    i    a that  was this
  751  461  387  339  264  179  171  152  140  107 </code></pre>
 </div>
-<p>Making sense of such frequencies requires us to understand an
-important concept in computational analysis of text, namely
-<strong>frequency</strong>.</p>
-</section><div class="section level1">
-<h1 id="using-word-frequencies-to-analyse-text">Using Word Frequencies to Analyse Text<a class="anchor" aria-label="anchor" href="#using-word-frequencies-to-analyse-text"></a></h1>
-<p>Frequency is a key concept underpinning the analysis of text and
-corpora. As a purely quantitative measure, media researchers need to use
-word frequencies with a sensitivity to the word-distribution patterns in
-human languages, and the importance of context for meaning</p>
-<p>Word frequency lists are an important starting point and can help
-direct an investigation. We combine them with measures of dispersion,
-which are used to reveal trends across texts. For example, certain
-linguistic patterns may occur more often at the beginning or ends of
-texts.</p>
-<p>At the same time, frequencies can be reductive and generalising. If
-we’re interested in meaning it’s important not to oversimplify, and
-focusing only on word distributions can obscure more interesting
-interpretations of a text.</p>
-</div>
-<div class="section level1">
-<h1 id="why-is-frequency-important">Why is frequency important?<a class="anchor" aria-label="anchor" href="#why-is-frequency-important"></a></h1>
-<p>Language is not a random affair - it is <em>rule based</em>. Words
-are likely to occur predictably in relationship to other words.</p>
-<p>At the same time, human beings use language creatively and people can
-make many choices about how they want to use language. Language has
-<em>rule-generating</em> qualities which is why it changes over time and
-varies depending on the context where it is used.</p>
-</div>
-<div class="section level1">
-<h1 id="the-relationship-between-frequency-and-ideology">The relationship between frequency and ideology<a class="anchor" aria-label="anchor" href="#the-relationship-between-frequency-and-ideology"></a></h1>
-<p>Media studies builds on the insights of discourse analysis and corpus
-linguistics, which have sensitised researchers to the ideological
-implications of the words people choose to use.</p>
-<blockquote>
-<p>“If people speak or write in an unexpected way, or make one
-linguistic choice over another, more obvious one, then that reveals
-something about their intentions, whether conscious or not.”
-(Baker:48)</p>
-</blockquote>
-<div class="section level2">
-<h2 id="charting-frequencies-with-quanteda">Charting frequencies with
+</section><section><h2 class="section-heading" id="charting-frequencies-with-quanteda">Charting frequencies with
 <strong><code>quanteda</code></strong>
 <a class="anchor" aria-label="anchor" href="#charting-frequencies-with-quanteda"></a></h2>
-<p>Using the <code>textstat_frequency()</code> function and
+<hr class="half-width"><p>Using the <code>textstat_frequency()</code> function and
 <code>ggplot()</code> we can chart the most frequently used 60 words
 (features) from Mandela’s speech:</p>
 <div class="codewrapper sourceCode" id="cb12">
@@ -703,10 +668,8 @@ something about their intentions, whether conscious or not.”
 <span></span>
 <span><span class="va">feature_freq</span></span></code></pre>
 </div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
-<div class="section level2">
-<h2 id="grammaticalfunction-words">Grammatical/Function words<a class="anchor" aria-label="anchor" href="#grammaticalfunction-words"></a></h2>
-<p>The chart shows us that the most commonly used words in the speech as
+<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="grammaticalfunction-words">Grammatical/Function words<a class="anchor" aria-label="anchor" href="#grammaticalfunction-words"></a></h2>
+<hr class="half-width"><p>The chart shows us that the most commonly used words in the speech as
 a whole are similar to the common English words we saw repeated in the
 final sentences.These words are known as grammatical or function words
 and are the most commonly used in a language. They seldom change over
@@ -714,18 +677,14 @@ short periods of time.</p>
 <p>For this reason, grammatical and function words are on lists of words
 to be excluded from frequency counts. These lists are known as “stop
 words”</p>
-</div>
-<div class="section level2">
-<h2 id="lexical-words">Lexical words<a class="anchor" aria-label="anchor" href="#lexical-words"></a></h2>
-<p>By contrast, the frequencies of the lexical words in Mandela’s speech
+</section><section><h2 class="section-heading" id="lexical-words">Lexical words<a class="anchor" aria-label="anchor" href="#lexical-words"></a></h2>
+<hr class="half-width"><p>By contrast, the frequencies of the lexical words in Mandela’s speech
 (“African”, “ANC”, “Africans”, “people”, “political”, “umkhonto”,
 “Africa”, “white”, “South”,“violence”,
-“government”,“policy”,“against”,“communist”) show us what this specific
-text or corpus is about.</p>
-</div>
-<div class="section level2">
-<h2 id="defining-stopwords">Defining stopwords<a class="anchor" aria-label="anchor" href="#defining-stopwords"></a></h2>
-<p>We can start identifying these important lexical words by excluding
+“government”,“policy”,“against”,“communist”) give far more clues if
+we’re interested in what this specific text or corpus is about.</p>
+</section><section><h2 class="section-heading" id="defining-stopwords">Defining stopwords<a class="anchor" aria-label="anchor" href="#defining-stopwords"></a></h2>
+<hr class="half-width"><p>We can start identifying these important lexical words by excluding
 common English words from our analysis:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -735,10 +694,8 @@ common English words from our analysis:</p>
 <span><span class="va">mystopwords</span> <span class="op">&lt;-</span> <span class="fu">stopwords</span><span class="op">(</span><span class="st">"english"</span>,</span>
 <span>                         source<span class="op">=</span><span class="st">"snowball"</span><span class="op">)</span></span></code></pre>
 </div>
-</div>
-<div class="section level2">
-<h2 id="removing-stopwords">Removing stopwords<a class="anchor" aria-label="anchor" href="#removing-stopwords"></a></h2>
-<p>After removing stopwords from the DTM using the function
+</section><section><h2 class="section-heading" id="removing-stopwords">Removing stopwords<a class="anchor" aria-label="anchor" href="#removing-stopwords"></a></h2>
+<hr class="half-width"><p>After removing stopwords from the DTM using the function
 <code>dfm_remove()</code> we can chart frequencies for the most common
 lexical words used in the Rivonia speech.</p>
 <div class="codewrapper sourceCode" id="cb16">
@@ -755,8 +712,47 @@ lexical words used in the Rivonia speech.</p>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Frequency"</span>, y <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span>
 <span><span class="va">feature_freq</span></span></code></pre>
 </div>
-<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>With the stop words excluded, the chart shows us more clearly what
-the speech was about.</p>
+<figure><img src="../fig/08-text-as-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Once the grammatical/function words have been excluded with the
+stopword list, the frequency chart shows more clearly what the speech
+was about.</p>
+<p>As we start to make sense of these word frequencies in Mandela’s
+speech, we should pause briefly and reflect on an important concept in
+computational analysis of text, namely <strong>frequency</strong>.</p>
+</section><div class="section level1">
+<h1 id="using-word-frequencies-to-analyse-text">Using Word Frequencies to Analyse Text<a class="anchor" aria-label="anchor" href="#using-word-frequencies-to-analyse-text"></a></h1>
+<p>Frequency is a key concept underpinning the analysis of text and
+corpora. As a purely quantitative measure, media researchers need to use
+word frequencies with a sensitivity to the word-distribution patterns in
+human languages, and the importance of context for meaning</p>
+<p>Word frequency lists are an important starting point and can help
+direct an investigation. We combine them with measures of dispersion,
+which are used to reveal trends across texts. For example, certain
+linguistic patterns may occur more often at the beginning or ends of
+texts.</p>
+<p>At the same time, frequencies can be reductive and generalising. If
+we’re interested in meaning it’s important not to oversimplify. Focusing
+only on general patterns and individual word distributions without
+paying attention to context can obscure what is going on in a text.</p>
+<div class="section level2">
+<h2 id="why-is-frequency-important">Why is frequency important?<a class="anchor" aria-label="anchor" href="#why-is-frequency-important"></a></h2>
+<p>Language is not a random affair - it is <em>rule based</em>. Words
+are likely to occur predictably in relationship to other words.</p>
+<p>At the same time, human beings use language creatively and people can
+make many choices about how they want to use language. Language has
+<em>rule-generating</em> qualities which is why it changes over time and
+varies depending on the context where it is used.</p>
+</div>
+<div class="section level2">
+<h2 id="the-relationship-between-frequency-and-ideology">The relationship between frequency and ideology<a class="anchor" aria-label="anchor" href="#the-relationship-between-frequency-and-ideology"></a></h2>
+<p>Media studies builds on the insights of discourse analysis and corpus
+linguistics, which have sensitised researchers to the ideological
+implications of the words people choose to use.</p>
+<blockquote>
+<p>“If people speak or write in an unexpected way, or make one
+linguistic choice over another, more obvious one, then that reveals
+something about their intentions, whether conscious or not.”
+(Baker:48)</p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="wordclouds-and-visualisation">Wordclouds and visualisation<a class="anchor" aria-label="anchor" href="#wordclouds-and-visualisation"></a></h2>
@@ -800,7 +796,7 @@ President on 10 May 1994?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -849,7 +845,7 @@ represent textual data?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p><strong>Using a wordcloud</strong></p>
 <p>Pro: The wordcloud allows quick exploration of the meaning of a
