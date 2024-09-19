@@ -54,10 +54,12 @@ require(spacyr)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Load quanteda package
+## Using **`quanteda`**
+
+We will need to load the **`quanteda`** package which offers many useful text analysis functions.
 
 ```{r, message=FALSE}
-require(quanteda)
+library(quanteda)
 ```
 
 
@@ -185,7 +187,7 @@ Media studies builds on the insights of discourse analysis and corpus linguistic
 > "If people speak or write in an unexpected way, or make one linguistic choice over another, more obvious one, then that reveals something about their intentions, whether conscious or not." (Baker:48)
 
 
-## Charting frequencies with quanteda
+## Charting frequencies with **`quanteda`**
 
 Using the `textstat_frequency()` function and `ggplot()` we can chart the most frequently used 60 words (features) from Mandela's speech:
 
@@ -247,27 +249,18 @@ textplot_wordcloud(d, max_words=100)
 ```
 
 
-```{r}
-#| echo: false
-require(wordcloud2)
-require(RColorBrewer)
 
-#make the graph
+:::::::::::::::::::::::::::::::::::::::  challenge
 
-f <- colSums(d)
-col <- rev(tail(brewer.pal(6, "Blues"), 5))
+## Exercise
 
-p <- wordcloud2(data.frame(names(f), f), minRotation = 0, maxRotation = 0,
-                color = col[as.integer(cut(f, length(col)))], shape="circle")
-p
+How would you go about using quanteda functions to study linguistic choices in the inaugural speech given by Mandela when he became President on 10 May 1994? 
+What are the strengths of using ggplot and textplot_wordcloud to represent textual data?
 
-```
+:::::::::::::::  solution
 
-Can you think of some of the disadvantages of representing data in this way?
+## Solution
 
-Activity
-
-Repeat these steps with the inaugural speech given by Mandela when he became President on 10 May 1994.
 
 ```{r}
 d <- speeches %>%
@@ -278,72 +271,24 @@ d <- speeches %>%
   dfm_remove(mystopwords)
 
 topfeatures(d)
-textplot_wordcloud(d, max_words=100)
+textplot_wordcloud(d, max_words=20)
 
-```
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Exercise
-
-Which YouTube video categories are used to describe the videos in the sample? (Use the video_category_label column.) 
-Create a tibble of these categories and the number of videos in each of them, arranged in descending order.
-
-:::::::::::::::  solution
-
-## Solution
-
-```{r}
-videos %>%
-   count(video_category_label, sort=TRUE) 
 ```
 
 :::::::::::::::::::::::::
 
-Use `group_by()` and `summarize()` to find the mean, min, and max
-number of views for each YouTube channel (channel_title). Also add the number of
-observations (hint: see `?n`).  Arrange the channels in descending order by the channel's maximum views.
+Pro: The frequency plot using ggplot allows for precise comparisons and shows the exact frequency for each word. 
 
-:::::::::::::::  solution
+Con: As a visualisation it is not as intuitively read for meaning.
 
-## Solution
+Pro: The wordcloud allows quick exploration of the meaning of a speech. 
 
-```{r}
-videos %>%
-  group_by(channel_title) %>%
-  summarize(
-      mean_views = mean(view_count),
-      min_views = min(view_count),
-      max_views = max(view_count),
-      n = n()  )%>%
-      arrange(desc(max_views))
-```
+Con: Wordclouds can give undue emphasis to long words. 
 
-:::::::::::::::::::::::::
-
-Excluding those videos that were set to not allow comments (comment_count =NA),
- what was the total number of comments posted on the videos in each month?
-
-:::::::::::::::  solution
-
-## Solution
-
-```{r}
-# if not already included, add month, year, and day columns
-library(lubridate) # load lubridate if not already loaded
-videos %>%
-    filter(!is.na(comment_count)) %>%
-    mutate(month = month(published_at_sql),
-           day = day(published_at_sql),
-           year = year(published_at_sql)) %>%
-    group_by(year, month) %>%
-    summarize(total_comments = sum(comment_count)) %>%
-    arrange(year,month)
-```
-
-:::::::::::::::::::::::::
+Both visualisations rely on simple frequency counts, which split up multi-word concepts like "south africa".
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
