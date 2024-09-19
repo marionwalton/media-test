@@ -595,7 +595,8 @@ investigate these linguistic patterns.</p>
 <pre class="output" tabindex="0"><code>Rows: 2 Columns: 7
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
-chr (7): first_name, president, date, delivery, type, party, text
+chr  (6): first_name, president, delivery, type, party, text
+date (1): date
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -631,14 +632,6 @@ dataframe to a corpus object.</p>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="fu">year</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="st">"1964"</span> <span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">corpus</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in `mutate()`:
-ℹ In argument: `doc_id = paste(year(date), president, delivery)`.
-Caused by error in `as.POSIXlt.character()`:
-! character string is not in a standard unambiguous format</code></pre>
-</div>
 </section><section><h2 class="section-heading" id="tokens---preparing-for-analysis">Tokens - preparing for analysis<a class="anchor" aria-label="anchor" href="#tokens---preparing-for-analysis"></a></h2>
 <hr class="half-width"><p>Tokens are usually the words in a document. (They can also be
 sentences.) We will now prepare the text for analysis by deciding what
@@ -649,7 +642,7 @@ and numbers, and stem words to reduce the size of the eventual matrix.
 Of course, in cases where numbers or punctuataion are important to our
 analysis, we would keep them intact!</p>
 <p>In this case we will remove all punctuation and numbers.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -659,15 +652,10 @@ analysis, we would keep them intact!</p>
 <span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'd_corpus' not found</code></pre>
-</div>
 </section><section><h2 class="section-heading" id="starting-analysis---the-dtm">Starting Analysis - the DTM<a class="anchor" aria-label="anchor" href="#starting-analysis---the-dtm"></a></h2>
 <hr class="half-width"><p>Once the speech is converted to a DTM with the <code>dtm()</code>
 function, we can start exploring its linguistic patterns.</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -676,13 +664,11 @@ function, we can start exploring its linguistic patterns.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>Document-feature matrix of: 3 documents, 40 features (56.67% sparse) and 0 docvars.
-       features
-docs    i have cherished the ideal of a democratic and free
-  text1 1    1         1   1     1  1 1          1   2    1
-  text2 1    0         0   0     0  0 0          0   1    0
-  text3 1    0         0   0     1  0 0          0   0    0
-[ reached max_nfeat ... 30 more features ]</code></pre>
+<pre class="output" tabindex="0"><code>Document-feature matrix of: 1 document, 2,119 features (0.00% sparse) and 6 docvars.
+                     features
+docs                    i am the first accused hold   a bachelor's degree  in
+  1964 Mandela speech 179 12 751     9       1    2 171          1      1 264
+[ reached max_nfeat ... 2,109 more features ]</code></pre>
 </div>
 <p>The <code>head()</code> function tells us that the resulting DFM has
 2154 tokens. It is a sparse matrix, (0.00% sparse). In other words, very
@@ -700,7 +686,7 @@ text.</p>
 <hr class="half-width"><p>Using the <code>textstat_frequency()</code> function and
 <code>ggplot()</code> we can chart the most frequently used 60 words
 (features) from Mandela’s speech:</p>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -709,10 +695,10 @@ text.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>    i   and which    it   for    to ideal    in  live    is
-    3     3     3     3     3     3     2     2     2     2 </code></pre>
+<pre class="output" tabindex="0"><code> the   of   to  and   in    i    a that  was this
+ 751  461  387  339  264  179  171  152  140  107 </code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -742,7 +728,7 @@ we’re interested in what this specific text or corpus is about.</p>
 </section><section><h2 class="section-heading" id="defining-stopwords">Defining stopwords<a class="anchor" aria-label="anchor" href="#defining-stopwords"></a></h2>
 <hr class="half-width"><p>We can start identifying these important lexical words by excluding
 common English words from our analysis:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -756,7 +742,7 @@ common English words from our analysis:</p>
 </h3>
 <pre class="output" tabindex="0"><code> chr [1:175] "i" "me" "my" "myself" "we" "our" "ours" "ourselves" "you" ...</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -811,7 +797,7 @@ later stage.</p>
 <hr class="half-width"><p>After removing stopwords from the DTM using the function
 <code>dfm_remove()</code> we can chart frequencies for the most common
 lexical words used in the Rivonia speech.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -871,7 +857,7 @@ something about their intentions, whether conscious or not.”
 <h2 id="wordclouds-and-visualisation">Wordclouds and visualisation<a class="anchor" aria-label="anchor" href="#wordclouds-and-visualisation"></a></h2>
 <p>Wordclouds are a popular visualisation format for frequencies because
 they allow us to focus on meanings.</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -880,27 +866,22 @@ they allow us to focus on meanings.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>     ideal       live  cherished democratic       free    society    persons
-         2          2          1          1          1          1          1
-  together    harmony      equal
-         1          1          1 </code></pre>
+<pre class="output" tabindex="0"><code>  african       anc  africans    people political  umkhonto    africa     white
+       71        57        55        48        43        38        35        35
+    south  violence
+       34        33 </code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3</code></pre>
-</div>
-<p>We notice the duplication of related words, such as “africa”,
+<figure><img src="fig/08-text-as-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>We notice the duplication of related words, such as “africa”,
 “african” or “africans”. It is possible to combine these by using by
 using the <code>tokens_wordstem()</code> function, which will reduce all
 words to their stems.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -909,12 +890,12 @@ words to their stems.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>     ideal       live  cherished democratic       free    society    persons
-         2          2          1          1          1          1          1
-  together    harmony      equal
-         1          1          1 </code></pre>
+<pre class="output" tabindex="0"><code>  african       anc  africans    people political  umkhonto    africa     white
+       71        57        55        48        43        38        35        35
+    south  violence
+       34        33 </code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -922,25 +903,11 @@ words to their stems.</p>
 <span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tokens_wordstem</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'd_corpus' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb31">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3</code></pre>
-</div>
-<div id="exercise" class="callout challenge">
+<figure><img src="fig/08-text-as-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="exercise" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
@@ -960,7 +927,7 @@ President on 10 May 1994?</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -970,43 +937,23 @@ President on 10 May 1994?</p>
 <span>  <span class="fu">corpus</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tokens</span><span class="op">(</span>remove_punct<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in `mutate()`:
-ℹ In argument: `doc_id = paste(lubridate::year(date), president,
-  delivery)`.
-Caused by error in `as.POSIXlt.character()`:
-! character string is not in a standard unambiguous format</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb35">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">topfeatures</span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">topfeatures</span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>     ideal       live  cherished democratic       free    society    persons
-         2          2          1          1          1          1          1
-  together    harmony      equal
-         1          1          1 </code></pre>
+<pre class="output" tabindex="0"><code>     us   world  people country   peace   human   south     let freedom   never
+      9       8       8       6       6       5       5       5       4       4 </code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb37">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3</code></pre>
-</div>
-</div>
+<figure><img src="fig/08-text-as-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
@@ -1031,7 +978,7 @@ construct a group identity.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1041,25 +988,11 @@ construct a group identity.</p>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d_corpus</span> <span class="op">%&gt;%</span></span>
 <span>    <span class="fu">tokens</span><span class="op">(</span>remove_punct <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dfm</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">dfm_remove</span><span class="op">(</span><span class="va">mystopwords</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'd_corpus' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb41">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">textplot_wordcloud</span><span class="op">(</span><span class="va">d</span>, max_words<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3</code></pre>
-</div>
-</div>
+<figure><img src="fig/08-text-as-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
