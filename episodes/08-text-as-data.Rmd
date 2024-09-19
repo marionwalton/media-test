@@ -34,8 +34,7 @@ require(spacyr)
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Introduce key concepts needed to use the **`quanteda`** package for discourse analysis 
-i.e. corpus, tokens, dfm, frequency, collocation, keyness, concordance.
+- Introduce basic concepts needed to use the **`quanteda`** package for discourse analysis: corpus, tokens, dfm,and frequency.
 - Prepare text for analysis with the **`quanteda`** functions `corpus`, `tokens`, `dfm`, and `dfm_remove`.
 - Investigate the most frequent features in a dfm using the **`quanteda`** function `textstat_frequency`.
 - Plot frequencies using **`ggplot`** 
@@ -64,23 +63,23 @@ require(quanteda)
 
 ## Computational linguistics and Corpus Linguistics
 
-Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches media scholars can use when analysing textual data in media texts.
+Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches which media scholars can use when analysing textual data in media texts.
 
 Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are related to Natural Language Processing (NLP) which is a subfield of computer science.
 
 While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics often includes qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of traditional media studies approaches to linguistic discourse such as Critical Discourse Analysis (CDA).
 
-For more see:
+For more 
 
 (Baker et al 2008:273)
 
-## Corpus
+## What is a Corpus?
 
 A *corpus* is a set of documents which stores large quantities of real-life text. The plural form of the word is *corpora*.
 
 You can find a set of South African language corpora on the [SADILAR corpus portal](https://corpus.sadilar.org/corpusportal/explore/corpus) website.
 
-## Document-Term Matrix
+## Using a Document-Term Matrix
 
 Computers work by using numbers, and so corpora are analysed by generating a numerical representations of text.
 
@@ -115,62 +114,76 @@ We will take this DTM and look at its matrix structure, using the `convert()` fu
 convert(d, "matrix") 
 ```
 
-The example matrix above shows that we have certainly lost a lot when we represent the closing sentences of Mandela's speech from the dock as a DTM. We have lost the original word order of the conclusion to his four hour long speech, which means we lose Mandela's poetic use of repetition and the carefully crafted drama of his final statement. 
+The example matrix above shows the losses and the gains when we represent the closing sentences of Mandela's four hour long speech from the dock as a DTM. 
 
-When we represent the speech in a numeric matrix format we move away from the original sequence of the words are quantifying Mandela's linguistic choices so that we can see the patterns in the speech, which helps us to notice some of his rhetorical strategies, such as the repetition of the first person pronoun "I" and the words "ideal" and "live", as well as the poignant shift from the repeated positive terms "cherished", "democratic",  "free", "equal", "hope",  and harmony" to the determination of the final shocking negative, "die". 
+We lose the original word order of the conclusion to the speech, its poetic use of repetition and the impact of the final statement. 
 
-Nonetheless, by converting the whole speech into the quantitative DTM format, we can more easily use computational methods to compare Mandela's 1964 speech to his other famous speeches, or to speeches made by other political leaders and statesmen.
+At the same time, we gain other insights. Since we represent the speech in a numeric matrix format Mandela's linguistic choices are quantified and we can see certain lexical patterns. This draws attention to some rhetorical strategies, such as the repetition of the first person pronoun "I" and the repeated words "ideal" and "live", which lead up to the shock of the final emphatic "die". 
 
-Now we will load the full text of the speech from the `rivonia_speech_sentences.csv` to investigate these linguistic patterns.
+Furthermore, by converting the whole speech into the quantitative DTM format, we can more easily use computational methods to compare Mandela's 1964 speech to other famous speeches, such as his speech in 1994, or to speeches made by other political leaders and statesmen.
+
+Now we will load the full text of the speech from a collection of speeches `speeches.tsv` to investigate these linguistic patterns.
 
 ```{r}
 
-# load file with video metadata (you tube data tools)
-speech <- read_csv(
-  here("data","rivonia_speech_sentences.csv"),
-  na= "")
+# load file with text of political speeches
+speeches <- read_tsv(
+  here("data","speeches.tsv"),
+  na= ""
+)
+
 ```
 
-Once we have loaded the full text of the speech we will need to use the `corpus()`, `tokens()` and `dfm()`functions to represent the speech as a DTM which will allow us to investigate its linguistic patterns.
+Now that we have loaded the collection we can select only the Rivonia speech using `filter()`. 
+
+Then we will use the `corpus()`, `tokens()` and `dfm()`functions to represent the speech as a DTM. 
 
 ```{r}
+# select only the Rivonia speech, tokenize and convert to a DTM
 
-d <- corpus(speech) %>%
+d <- speeches %>%
+  filter(date == "April 20 1964" ) %>%
+  corpus() %>%
   tokens(remove_punct=T) %>%
   dfm()
+
+```
+Once the speech is converted to a DTM, we can use other functions to explore its linguistic patterns. 
+
+```{r}
+head(d)
+```
+The `head()` function tells us that the resulting DFM has 2154 tokens. It is a sparse matrix, (0.00% sparse). In other words, very few of the 2154 words are ever repeated. 
+
+The function `topfeatures()` highlights the most commonly used words in the speech. Unsurprisingly, these are common words in English such as "I", "the", "a" and "in".
+
+```{r}
+topfeatures(d)
 ```
 
-Using the `dim()` function we see that the resulting DFM has 487 sentences and 2154 tokens. The `head()` function tells us that it is a sparse matrix, (99.03% sparse). In other words, very few (0,97%) of the 2154 words are ever repeated. Even from the first few rows of the DTM, we can see that the most repeated words are the common words in English such as "I", "the", "a" and "in". Interpreting these relative frequencies requires us to understand an important concept in computational analysis of text, namely **frequency**.
+Making sense of such frequencies requires us to understand an important concept in computational analysis of text, namely **frequency**.
 
-## Frequency
+# Using Word Frequencies to Analyse Text
 
 Frequency is a key concept underpinning the analysis of text and corpora. As a purely quantitative measure, media researchers need to use word frequencies with a sensitivity to the word-distribution patterns in human languages, and the importance of context for meaning
 
-# Frequency lists
+Word frequency lists are an important starting point and can help direct an investigation. We combine them with measures of dispersion, which are used to reveal trends across texts. For example, certain linguistic patterns may occur more often at the beginning or ends of texts.
 
--   Help direct researcher's investigations
--   Measures of dispersion can reveal trends across texts
--   Can provide a sociological profile of a given word or phrase
+At the same time, frequencies can be reductive and generalising. If we're interested in meaning it's important not to oversimplify, and focusing only on word distributions can obscure more interesting interpretations of a text.
 
-# Many potential problems
-
--   Can be reductive and generalising
--   Can oversimplify
--   Focus on differences between word distributions can obscure more interesting interpretations.
-
-## Why is frequency important?
+# Why is frequency important?
 
 Language is not a random affair - it is *rule based*. Words are likely to occur predictably in relationship to other words. 
 
 At the same time, human beings use language creatively and people can make many choices about how they want to use language. Language has *rule-generating* qualities which is why it changes over time and varies depending on the context where it is used. 
 
-## Why are our linguistic choices important?
+# The relationship between frequency and ideology
 
-Media studies builds on the insights of discourse analysis and corpus linguistics, which have sensitised researchers to the ideological implications of people's linguistic choices. 
+Media studies builds on the insights of discourse analysis and corpus linguistics, which have sensitised researchers to the ideological implications of the words people choose to use.
 
-> "No terms are neutral. Choice of words expresses an ideological position". (Stubbs, 1996:107; Baker, 47)
 
 > "If people speak or write in an unexpected way, or make one linguistic choice over another, more obvious one, then that reveals something about their intentions, whether conscious or not." (Baker:48)
+
 
 ## Charting frequencies with quanteda
 
@@ -194,11 +207,11 @@ For this reason, grammatical and function words are on lists of words to be excl
 
 ## Lexical words
 
-By contrast, the frequencies of the lexical words in Mandela's speech ("African", "ANC", "Africans", "people", "political", "umkhonto", "Africa", "white", "South","violence", "government","policy","against","communist") show us what a specific text or corpus is about.
+By contrast, the frequencies of the lexical words in Mandela's speech ("African", "ANC", "Africans", "people", "political", "umkhonto", "Africa", "white", "South","violence", "government","policy","against","communist") show us what this specific text or corpus is about.
 
 ## Defining stopwords
 
-Let us start by excluding common English words from our analysis:
+We can start identifying these important lexical words by excluding common English words from our analysis:
 
 ```{r}
 ## exclude common english words
@@ -208,7 +221,7 @@ mystopwords <- stopwords("english",
 
 ## Removing stopwords
 
-After removing stopwords from the DTM using the function `dfm_remove()` we can chart frequencies for the most common lexical words.
+After removing stopwords from the DTM using the function `dfm_remove()` we can chart frequencies for the most common lexical words used in the Rivonia speech.
 
 ```{r}
 d <- d %>%
@@ -224,7 +237,50 @@ feature_freq
 
 With the stop words excluded, the chart shows us more clearly what the speech was about.
 
+## Wordclouds and visualisation
 
+Wordclouds are a popular visualisation format for frequencies because they allow us to focus on meanings.
+
+```{r}
+topfeatures(d)
+textplot_wordcloud(d, max_words=100)
+```
+
+
+```{r}
+#| echo: false
+require(wordcloud2)
+require(RColorBrewer)
+
+#make the graph
+
+f <- colSums(d)
+col <- rev(tail(brewer.pal(6, "Blues"), 5))
+
+p <- wordcloud2(data.frame(names(f), f), minRotation = 0, maxRotation = 0,
+                color = col[as.integer(cut(f, length(col)))], shape="circle")
+p
+
+```
+
+Can you think of some of the disadvantages of representing data in this way?
+
+Activity
+
+Repeat these steps with the inaugural speech given by Mandela when he became President on 10 May 1994.
+
+```{r}
+d <- speeches %>%
+  filter(date == "10 May 1994" ) %>%
+  corpus() %>%
+  tokens(remove_punct=T) %>%
+  dfm()  %>%
+  dfm_remove(mystopwords)
+
+topfeatures(d)
+textplot_wordcloud(d, max_words=100)
+
+```
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Use the **`quanteda`** package to analyse text data.
