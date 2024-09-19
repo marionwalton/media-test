@@ -250,12 +250,12 @@ textplot_wordcloud(d, max_words=100)
 
 
 
+
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
 
 How would you go about using quanteda functions to study linguistic choices in the inaugural speech given by Mandela when he became President on 10 May 1994? 
-What are the strengths of using ggplot and textplot_wordcloud to represent textual data?
 
 :::::::::::::::  solution
 
@@ -277,18 +277,29 @@ textplot_wordcloud(d, max_words=20)
 
 :::::::::::::::::::::::::
 
-Pro: The frequency plot using ggplot allows for precise comparisons and shows the exact frequency for each word. 
+What are the pros and cons of using ggplot and textplot_wordcloud to represent textual data?
 
-Con: As a visualisation it is not as intuitively read for meaning.
+:::::::::::::::  solution
+
+## Solution
+
+**Using a wordcloud**
 
 Pro: The wordcloud allows quick exploration of the meaning of a speech. 
 
 Con: Wordclouds can give undue emphasis to long words. 
 
+**Using a ggplot feature-frequency chart**
+
+Pro: The frequency plot using ggplot allows for precise comparisons and shows the exact frequency for each word. 
+
+Con: As a visualisation it is not as intuitively read for meaning.
+
+**Using any visualisation of simple frequencies**
+
 Both visualisations rely on simple frequency counts, which split up multi-word concepts like "south africa".
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
