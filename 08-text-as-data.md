@@ -45,33 +45,49 @@ For this tutorial we will be using the **`quanteda`** package which offers many 
 # install.packages("quanteda")
 library(quanteda)
 ```
+## Example data
+We will start by exploring the text from some historical speeches by Nelson Mandela. 
+You can download the required data [from this link](data/speeches.tsv)
+
 ## Computational linguistics and Corpus Linguistics
-This tutorial is intended to provide a foundation for media researchers who would like to use computational tools for discourse analysis. We will be drawing on both computational linguistics and corpus linguistics.
+This tutorial is intended to provide a foundation for media researchers who would like to use computational tools for discourse analysis on collections of textual data such as social media posts, web pages, text output from machine vision services, or interview transcripts. We will be drawing on both computational linguistics and corpus linguistics to do this.
 
-Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches which media scholars can use when analysing textual data in media texts.
+Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches concepts and tools for analysing textual data, but it is important to know where the tools originate and what they assume about language.
 
-Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are related to Natural Language Processing (NLP) which is a subfield of computer science.
+Media scholars have used corpus linguistics together with discourse analysis to explore dominant discourses, and to investigate the social implications of certain linguistic choices. Computational linguistics has been used to automate some aspects of content analysis, such as sentiment analysis (which identifies positive and negative sentiments in text) or to label texts or automatically identify topics. In all these cases, researchers need to manage textual data and to prepare it for analysis by sorting, categorising and summarising it.
 
-While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics often includes qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of traditional media studies approaches to linguistic discourse such as Critical Discourse Analysis (CDA).
+Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use and sociolinguistic variation by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are also related to Natural Language Processing (NLP) which is a subfield of computer science.
+
+While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics can also include qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of Critical Discourse Analysis (CDA) and other smaller-scale media studies approaches to analysing linguistic discourse.
 
 For more about these approaches, see these additional readings: (Baker et al 2008:273).
 ## What is a Corpus?
 A *corpus* is a set of documents which stores large quantities of real-life text. The plural form of the word is *corpora*.
 
 You can find a set of South African language corpora on the [SADILAR corpus portal](https://corpus.sadilar.org/corpusportal/explore/corpus) website.
+
+In this tutorial you can think of the corpus as your back-up or raw data which needs to be kept unchanged by the analysis. The individual documents which make up the corpus can be labelled and stored separately from one another in the corpus format.
+
 ## Using a Document-Term Matrix
 Computers work by using numbers, and so corpora are analysed by generating a numerical representations of text.
 
-A popular representation of text in CL is the *Document-Term Matrix* or *DTM* (also known as Term-Document Matrix (TDM) or Document-Feature Matrix (DTM). 
-A DTM represents a corpus as a large table (known as a matrix). 
+A popular representation of text in CL is the *Document-Term Matrix* or *DTM* (also known as Term-Document Matrix (TDM) or Document-Feature Matrix (DFM). 
 
-We will study a small example of a document-term matrix, using this famous quotation from Nelson Mandela's 1964 speech during the Rivonia Trial: 
+A DTM represents a corpus as a large table (known as a matrix) which organises all the words (terms) in the corpus according to how often they occur in each of the documents included in the corpus.
+
+We will start with a small example of a document-term matrix, using this famous quotation from Nelson Mandela's 1964 speech during the Rivonia Trial: 
 
 > "I have cherished the ideal of a democratic and free society in which all persons will live together in harmony and with equal opportunities. It is an idea for which I hope to live for and to see realized. But, my Lord, if it needs be, it is an ideal for which I am prepared to die."
 
+Once we understand how a short paragraph like this is represented numerically as a DFM, we will use a larger DFM to compare Mandela's linguistic choices across different speeches made in 1964 and in 1994.
+
+## Tokens
+To create a DFM we first need to create a 
+
+
 In **quanteda** the function to create a DTM is `dfm()`, as it can be used for textual features other than individual words or tokens (e.g. emojis or punctuation marks). 
 
-Each document has a separate row, each word has a separate column, and each cell has a number showing how often a particular word appears in a particular document.
+In a DTM, each document is allocated a separate row. (In this case we are treating each sentence as a separate row.) Each word in the document has a separate column. (As a result a DTM can be extremely wide.) Each cell has a number showing how often a particular word appears in a particular document.
 
 We start by creating a list of the individual words in the sentences, which in **quanteda** uses the `tokens()` function. 
 Our second step is to convert these words into a DTM using `dfm()`. For the purposes of this example, we will treat each sentence as a separate "text".
@@ -79,42 +95,34 @@ Our second step is to convert these words into a DTM using `dfm()`. For the purp
 
 ``` r
 texts <- c(
-      "I have cherished the ideal of a democratic and free society in which all persons will live together in harmony and with equal opportunities", 
-"It is an idea for which I hope to live for and to see realized", 
-"But my Lord if it needs be it is an ideal for which I am prepared to die")
+      "I have cherished the ideal of a democratic and free society
+      in which all persons will live together in harmony and with equal
+      opportunities", 
+      "It is an idea for which I hope to live for and to see realized", 
+      "But my Lord if it needs be it is an ideal for which I am prepared 
+      to die")
 
 d <- tokens(texts) %>%
   dfm()
 ```
 
-Let's take the DTM created by the dfm() function and look more closely at its matrix structure, using the `convert()` function. 
+Let's take the DTM created by the dfm() function and look more closely at its matrix structure.
+
+Since it's a very wide matrix with 40 columns, we will focus on the first 10 words, or features.
 
 
 ``` r
-convert(d, "matrix") 
+print(d) 
 ```
 
 ``` output
+Document-feature matrix of: 3 documents, 40 features (56.67% sparse) and 0 docvars.
        features
-docs    i have cherished the ideal of a democratic and free society in which
-  text1 1    1         1   1     1  1 1          1   2    1       1  2     1
-  text2 1    0         0   0     0  0 0          0   1    0       0  0     1
-  text3 1    0         0   0     1  0 0          0   0    0       0  0     1
-       features
-docs    all persons will live together harmony with equal opportunities it is
-  text1   1       1    1    1        1       1    1     1             1  0  0
-  text2   0       0    0    1        0       0    0     0             0  1  1
-  text3   0       0    0    0        0       0    0     0             0  2  1
-       features
-docs    an idea for hope to see realized but my lord if needs be am prepared
-  text1  0    0   0    0  0   0        0   0  0    0  0     0  0  0        0
-  text2  1    1   2    1  2   1        1   0  0    0  0     0  0  0        0
-  text3  1    0   1    0  1   0        0   1  1    1  1     1  1  1        1
-       features
-docs    die
-  text1   0
-  text2   0
-  text3   1
+docs    i have cherished the ideal of a democratic and free
+  text1 1    1         1   1     1  1 1          1   2    1
+  text2 1    0         0   0     0  0 0          0   1    0
+  text3 1    0         0   0     1  0 0          0   0    0
+[ reached max_nfeat ... 30 more features ]
 ```
 
 The example matrix above shows the losses and the gains when we represent the closing sentences of Mandela's four hour long speech from the dock as a DTM. 
@@ -125,7 +133,9 @@ At the same time, we gain other insights. Since we represent the speech in a num
 
 Furthermore, by converting the whole speech into the quantitative DTM format, we can more easily use computational methods to compare Mandela's 1964 speech to other famous speeches, such as his speech in 1994, or to speeches made by other political leaders and statesmen.
 
-Now we will load the full text of the speech from a collection of speeches `speeches.tsv` to investigate these linguistic patterns.
+## Creating a corpus
+
+We need to load the full text of the speech from a collection of speeches (`speeches.tsv`) and create a reference corpus to investigate these linguistic patterns.
 
 
 ``` r
@@ -145,21 +155,59 @@ chr (7): first_name, president, date, delivery, type, party, text
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
-Now that we have loaded the collection we can select only the Rivonia speech using `filter()`. 
-
-Then we will use the `corpus()`, `tokens()` and `dfm()`functions to represent the speech as a DTM. 
+Our dataframe includes a column with the full text of the speeches, as well as   various other metadata for the speeches.
 
 
 ``` r
-# select only the Rivonia speech, tokenize and convert to a DTM
+colnames(speeches)
+```
+
+``` output
+[1] "first_name" "president"  "date"       "delivery"   "type"      
+[6] "party"      "text"      
+```
+ Now that we have loaded the collection we create a unique "docid" column for each speach. Using`mutate()` we combine the year of the speech with the name of the speaker, and the mode of delivery. Then we select only the Rivonia speech using `filter()`. 
+
+Now we can use the `corpus()` function to convert the dataframe to a corpus object.
+
+
+``` r
+# select only the Rivonia speech and convert to a DTM
 
 d <- speeches %>%
-  filter(date == "April 20 1964" ) %>%
-  corpus() %>%
-  tokens(remove_punct=T) %>%
+  mutate(doc_id=paste(year(date), president, delivery)) %>%
+  filter(year(date) == "1994" ) %>%
+  corpus()
+```
+
+``` error
+Error in `mutate()`:
+ℹ In argument: `doc_id = paste(year(date), president, delivery)`.
+Caused by error in `as.POSIXlt.character()`:
+! character string is not in a standard unambiguous format
+```
+
+## Tokens - preparing for analysis
+
+Tokens are usually the words in a document. (They can also be sentences.) We will now prepare the text for analysis by deciding what tokens are important for us to address the research question.
+
+In many cases, we will not want to keep all of the tokens in a text. For example, we might convert all words to lowercase, remove punctuation and numbers, and stem words to reduce the size of the eventual matrix. Of course, in cases where numbers or punctuataion are important to our analysis, we would keep them intact!
+
+In this case we will remove all punctuation and numbers.
+
+
+``` r
+# tokenize, remove punctuation and number, and convert to a DTM
+
+d <- d %>%
+  tokens(remove_punct = T, remove_numbers = T) %>%
   dfm()
 ```
-Once the speech is converted to a DTM, we can use other functions to explore its linguistic patterns. 
+
+``` error
+Error: tokens() only works on character, corpus, list, tokens, tokens_xptr objects.
+```
+Once the speech is converted to a DTM with the `dtm()` function, we can start exploring its linguistic patterns. 
 
 
 ``` r
@@ -167,11 +215,13 @@ head(d)
 ```
 
 ``` output
-Document-feature matrix of: 1 document, 2,154 features (0.00% sparse) and 6 docvars.
+Document-feature matrix of: 3 documents, 40 features (56.67% sparse) and 0 docvars.
        features
-docs      i am the first accused hold   a bachelor's degree  in
-  text1 179 12 751     9       1    2 171          1      1 264
-[ reached max_nfeat ... 2,144 more features ]
+docs    i have cherished the ideal of a democratic and free
+  text1 1    1         1   1     1  1 1          1   2    1
+  text2 1    0         0   0     0  0 0          0   1    0
+  text3 1    0         0   0     1  0 0          0   0    0
+[ reached max_nfeat ... 30 more features ]
 ```
 The `head()` function tells us that the resulting DFM has 2154 tokens. It is a sparse matrix, (0.00% sparse). In other words, very few of the 2154 words are ever repeated. 
 
@@ -183,8 +233,8 @@ topfeatures(d)
 ```
 
 ``` output
- the   of   to  and   in    i    a that  was this 
- 751  461  387  339  264  179  171  152  140  107 
+    i   and which    it   for    to ideal    in  live    is 
+    3     3     3     3     3     3     2     2     2     2 
 ```
 
 ## Charting frequencies with **`quanteda`**
@@ -197,8 +247,8 @@ topfeatures(d)
 ```
 
 ``` output
- the   of   to  and   in    i    a that  was this 
- 751  461  387  339  264  179  171  152  140  107 
+    i   and which    it   for    to ideal    in  live    is 
+    3     3     3     3     3     3     2     2     2     2 
 ```
 
 ``` r
@@ -211,7 +261,7 @@ feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, fre
 feature_freq
 ```
 
-<img src="fig/08-text-as-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="fig/08-text-as-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 ## Grammatical/Function words
 
@@ -250,7 +300,7 @@ feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, fre
 feature_freq
 ```
 
-<img src="fig/08-text-as-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="fig/08-text-as-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 Once the grammatical/function words have been excluded with the stopword list, the frequency chart shows more clearly what the speech was about.
 
@@ -282,17 +332,19 @@ topfeatures(d)
 ```
 
 ``` output
-  african       anc  africans    people political  umkhonto    africa     white 
-       71        57        55        48        43        38        35        35 
-    south  violence 
-       34        33 
+     ideal       live  cherished democratic       free    society    persons 
+         2          2          1          1          1          1          1 
+  together    harmony      equal 
+         1          1          1 
 ```
 
 ``` r
 textplot_wordcloud(d, max_words=100)
 ```
 
-<img src="fig/08-text-as-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+``` error
+Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3
+```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -306,25 +358,40 @@ How would you go about using quanteda functions to study linguistic choices in t
 
 ``` r
 d <- speeches %>%
-  filter(date == "10 May 1994" ) %>%
+  mutate(doc_id=paste(lubridate::year(date), president, delivery)) %>%
+  filter(lubridate::year(date) == "1994" ) %>%
   corpus() %>%
   tokens(remove_punct=T) %>%
   dfm()  %>%
   dfm_remove(mystopwords)
+```
 
+``` error
+Error in `mutate()`:
+ℹ In argument: `doc_id = paste(lubridate::year(date), president,
+  delivery)`.
+Caused by error in `as.POSIXlt.character()`:
+! character string is not in a standard unambiguous format
+```
+
+``` r
 topfeatures(d)
 ```
 
 ``` output
-     us   world  people country   peace   human   south     let freedom   never 
-      9       8       8       6       6       5       5       5       4       4 
+     ideal       live  cherished democratic       free    society    persons 
+         2          2          1          1          1          1          1 
+  together    harmony      equal 
+         1          1          1 
 ```
 
 ``` r
 textplot_wordcloud(d, max_words=20)
 ```
 
-<img src="fig/08-text-as-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+``` error
+Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3
+```
 
 :::::::::::::::::::::::::
 
