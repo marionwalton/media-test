@@ -282,7 +282,6 @@ textplot_wordcloud(d, max_words=100)
 
 We notice the duplication of related words, such as "africa", "african" or "africans". It is possible to combine these by using by using the `tokens_wordstem()` function, which will reduce all words to their stems. 
 
-
 ```{r}
 topfeatures(d)
 
@@ -293,7 +292,6 @@ d <- d_corpus %>%
   dfm_remove(mystopwords)
 
 textplot_wordcloud(d, max_words=100)
-
 
 ```
 
