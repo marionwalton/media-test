@@ -51,9 +51,7 @@ require(spacyr)
 - How can I visualise frequency, collocation and concordance for a corpus of textual data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
 ## Using **`quanteda`** for text analysis
-
 Before conducting automated text analysis, we will need to install and load a suitable package.
 For this tutorial we will be using the **`quanteda`** package which offers many useful text analysis functions.
 
@@ -62,25 +60,20 @@ For this tutorial we will be using the **`quanteda`** package which offers many 
 library(quanteda)
 ```
 ## Computational linguistics and Corpus Linguistics
-
 Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches which media scholars can use when analysing textual data in media texts.
 
 Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are related to Natural Language Processing (NLP) which is a subfield of computer science.
 
 While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics often includes qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of traditional media studies approaches to linguistic discourse such as Critical Discourse Analysis (CDA).
 
-For more see these additional readings:
-
-(Baker et al 2008:273)
+For more see these additional readings: (Baker et al 2008:273)
 
 ## What is a Corpus?
-
 A *corpus* is a set of documents which stores large quantities of real-life text. The plural form of the word is *corpora*.
 
 You can find a set of South African language corpora on the [SADILAR corpus portal](https://corpus.sadilar.org/corpusportal/explore/corpus) website.
 
 ## Using a Document-Term Matrix
-
 Computers work by using numbers, and so corpora are analysed by generating a numerical representations of text.
 
 A popular representation of text in CL is the *Document-Term Matrix* or *DTM* (also known as Term-Document Matrix (TDM) or Document-Feature Matrix (DTM). 
@@ -158,28 +151,6 @@ The function `topfeatures()` highlights the most commonly used words in the spee
 ```{r}
 topfeatures(d)
 ```
-Making sense of such frequencies requires us to understand an important concept in computational analysis of text, namely **frequency**.
-
-# Using Word Frequencies to Analyse Text
-
-Frequency is a key concept underpinning the analysis of text and corpora. As a purely quantitative measure, media researchers need to use word frequencies with a sensitivity to the word-distribution patterns in human languages, and the importance of context for meaning
-
-Word frequency lists are an important starting point and can help direct an investigation. We combine them with measures of dispersion, which are used to reveal trends across texts. For example, certain linguistic patterns may occur more often at the beginning or ends of texts.
-
-At the same time, frequencies can be reductive and generalising. If we're interested in meaning it's important not to oversimplify, and focusing only on word distributions can obscure more interesting interpretations of a text.
-
-# Why is frequency important?
-
-Language is not a random affair - it is *rule based*. Words are likely to occur predictably in relationship to other words. 
-
-At the same time, human beings use language creatively and people can make many choices about how they want to use language. Language has *rule-generating* qualities which is why it changes over time and varies depending on the context where it is used. 
-
-# The relationship between frequency and ideology
-
-Media studies builds on the insights of discourse analysis and corpus linguistics, which have sensitised researchers to the ideological implications of the words people choose to use.
-
-
-> "If people speak or write in an unexpected way, or make one linguistic choice over another, more obvious one, then that reveals something about their intentions, whether conscious or not." (Baker:48)
 
 ## Charting frequencies with **`quanteda`**
 
@@ -205,7 +176,7 @@ For this reason, grammatical and function words are on lists of words to be excl
 
 ## Lexical words
 
-By contrast, the frequencies of the lexical words in Mandela's speech ("African", "ANC", "Africans", "people", "political", "umkhonto", "Africa", "white", "South","violence", "government","policy","against","communist") show us what this specific text or corpus is about.
+By contrast, the frequencies of the lexical words in Mandela's speech ("African", "ANC", "Africans", "people", "political", "umkhonto", "Africa", "white", "South","violence", "government","policy","against","communist") give far more clues if we're interested in what this specific text or corpus is about.
 
 ## Defining stopwords
 
@@ -216,8 +187,8 @@ We can start identifying these important lexical words by excluding common Engli
 mystopwords <- stopwords("english",
                          source="snowball")
 ```
-## Removing stopwords
 
+## Removing stopwords
 After removing stopwords from the DTM using the function `dfm_remove()` we can chart frequencies for the most common lexical words used in the Rivonia speech.
 
 ```{r}
@@ -232,10 +203,28 @@ feature_freq <- ggplot(tstat_freq_d, aes(x = frequency, y = reorder(feature, fre
 feature_freq
 ```
 
-With the stop words excluded, the chart shows us more clearly what the speech was about.
+Once the grammatical/function words have been excluded with the stopword list, the frequency chart shows more clearly what the speech was about.
+
+As we start to make sense of these word frequencies in Mandela's speech, we should pause briefly and reflect on an important concept in computational analysis of text, namely **frequency**.
+
+# Using Word Frequencies to Analyse Text
+Frequency is a key concept underpinning the analysis of text and corpora. As a purely quantitative measure, media researchers need to use word frequencies with a sensitivity to the word-distribution patterns in human languages, and the importance of context for meaning
+
+Word frequency lists are an important starting point and can help direct an investigation. We combine them with measures of dispersion, which are used to reveal trends across texts. For example, certain linguistic patterns may occur more often at the beginning or ends of texts.
+
+At the same time, frequencies can be reductive and generalising. If we're interested in meaning it's important not to oversimplify. Focusing only on general patterns and individual word distributions without paying attention to context can obscure what is going on in a text.
+
+## Why is frequency important?
+Language is not a random affair - it is *rule based*. Words are likely to occur predictably in relationship to other words. 
+
+At the same time, human beings use language creatively and people can make many choices about how they want to use language. Language has *rule-generating* qualities which is why it changes over time and varies depending on the context where it is used. 
+
+## The relationship between frequency and ideology
+Media studies builds on the insights of discourse analysis and corpus linguistics, which have sensitised researchers to the ideological implications of the words people choose to use.
+
+> "If people speak or write in an unexpected way, or make one linguistic choice over another, more obvious one, then that reveals something about their intentions, whether conscious or not." (Baker:48)
 
 ## Wordclouds and visualisation
-
 Wordclouds are a popular visualisation format for frequencies because they allow us to focus on meanings.
 
 ```{r}
@@ -246,13 +235,11 @@ textplot_wordcloud(d, max_words=100)
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Exercise
-
 How would you go about using quanteda functions to study linguistic choices in the inaugural speech given by Mandela when he became President on 10 May 1994? 
 
 :::::::::::::::  solution
 
 ## Solution
-
 
 ```{r}
 d <- speeches %>%
@@ -274,7 +261,6 @@ What are the pros and cons of using ggplot and textplot_wordcloud to represent t
 :::::::::::::::  solution
 
 ## Solution
-
 **Using a wordcloud**
 
 Pro: The wordcloud allows quick exploration of the meaning of a speech. 
