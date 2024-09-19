@@ -151,7 +151,8 @@ speeches <- read_tsv(
 Rows: 2 Columns: 7
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
-chr (7): first_name, president, date, delivery, type, party, text
+chr  (6): first_name, president, delivery, type, party, text
+date (1): date
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -181,13 +182,6 @@ d_corpus <- speeches %>%
   corpus()
 ```
 
-``` error
-Error in `mutate()`:
-ℹ In argument: `doc_id = paste(year(date), president, delivery)`.
-Caused by error in `as.POSIXlt.character()`:
-! character string is not in a standard unambiguous format
-```
-
 ## Tokens - preparing for analysis
 
 Tokens are usually the words in a document. (They can also be sentences.) We will now prepare the text for analysis by deciding what tokens are important for us to address the research question.
@@ -205,10 +199,6 @@ d <- d_corpus %>%
   dfm()
 ```
 
-``` error
-Error in eval(expr, envir, enclos): object 'd_corpus' not found
-```
-
 ## Starting Analysis - the DTM
 
 Once the speech is converted to a DTM with the `dtm()` function, we can start exploring its linguistic patterns. 
@@ -219,13 +209,11 @@ head(d)
 ```
 
 ``` output
-Document-feature matrix of: 3 documents, 40 features (56.67% sparse) and 0 docvars.
-       features
-docs    i have cherished the ideal of a democratic and free
-  text1 1    1         1   1     1  1 1          1   2    1
-  text2 1    0         0   0     0  0 0          0   1    0
-  text3 1    0         0   0     1  0 0          0   0    0
-[ reached max_nfeat ... 30 more features ]
+Document-feature matrix of: 1 document, 2,119 features (0.00% sparse) and 6 docvars.
+                     features
+docs                    i am the first accused hold   a bachelor's degree  in
+  1964 Mandela speech 179 12 751     9       1    2 171          1      1 264
+[ reached max_nfeat ... 2,109 more features ]
 ```
 The `head()` function tells us that the resulting DFM has 2154 tokens. It is a sparse matrix, (0.00% sparse). In other words, very few of the 2154 words are ever repeated. 
 
@@ -243,8 +231,8 @@ topfeatures(d)
 ```
 
 ``` output
-    i   and which    it   for    to ideal    in  live    is 
-    3     3     3     3     3     3     2     2     2     2 
+ the   of   to  and   in    i    a that  was this 
+ 751  461  387  339  264  179  171  152  140  107 
 ```
 
 ``` r
@@ -376,22 +364,19 @@ topfeatures(d)
 ```
 
 ``` output
-     ideal       live  cherished democratic       free    society    persons 
-         2          2          1          1          1          1          1 
-  together    harmony      equal 
-         1          1          1 
+  african       anc  africans    people political  umkhonto    africa     white 
+       71        57        55        48        43        38        35        35 
+    south  violence 
+       34        33 
 ```
 
 ``` r
 textplot_wordcloud(d, max_words=100)
 ```
 
-``` error
-Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3
-```
+<img src="fig/08-text-as-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 We notice the duplication of related words, such as "africa", "african" or "africans". It is possible to combine these by using by using the `tokens_wordstem()` function, which will reduce all words to their stems. 
-
 
 
 ``` r
@@ -399,10 +384,10 @@ topfeatures(d)
 ```
 
 ``` output
-     ideal       live  cherished democratic       free    society    persons 
-         2          2          1          1          1          1          1 
-  together    harmony      equal 
-         1          1          1 
+  african       anc  africans    people political  umkhonto    africa     white 
+       71        57        55        48        43        38        35        35 
+    south  violence 
+       34        33 
 ```
 
 ``` r
@@ -411,19 +396,11 @@ d <- d_corpus %>%
   tokens_wordstem()%>%
   dfm()  %>%
   dfm_remove(mystopwords)
-```
 
-``` error
-Error in eval(expr, envir, enclos): object 'd_corpus' not found
-```
-
-``` r
 textplot_wordcloud(d, max_words=100)
 ```
 
-``` error
-Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3
-```
+<img src="fig/08-text-as-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -444,34 +421,20 @@ d <- speeches %>%
   tokens(remove_punct=T) %>%
   dfm()  %>%
   dfm_remove(mystopwords)
-```
 
-``` error
-Error in `mutate()`:
-ℹ In argument: `doc_id = paste(lubridate::year(date), president,
-  delivery)`.
-Caused by error in `as.POSIXlt.character()`:
-! character string is not in a standard unambiguous format
-```
-
-``` r
 topfeatures(d)
 ```
 
 ``` output
-     ideal       live  cherished democratic       free    society    persons 
-         2          2          1          1          1          1          1 
-  together    harmony      equal 
-         1          1          1 
+     us   world  people country   peace   human   south     let freedom   never 
+      9       8       8       6       6       5       5       5       4       4 
 ```
 
 ``` r
 textplot_wordcloud(d, max_words=20)
 ```
 
-``` error
-Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3
-```
+<img src="fig/08-text-as-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
@@ -489,19 +452,11 @@ d <- d_corpus %>%
     tokens(remove_punct = T, remove_numbers = T) %>%
   dfm() %>%
   dfm_remove(mystopwords)
-```
 
-``` error
-Error in eval(expr, envir, enclos): object 'd_corpus' not found
-```
-
-``` r
 textplot_wordcloud(d, max_words=20)
 ```
 
-``` error
-Error in wordcloud(x, min_size, max_size, min_count, max_words, color, : No features left after trimming with min_count = 3
-```
+<img src="fig/08-text-as-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::
 
