@@ -46,19 +46,19 @@ For this tutorial we will be using the **`quanteda`** package which offers many 
 library(quanteda)
 ```
 ## Computational linguistics and Corpus Linguistics
+This tutorial is intended to provide a foundation for media researchers who would like to use computational tools for discourse analysis. We will be drawing on both computational linguistics and corpus linguistics.
+
 Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches which media scholars can use when analysing textual data in media texts.
 
 Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are related to Natural Language Processing (NLP) which is a subfield of computer science.
 
 While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics often includes qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of traditional media studies approaches to linguistic discourse such as Critical Discourse Analysis (CDA).
 
-For more see these additional readings: (Baker et al 2008:273)
-
+For more about these approaches, see these additional readings: (Baker et al 2008:273).
 ## What is a Corpus?
 A *corpus* is a set of documents which stores large quantities of real-life text. The plural form of the word is *corpora*.
 
 You can find a set of South African language corpora on the [SADILAR corpus portal](https://corpus.sadilar.org/corpusportal/explore/corpus) website.
-
 ## Using a Document-Term Matrix
 Computers work by using numbers, and so corpora are analysed by generating a numerical representations of text.
 
