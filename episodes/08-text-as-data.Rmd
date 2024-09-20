@@ -38,8 +38,8 @@ require(spacyr)
 - Prepare text for analysis with the **`quanteda`** functions `corpus`, `tokens`, `dfm`, and `dfm_remove`.
 - Investigate the most frequent features in a dfm using the **`quanteda`** function `textstat_frequency`.
 - Plot frequencies using **`ggplot`** 
-- Select and modify a list of stopwords to remove unwanted words, query terms and spam from a dataset. 
-- Visualise frequencies as a wordcloud using the **`quanteda`** function `textplot_wordcloud` and the **`wordcloud2`** function  `wordcloud2`.
+- Select and modify a list of stopwords to remove unwanted words from a dataset. 
+- Visualise frequencies as a wordcloud using the **`quanteda`** function `textplot_wordcloud`.
 - Identify the strengths and weaknesses of these approaches to visualising text data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -63,12 +63,12 @@ library(quanteda)
 We will start by exploring the text from some historical speeches by Nelson Mandela. 
 You can download the required data [from this link](data/speeches.tsv)
 
-## Computational linguistics and Corpus Linguistics
-This tutorial is intended to provide a foundation for media researchers who would like to use computational tools for discourse analysis on collections of textual data such as social media posts, web pages, text output from machine vision services, or interview transcripts. We will be drawing on both computational linguistics and corpus linguistics to do this.
+## Using automated text analysis for media research
+Classic approaches to media research can be expanded and enhanced by using computational approaches such as automated text analysis. Nonetheless it is important for researchers to know where these new tools originate and what they assume about language. This tutorial is intended to provide a foundation for media researchers who would like to use computational tools for discourse analysis on collections of textual data such as social media posts, web pages, text output from machine vision services, or interview transcripts. These techniques have their roots in both computational linguistics and corpus linguistics.
 
-Computational linguistics and Corpus Linguistics are two related areas of study in linguistics. Both of these areas provide approaches concepts and tools for analysing textual data, but it is important to know where the tools originate and what they assume about language.
+Computational linguistics and Corpus Linguistics are two related areas which provide different approaches, concepts and tools for analysing textual data.
 
-Media scholars have used corpus linguistics together with discourse analysis to explore dominant discourses, and to investigate the social implications of certain linguistic choices. Computational linguistics has been used to automate some aspects of content analysis, such as sentiment analysis (which identifies positive and negative sentiments in text) or to label texts or automatically identify topics. In all these cases, researchers need to manage textual data and to prepare it for analysis by sorting, categorising and summarising it.
+Media scholars have used corpus linguistics together with discourse analysis to explore dominant discourses, and to investigate the social implications of certain linguistic choices. Computational linguistics has been used to automate some aspects of content analysis, such as sentiment analysis (which identifies positive and negative sentiments in text) or to label texts or automatically identify topics . In all these cases, researchers need to manage textual data and to prepare it for analysis by sorting, categorising and summarising it.
 
 Computational linguistics is a broad inter-disciplinary area of study where software and algorithms are developed to analyse and synthesise language and speech for applications such as machine translation, speech recognition, machine learning and deep learning ("AI"). Corpus linguistics has developed methods to study trends and patterns in language use and sociolinguistic variation by analysing large collections of electronically stored, naturally occurring texts. Both of these areas are also related to Natural Language Processing (NLP) which is a subfield of computer science.
 
@@ -79,6 +79,12 @@ For more about these approaches, see these additional readings:
 Baker, P. et al. (2008) A useful methodological synergy? Combining critical discourse analysis and corpus linguistics to examine discourses of refugees and asylum seekers in the UK press. Discourse & society. [19 (3), 273–306.
 
 Baker, P. 2006. Using Corpora in Discourse Analysis. Continuum: London. 
+
+Van Atteveldt, W. & T. Peng, (2018) When Communication Meets Computation: Opportunities, Challenges, and Pitfalls in Computational Communication Science, Communication Methods and Measures, 12:2-3, 81-92, DOI: 10.1080/19312458.2018.1458084
+
+Theocharis, Y. & A. Jungherr (2020) Computational Social Science and the Study of Political Communication, Political Communication, DOI: 10.1080/10584609.2020.1833121
+
+
 
 ## What is a Corpus?
 A *corpus* is a set of documents which stores large quantities of real-life text. The plural form of the word is *corpora*.
