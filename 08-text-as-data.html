@@ -290,7 +290,7 @@
       <div class="accordion-body">
         <ul><li><a href="#using-quanteda-for-text-analysis">Using <strong><code>quanteda</code></strong> for text analysis</a></li>
 <li><a href="#example-data">Example data</a></li>
-<li><a href="#computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics</a></li>
+<li><a href="#using-automated-text-analysis-for-media-research">Using automated text analysis for media research</a></li>
 <li><a href="#what-is-a-corpus">What is a Corpus?</a></li>
 <li><a href="#using-a-document-term-matrix">Using a Document-Term Matrix</a></li>
 <li><a href="#creating-a-corpus">Creating a corpus</a></li>
@@ -366,7 +366,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Text as data (Optional)</h1>
-        <p>Last updated on 2024-09-19 |
+        <p>Last updated on 2024-09-20 |
 
         <a href="https://github.com/marionwalton/media-test/edit/main/episodes/08-text-as-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -409,13 +409,11 @@ corpus, tokens, dfm,and frequency.</li>
 <code>textstat_frequency</code>.</li>
 <li>Plot frequencies using <strong><code>ggplot</code></strong>
 </li>
-<li>Select and modify a list of stopwords to remove unwanted words,
-query terms and spam from a dataset.</li>
+<li>Select and modify a list of stopwords to remove unwanted words from
+a dataset.</li>
 <li>Visualise frequencies as a wordcloud using the
 <strong><code>quanteda</code></strong> function
-<code>textplot_wordcloud</code> and the
-<strong><code>wordcloud2</code></strong> function
-<code>wordcloud2</code>.</li>
+<code>textplot_wordcloud</code>.</li>
 <li>Identify the strengths and weaknesses of these approaches to
 visualising text data.</li>
 </ul></div>
@@ -438,23 +436,25 @@ text analysis functions.</p>
 </section><section><h2 class="section-heading" id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a></h2>
 <hr class="half-width"><p>We will start by exploring the text from some historical speeches by
 Nelson Mandela. You can download the required data <a href="data/speeches.tsv">from this link</a></p>
-</section><section><h2 class="section-heading" id="computational-linguistics-and-corpus-linguistics">Computational linguistics and Corpus Linguistics<a class="anchor" aria-label="anchor" href="#computational-linguistics-and-corpus-linguistics"></a></h2>
-<hr class="half-width"><p>This tutorial is intended to provide a foundation for media
-researchers who would like to use computational tools for discourse
-analysis on collections of textual data such as social media posts, web
-pages, text output from machine vision services, or interview
-transcripts. We will be drawing on both computational linguistics and
-corpus linguistics to do this.</p>
+</section><section><h2 class="section-heading" id="using-automated-text-analysis-for-media-research">Using automated text analysis for media research<a class="anchor" aria-label="anchor" href="#using-automated-text-analysis-for-media-research"></a></h2>
+<hr class="half-width"><p>Classic approaches to media research can be expanded and enhanced by
+using computational approaches such as automated text analysis.
+Nonetheless it is important for researchers to know where these new
+tools originate and what they assume about language. This tutorial is
+intended to provide a foundation for media researchers who would like to
+use computational tools for discourse analysis on collections of textual
+data such as social media posts, web pages, text output from machine
+vision services, or interview transcripts. These techniques have their
+roots in both computational linguistics and corpus linguistics.</p>
 <p>Computational linguistics and Corpus Linguistics are two related
-areas of study in linguistics. Both of these areas provide approaches
-concepts and tools for analysing textual data, but it is important to
-know where the tools originate and what they assume about language.</p>
+areas which provide different approaches, concepts and tools for
+analysing textual data.</p>
 <p>Media scholars have used corpus linguistics together with discourse
 analysis to explore dominant discourses, and to investigate the social
 implications of certain linguistic choices. Computational linguistics
 has been used to automate some aspects of content analysis, such as
 sentiment analysis (which identifies positive and negative sentiments in
-text) or to label texts or automatically identify topics. In all these
+text) or to label texts or automatically identify topics . In all these
 cases, researchers need to manage textual data and to prepare it for
 analysis by sorting, categorising and summarising it.</p>
 <p>Computational linguistics is a broad inter-disciplinary area of study
@@ -479,6 +479,13 @@ of refugees and asylum seekers in the UK press. Discourse &amp; society.
 [19 (3), 273–306.</p>
 <p>Baker, P. 2006. Using Corpora in Discourse Analysis. Continuum:
 London.</p>
+<p>Van Atteveldt, W. &amp; T. Peng, (2018) When Communication Meets
+Computation: Opportunities, Challenges, and Pitfalls in Computational
+Communication Science, Communication Methods and Measures, 12:2-3,
+81-92, DOI: 10.1080/19312458.2018.1458084</p>
+<p>Theocharis, Y. &amp; A. Jungherr (2020) Computational Social Science
+and the Study of Political Communication, Political Communication, DOI:
+10.1080/10584609.2020.1833121</p>
 </section><section><h2 class="section-heading" id="what-is-a-corpus">What is a Corpus?<a class="anchor" aria-label="anchor" href="#what-is-a-corpus"></a></h2>
 <hr class="half-width"><p>A <em>corpus</em> is a set of documents which stores large quantities
 of real-life text. The plural form of the word is <em>corpora</em>.</p>
@@ -1120,8 +1127,8 @@ any links that you are not going to use.
   "url": "https://marionwalton.github.io/media-test/08-text-as-data.html",
   "identifier": "https://marionwalton.github.io/media-test/08-text-as-data.html",
   "dateCreated": "2024-08-23",
-  "dateModified": "2024-09-19",
-  "datePublished": "2024-09-19"
+  "dateModified": "2024-09-20",
+  "datePublished": "2024-09-20"
 }
 
   </script><script>
