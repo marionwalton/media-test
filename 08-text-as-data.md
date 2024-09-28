@@ -60,7 +60,9 @@ Computational linguistics is a broad inter-disciplinary area of study where soft
 
 While Computational Linguistics has a strongly quantitative focus, Corpus Linguistics can also include qualitative analysis (such as examining concordance lines).  Corpus linguistics involves much qualitative work interpreting text, and so can be used to extend the scope of Critical Discourse Analysis (CDA) and other smaller-scale media studies approaches to analysing linguistic discourse.
 
-For more about these approaches, see these additional readings: 
+For more about these approaches, see these additional readings below.
+
+## References
 
 Baker, P. et al. (2008) A useful methodological synergy? Combining critical discourse analysis and corpus linguistics to examine discourses of refugees and asylum seekers in the UK press. Discourse & society. [19 (3), 273–306.
 
