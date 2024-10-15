@@ -1562,10 +1562,11 @@
     },
     "statnet.common": {
       "Package": "statnet.common",
-      "Version": "4.9.0",
+      "Version": "4.10.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
+        "Matrix",
         "R",
         "coda",
         "methods",
@@ -1573,7 +1574,7 @@
         "tools",
         "utils"
       ],
-      "Hash": "be35aebf512f7b31de12200d5c3d1d67"
+      "Hash": "8996902b1e7c4dbeaad70d1809bb4f74"
     },
     "stopwords": {
       "Package": "stopwords",
