@@ -132,16 +132,16 @@ videos %>%
 # A tibble: 10 × 3
    video_id    channel_title published_at_sql   
    <chr>       <chr>         <chr>              
- 1 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
- 2 3EtH4eDceFY eNCA          2020-09-10 9:11:44 
- 3 Ra0hdT2gsxU eNCA          2020-09-07 14:20:04
- 4 oYpXigYPY34 eNCA          2020-09-07 13:12:02
- 5 3BkmO0M56lA eNCA          2020-09-08 6:54:04 
- 6 flzoE9zL_KA eNCA          2020-09-07 11:28:32
- 7 li3_91gCQHc eNCA          2020-09-09 4:30:37 
- 8 huI9qbGqNhA eNCA          2020-09-07 17:59:13
- 9 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
-10 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
+ 1 EH0RpWcq66w eNCA          2020-09-08 12:50:32
+ 2 RGXqGXPQNVE eNCA          2020-09-07 13:18:00
+ 3 YUmIAd_O0U4 eNCA          2020-09-11 5:34:52 
+ 4 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
+ 5 huI9qbGqNhA eNCA          2020-09-07 17:59:13
+ 6 Ra0hdT2gsxU eNCA          2020-09-07 14:20:04
+ 7 flzoE9zL_KA eNCA          2020-09-07 11:28:32
+ 8 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
+ 9 59uEjm0OlRs eNCA          2020-09-07 8:13:41 
+10 li3_91gCQHc eNCA          2020-09-09 4:30:37 
 ```
 
 We notice that the layout or format of the `videos` data is in a format that
