@@ -132,15 +132,15 @@ videos %>%
 # A tibble: 10 × 3
    video_id    channel_title published_at_sql   
    <chr>       <chr>         <chr>              
- 1 RGXqGXPQNVE eNCA          2020-09-07 13:18:00
- 2 -vdIFk95vPk eNCA          2020-09-07 8:23:46 
- 3 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
- 4 _Mz-QydrFMs eNCA          2020-09-07 7:17:10 
- 5 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
- 6 huI9qbGqNhA eNCA          2020-09-07 17:59:13
- 7 li3_91gCQHc eNCA          2020-09-09 4:30:37 
- 8 Ra0hdT2gsxU eNCA          2020-09-07 14:20:04
- 9 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
+ 1 kvQRfnD1h64 eNCA          2020-09-10 10:54:39
+ 2 59uEjm0OlRs eNCA          2020-09-07 8:13:41 
+ 3 _Mz-QydrFMs eNCA          2020-09-07 7:17:10 
+ 4 flzoE9zL_KA eNCA          2020-09-07 11:28:32
+ 5 3BkmO0M56lA eNCA          2020-09-08 6:54:04 
+ 6 qvd3C1ZAAmQ eNCA          2020-09-08 16:57:47
+ 7 JqdoE4kKYKg eNCA          2020-09-09 7:53:16 
+ 8 EH0RpWcq66w eNCA          2020-09-08 12:50:32
+ 9 vaSOdyC3iNk eNCA          2020-09-04 11:32:18
 10 hZBwMrCCp4A eNCA          2020-09-08 16:49:28
 ```
 
